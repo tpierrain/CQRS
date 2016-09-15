@@ -3,8 +3,10 @@
 
   "dependencies": {
     "NUnit": "3.4.1",
-    "BookARoom": "1.0.0-*",
-    "dotnet-test-nunit": "3.4.0-beta-1"
+    "dotnet-test-nunit": "3.4.0-beta-1",
+    "BookARoom": {
+      "target": "project"
+    }
   },
 
   "testRunner": "nunit",
