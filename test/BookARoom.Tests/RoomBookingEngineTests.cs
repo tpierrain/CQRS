@@ -1,4 +1,4 @@
-﻿namespace RoomsBooking.Tests
+﻿namespace BookARoom.Tests
 {
     using System;
     using System.Collections.Generic;
