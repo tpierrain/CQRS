@@ -12,15 +12,15 @@ Of course, booking a room (write model) will impact the read model accordingly.
 
 ## Highlights
 
-1. How *Outside-in* TDD works
-2. How Hexagonal Architecture can help us to focus on *Domain first*, before tackling the *infra (ASP.NET) in a second time*
-3. *CQRS without Event sourcing*:
+1. How __Outside-in__ TDD works
+2. How Hexagonal Architecture can help us to focus on __Domain first__, before tackling the __infra (ASP.NET) in a second time__
+3. __CQRS without Event sourcing__:
     - why CQRS?
     - pattern origin
     - how read and write models articulate
     - Eventual consistency
-    - CQRS loves Event sourcing, but CQRS != Event sourcing (clarifying what Event sourcing is)
-4. ASP.NET with *dotnet core*
+    - CQRS loves Event sourcing, but __CQRS != Event sourcing__ (clarifying what Event sourcing is)
+4. ASP.NET with __dotnet core__
 
 
 
