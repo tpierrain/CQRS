@@ -4,6 +4,8 @@
 
 ### 1. Install all the plugins and dependencies for ASP.NET dotnet core project
 ### 2. Configure your project.json to allow unit test execution in a dotnet core environment
+(note: review what I've found after my own explorations: https://github.com/dotnet/core-docs/blob/master/docs/core/testing/unit-testing-with-dotnet-test.md )
+
 1. Within the *project.json* file, comment:
     ````C#
      "frameworks": {
