@@ -11,21 +11,44 @@
         [Test]
         public void Should_find_no_room_when_searching_an_empty_location_catalog()
         {
-            var bookingEngine = new RoomBookingEngine();
+            var bookingEngine = new RoomBookingEngine(new PlacesCatalog());
             IEnumerable<Place> availablePlaces = bookingEngine.SearchPlaceToStay(checkInDate:DateTime.Now, checkOutDate:DateTime.Now.AddDays(1), location:"Paris", roomNumber:1, adultsCout:2, childrenCount:0);
             Assert.AreEqual(0, availablePlaces.Count());
         }
     }
 
+    public class PlacesCatalog
+    {
+        private List<Place> places;
+
+        public PlacesCatalog()
+        {
+            this.places = new List<Place>();
+        }
+
+        public IEnumerable<Place> SearchFromLocation(string location)
+        {
+            return this.places.FindAll(p => p.Location == location);
+        }
+    }
+
     public class RoomBookingEngine
     {
+        private readonly PlacesCatalog places;
+
+        public RoomBookingEngine(PlacesCatalog places)
+        {
+            this.places = places;
+        }
+
         public IEnumerable<Place> SearchPlaceToStay(DateTime checkInDate, DateTime checkOutDate, string location, int roomNumber, int adultsCout, int childrenCount)
         {
-            throw new NotImplementedException();
+            return this.places.SearchFromLocation(location);
         }
     }
 
     public class Place
     {
+        public string Location { get; }
     }
 }
