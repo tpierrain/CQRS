@@ -1,19 +1,18 @@
 ﻿namespace BookARoom.Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using NUnit.Framework;
     using BookARoom;
 
     [TestFixture]
-    public class RoomBookingEngineTests
+    public partial class RoomBookingEngineTests
     {
         [Test]
         public void Should_find_no_room_when_searching_an_empty_location_catalog()
         {
             var bookingEngine = new BookARoom.RoomBookingEngine(new PlacesCatalog());
-            IEnumerable<Place> availablePlaces = bookingEngine.SearchPlaceToStay(checkInDate:DateTime.Now, checkOutDate:DateTime.Now.AddDays(1), location:"Paris", roomNumber:1, adultsCout:2, childrenCount:0);
+            var availablePlaces = bookingEngine.SearchPlaceToStay(checkInDate:DateTime.Now, checkOutDate:DateTime.Now.AddDays(1), location:"Paris", roomNumber:1, adultsCout:2, childrenCount:0);
             Assert.AreEqual(0, availablePlaces.Count());
         }
 

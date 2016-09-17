@@ -9,13 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		Doc\FollowTheWhiteRabbit.md = Doc\FollowTheWhiteRabbit.md
 		global.json = global.json
-		HotelsAPIs.md = HotelsAPIs.md
+		MiscNotes.md = MiscNotes.md
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookARoom", "src\BookARoom\BookARoom.xproj", "{B50A9368-9FF0-4619-8B50-76D2ACD1A1F3}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookARoom.Tests", "test\BookARoom.Tests\BookARoom.Tests.xproj", "{0197FC69-EAA2-4D9E-86AE-58064B296F7A}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookARoom.Integration", "src\BookARoom.Integration\BookARoom.Integration.xproj", "{3C54CC13-C90F-4296-BD22-F9A1CE131C21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{0197FC69-EAA2-4D9E-86AE-58064B296F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0197FC69-EAA2-4D9E-86AE-58064B296F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0197FC69-EAA2-4D9E-86AE-58064B296F7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C54CC13-C90F-4296-BD22-F9A1CE131C21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C54CC13-C90F-4296-BD22-F9A1CE131C21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C54CC13-C90F-4296-BD22-F9A1CE131C21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C54CC13-C90F-4296-BD22-F9A1CE131C21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
