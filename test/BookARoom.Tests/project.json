@@ -2,12 +2,15 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "NUnit": "3.4.1",
-    "Newtonsoft.Json": "9.0.1",
-    "dotnet-test-nunit": "3.4.0-beta-1",
-    "BookARoom": {
+    "BookARoom.Domain": {
       "target": "project"
-    }
+    },
+    "BookARoom.Infra": {
+      "target": "project"
+    },
+    "dotnet-test-nunit": "3.4.0-beta-1",
+    "Newtonsoft.Json": "9.0.1",
+    "NUnit": "3.4.1"
   },
 
   "testRunner": "nunit",

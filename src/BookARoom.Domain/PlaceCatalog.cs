@@ -2,16 +2,16 @@ namespace BookARoom
 {
     using System.Collections.Generic;
 
-    public class PlacesCatalog
+    public class PlaceCatalog : ICatalogPlaces
     {
         private List<Place> places;
 
-        public PlacesCatalog()
+        public PlaceCatalog()
         {
             this.places = new List<Place>();
         }
 
-        public PlacesCatalog(List<Place> places)
+        public PlaceCatalog(List<Place> places)
         {
             this.places = places;
         }

@@ -5,9 +5,9 @@
 
     public class RoomBookingEngine
     {
-        private readonly PlacesCatalog places;
+        private readonly ICatalogPlaces places;
 
-        public RoomBookingEngine(PlacesCatalog places)
+        public RoomBookingEngine(ICatalogPlaces places)
         {
             this.places = places;
         }
