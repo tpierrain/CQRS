@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace BookARoom
+namespace BookARoom.Domain
 {
     public interface ICatalogPlaces
     {

@@ -1,7 +1,8 @@
-namespace BookARoom
-{
-    using System.Collections.Generic;
+using System.Collections.Generic;
+using BookARoom.Domain;
 
+namespace BookARoom.Infra.Adapters
+{
     public class PlaceCatalog : ICatalogPlaces
     {
         private List<Place> places;

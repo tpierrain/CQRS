@@ -1,12 +1,14 @@
-namespace BookARoom
+namespace BookARoom.Domain
 {
     public class Place
     {
-        public Place(string location)
+        public Place(string name, string location)
         {
-            Location = location;
+            this.Name = name;
+            this.Location = location;
         }
 
         public string Location { get; }
+        public string Name { get; }
     }
 }
