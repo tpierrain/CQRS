@@ -22,5 +22,7 @@ Of course, booking a room (write model) will impact the read model accordingly.
     - CQRS loves Event sourcing, but __CQRS != Event sourcing__ (clarifying what Event sourcing is)
 4. ASP.NET with __dotnet core__
 
+...
+
 
 
