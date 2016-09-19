@@ -18,11 +18,16 @@ namespace BookARoom.Tests
         }
 
         [Test]
-        public void Should_find_room_when_one_match_and_is_available()
+        public void Should_find_places_when_one_match/*_and_is_available*/()
         {
-            var places = new PlaceCatalogFileAdapter(@"../../../../IntegrationFiles/");
-            //var placesCatalog = new PlaceCatalog(new List<Place>() { new Place("Paris", "Georges V", "2016-09-20: "), new Place("NY", "Sofitel New York") });
-            throw new NotImplementedException();
+            var places = new PlaceCatalogFileAdapter(@"../../IntegrationFiles/");
+            places.LoadPlaceFile("New York Sofitel-availabilities.json");
+
+            var bookingEngine = new RoomBookingEngine(places);
+            var checkInDate = new DateTime(2016, 09, 11);
+            var availablePlaces = bookingEngine.SearchPlaceToStay(checkInDate, checkOutDate: checkInDate.AddDays(1), location: "New York", roomNumber: 1, adultsCount: 2, childrenCount: 0);
+
+            Assert.AreEqual(1, availablePlaces.Count());
         }
     }
 }
