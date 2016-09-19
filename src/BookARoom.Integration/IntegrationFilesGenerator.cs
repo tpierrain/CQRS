@@ -13,7 +13,7 @@ namespace BookARoom.Integration
         {
             var hotelName = "New York Sofitel";
             var roomsAvailability =  new RoomsAvailability(hotelName);
-            roomsAvailability.AvailabilitiesAt.Add(DateTime.Parse("2016-09-11"), new RoomStatus[] { new RoomStatus("101", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatus("102", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatus("201", new Price("EUR", 209), new Price("EUR", 240)) });
+            roomsAvailability.AvailabilitiesAt.Add(DateTime.Parse("2016-09-11"), new RoomStatusAndPrices[] { new RoomStatusAndPrices("101", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("102", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("201", new Price("EUR", 209), new Price("EUR", 240)) });
 
             var generatedFilePath = SerializeToJsonFile(roomsAvailability);
             Console.WriteLine($"Integration file generated: {generatedFilePath}");

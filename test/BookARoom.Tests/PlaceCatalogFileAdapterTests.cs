@@ -10,7 +10,7 @@ namespace BookARoom.Tests
         [Test]
         public void Should_load_a_file()
         {
-            var places = new PlaceCatalogFileAdapter(@"../../../../IntegrationFiles/");
+            var places = new PlaceCatalogFileAdapter(@"../../IntegrationFiles/");
             places.LoadPlaceFile("New York Sofitel-availabilities.json");
 
             Assert.AreEqual(1, places.Places.Count());

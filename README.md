@@ -22,6 +22,17 @@ Of course, booking a room (write model) will impact the read model accordingly.
     - CQRS loves Event sourcing, but __CQRS != Event sourcing__ (clarifying what Event sourcing is)
 4. ASP.NET with __dotnet core__
 
+---
+
+
+### Projects & Dependencies
+ - __BookARoom.Domain__ has no dependency
+ - __BookARoom.Integration__ has no dependency
+ - __BookARoom.Infra__ depends on both Domain and Integration projects and is also an ASP.NET dotnet core project
+ - __BookARoom.Tests__ depends on all the other BookARoom projects.
+
+ 
+
 ...
 
 

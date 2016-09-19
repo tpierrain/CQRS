@@ -16,6 +16,9 @@
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "BookARoom.Domain": {
       "target": "project"
+    },
+    "BookARoom.Integration": {
+      "target": "project"
     }
   },
 
