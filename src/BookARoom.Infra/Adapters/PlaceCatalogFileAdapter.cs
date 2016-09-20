@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using BookARoom.Domain;
 using BookARoom.Domain.ReadModel;
-using BookARoom.Integration;
+using BookARoom.IntegrationModel;
 using Newtonsoft.Json;
 using Price = BookARoom.Domain.ReadModel.Price;
 
@@ -110,7 +109,7 @@ namespace BookARoom.Infra.Adapters
             return new RoomStatus(roomStatusAndPrices.RoomIdentifier, AdaptPrice(roomStatusAndPrices.PriceForOneAdult), AdaptPrice(roomStatusAndPrices.PriceForTwoAdults));
         }
 
-        private static Price AdaptPrice(Integration.Price price)
+        private static Price AdaptPrice(IntegrationModel.Price price)
         {
             return new Price(price.Currency, price.Value);
         }
