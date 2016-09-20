@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BookARoom.Integration
+namespace BookARoom.IntegrationModel
 {
     public class Program
     {

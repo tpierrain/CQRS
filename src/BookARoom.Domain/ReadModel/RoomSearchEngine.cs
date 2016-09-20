@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BookARoom.Domain
+namespace BookARoom.Domain.ReadModel
 {
     /// <summary>
     /// Search available places to stay.

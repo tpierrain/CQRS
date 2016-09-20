@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace BookARoom.Integration
+namespace BookARoom.IntegrationModel
 {
     public static class IntegrationFilesGenerator
     {

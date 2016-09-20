@@ -1,4 +1,4 @@
-﻿namespace BookARoom.Domain
+﻿namespace BookARoom.Domain.ReadModel
 {
     public class Price
     {

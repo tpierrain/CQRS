@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BookARoom.Integration
+namespace BookARoom.IntegrationModel
 {
     public class RoomsAvailability
     {

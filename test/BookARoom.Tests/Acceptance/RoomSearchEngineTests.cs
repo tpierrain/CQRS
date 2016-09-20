@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using BookARoom.Domain;
+using BookARoom.Domain.ReadModel;
 using BookARoom.Infra.Adapters;
 using NUnit.Framework;
 

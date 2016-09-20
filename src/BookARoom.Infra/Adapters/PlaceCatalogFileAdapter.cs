@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using BookARoom.Domain;
+using BookARoom.Domain.ReadModel;
 using BookARoom.Integration;
 using Newtonsoft.Json;
+using Price = BookARoom.Domain.ReadModel.Price;
 
 namespace BookARoom.Infra.Adapters
 {
-    public class PlaceCatalogFileAdapter : ICatalogPlaces
+    public class PlaceCatalogFileAdapter : ICatalogPlaces, IProvidePlacesDetails
     {
         private readonly Dictionary<Place, Dictionary<DateTime, List<RoomStatus>>> placesWithPerDateRoomsStatus;
 
@@ -62,7 +64,15 @@ namespace BookARoom.Infra.Adapters
 
             return result;
         }
-        
+
+        #endregion
+
+        #region IProvidePlacesDetails
+
+        public PlaceDetails GetDetails(int placeId)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 
@@ -100,9 +110,9 @@ namespace BookARoom.Infra.Adapters
             return new RoomStatus(roomStatusAndPrices.RoomIdentifier, AdaptPrice(roomStatusAndPrices.PriceForOneAdult), AdaptPrice(roomStatusAndPrices.PriceForTwoAdults));
         }
 
-        private static Domain.Price AdaptPrice(Integration.Price price)
+        private static Price AdaptPrice(Integration.Price price)
         {
-            return new Domain.Price(price.Currency, price.Value);
+            return new Price(price.Currency, price.Value);
         }
 
         private static Place AdaptPlace(string placeName, string location)

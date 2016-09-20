@@ -1,4 +1,4 @@
-﻿namespace BookARoom.Integration
+﻿namespace BookARoom.IntegrationModel
 {
     public class Price
     {
