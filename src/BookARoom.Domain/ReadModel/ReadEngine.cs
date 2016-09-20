@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace BookARoom.Domain.ReadModel
 {
     /// <summary>
-    /// Search available placesProvider to stay or details about placesProvider.
+    /// Search BookingProposals or details about Places.
     /// </summary>
-    public class ReadEngine : ISearchAvailablePlacesToStay, IProvidePlaces
+    public class ReadEngine : ISearchBookingProposals, IProvidePlaces
     {
         // TODO: question: find a domain name instead or keep focus on the CQRS pattern to ease understanding of the MS experiences'16 audience?
 
@@ -24,9 +24,9 @@ namespace BookARoom.Domain.ReadModel
             this.placesProvider = placesProvider;
         }
 
-        #region ISearchAvailablePlacesToStay members
+        #region ISearchBookingProposals members
 
-        public IEnumerable<Place> SearchAvailablePlaceToStay(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int roomNumber = 1, int childrenCount = 0)
+        public IEnumerable<BookingProposal> SearchBookingProposals(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int roomNumber = 1, int childrenCount = 0)
         {
             if (checkInDate > checkOutDate)
             {

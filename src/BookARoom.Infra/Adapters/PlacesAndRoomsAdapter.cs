@@ -15,12 +15,12 @@ namespace BookARoom.Infra.Adapters
     /// </summary>
     public class PlacesAndRoomsAdapter : IProvideRooms, IProvidePlaces
     {
-        private readonly Dictionary<Place, Dictionary<DateTime, List<RoomStatus>>> placesWithPerDateRoomsStatus;
+        private readonly Dictionary<Place, Dictionary<DateTime, List<RoomWithPrices>>> placesWithPerDateRoomsStatus;
         private readonly Dictionary<int, Place> placesPerId = new Dictionary<int, Place>();
 
         public PlacesAndRoomsAdapter(string integrationFilesDirectoryPath)
         {
-            this.placesWithPerDateRoomsStatus = new Dictionary<Place, Dictionary<DateTime, List<RoomStatus>>>();
+            this.placesWithPerDateRoomsStatus = new Dictionary<Place, Dictionary<DateTime, List<RoomWithPrices>>>();
             this.IntegrationFilesDirectoryPath = integrationFilesDirectoryPath;
         }
 
@@ -58,14 +58,7 @@ namespace BookARoom.Infra.Adapters
 
         #region IProvideRooms methods
 
-        public IEnumerable<Place> SearchFromLocation(string location)
-        {
-            return from place in this.placesWithPerDateRoomsStatus.Keys
-                where place.Location == location
-                select place;
-        }
-
-        public IEnumerable<Place> SearchAvailablePlacesInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate)
+        public IEnumerable<BookingProposal> SearchAvailablePlacesInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate)
         {
             var result = (from placeWithAvailabilities in this.placesWithPerDateRoomsStatus
                 from dateAndRooms in this.placesWithPerDateRoomsStatus.Values
@@ -76,7 +69,7 @@ namespace BookARoom.Infra.Adapters
                       && availableRooms.Count > 0
                       && dateAndRooms.Values.Contains(availableRooms)
                       && placeWithAvailabilities.Value == dateAndRooms
-                select placeWithAvailabilities.Key).ToList().Distinct();
+                select new BookingProposal(placeWithAvailabilities.Key, availableRooms) ).ToList().Distinct();
 
             return result;
         }
@@ -84,6 +77,13 @@ namespace BookARoom.Infra.Adapters
         #endregion
 
         #region IProvidePlaces
+
+        public IEnumerable<Place> SearchFromLocation(string location)
+        {
+            return from place in this.placesWithPerDateRoomsStatus.Keys
+                   where place.Location == location
+                   select place;
+        }
 
         public Place GetPlace(int placeId)
         {
@@ -108,9 +108,9 @@ namespace BookARoom.Infra.Adapters
             placesWithPerDateRoomsStatus[place] = roomsPerDateAvailabilities;
         }
 
-        private Dictionary<DateTime, List<RoomStatus>> AdaptPlaceAvailabilities(Dictionary<DateTime, RoomStatusAndPrices[]> receivedAvailabilities)
+        private Dictionary<DateTime, List<RoomWithPrices>> AdaptPlaceAvailabilities(Dictionary<DateTime, RoomStatusAndPrices[]> receivedAvailabilities)
         {
-            var result = new Dictionary<DateTime, List<RoomStatus>>();
+            var result = new Dictionary<DateTime, List<RoomWithPrices>>();
 
             foreach (var receivedAvailability in receivedAvailabilities)
             {
@@ -120,16 +120,16 @@ namespace BookARoom.Infra.Adapters
             return result;
         }
 
-        private static List<RoomStatus> AdaptAllRoomsStatusOfThisPlaceForThisDate(Dictionary<DateTime, RoomStatusAndPrices[]> receivedAvailabilities)
+        private static List<RoomWithPrices> AdaptAllRoomsStatusOfThisPlaceForThisDate(Dictionary<DateTime, RoomStatusAndPrices[]> receivedAvailabilities)
         {
             return (from receivedRoomStatus in receivedAvailabilities.Values
                 from roomStatusAndPrices in receivedRoomStatus
                 select AdaptRoomStatus(roomStatusAndPrices)).ToList();
         }
 
-        private static RoomStatus AdaptRoomStatus(RoomStatusAndPrices roomStatusAndPrices)
+        private static RoomWithPrices AdaptRoomStatus(RoomStatusAndPrices roomStatusAndPrices)
         {
-            return new RoomStatus(roomStatusAndPrices.RoomIdentifier, AdaptPrice(roomStatusAndPrices.PriceForOneAdult), AdaptPrice(roomStatusAndPrices.PriceForTwoAdults));
+            return new RoomWithPrices(roomStatusAndPrices.RoomIdentifier, AdaptPrice(roomStatusAndPrices.PriceForOneAdult), AdaptPrice(roomStatusAndPrices.PriceForTwoAdults));
         }
 
         private static Price AdaptPrice(IntegrationModel.Price price)

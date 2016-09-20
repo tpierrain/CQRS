@@ -17,8 +17,8 @@ namespace BookARoom.Tests.Acceptance
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
 
             var readEngine = new ReadEngine(placesAdapter, placesAdapter);
-            var availablePlaces = readEngine.SearchAvailablePlaceToStay(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", adultsCount: 2, roomNumber: 1, childrenCount: 0);
-            Assert.AreEqual(0, availablePlaces.Count());
+            var bookingProposals = readEngine.SearchBookingProposals(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            Assert.AreEqual(0, bookingProposals.Count());
         }
 
         [Test]
@@ -28,13 +28,14 @@ namespace BookARoom.Tests.Acceptance
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
             var readEngine = new ReadEngine(placesAdapter, placesAdapter);
-            var availablePlaces = readEngine.SearchAvailablePlaceToStay(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "New York", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            var bookingProposals = readEngine.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "New York", adultsCount: 2, roomNumber: 1, childrenCount: 0);
 
-            Assert.AreEqual(1, availablePlaces.Count());
+            Assert.AreEqual(1, bookingProposals.Count());
 
-            var place = availablePlaces.First();
-            Assert.AreEqual("New York", place.Location);
-            Assert.AreEqual("New York Sofitel", place.Name);
+            var bookingProposal = bookingProposals.First();
+            Assert.AreEqual("New York", bookingProposal.Place.Location);
+            Assert.AreEqual("New York Sofitel", bookingProposal.Place.Name);
+            Assert.AreEqual(3, bookingProposal.AvailableRoomsWithPrices.Count());
         }
 
         [Test]
@@ -46,9 +47,9 @@ namespace BookARoom.Tests.Acceptance
             placesAdapter.LoadPlaceFile("BudaFull-the-always-unavailable-hotel-availabilities.json"); // unavailable
 
             var readEngine = new ReadEngine(placesAdapter, placesAdapter);
-            var availablePlaces = readEngine.SearchAvailablePlaceToStay(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            var bookingProposals = readEngine.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
 
-            Assert.AreEqual(2, availablePlaces.Count());
+            Assert.AreEqual(2, bookingProposals.Count());
         }
 
         [Test]
@@ -57,7 +58,7 @@ namespace BookARoom.Tests.Acceptance
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
             var readEngine = new ReadEngine(placesAdapter, placesAdapter);
 
-            Assert.Throws<InvalidOperationException>( () => readEngine.SearchAvailablePlaceToStay(checkInDate: DateTime.Now.AddDays(1), checkOutDate: DateTime.Now, location: "Kunming", adultsCount: 1));
+            Assert.Throws<InvalidOperationException>( () => readEngine.SearchBookingProposals(checkInDate: DateTime.Now.AddDays(1), checkOutDate: DateTime.Now, location: "Kunming", adultsCount: 1));
         }
 
         [Test]
@@ -68,9 +69,9 @@ namespace BookARoom.Tests.Acceptance
 
             var readEngine = new ReadEngine(placesAdapter, placesAdapter);
             var searchedLocation = "new york";
-            var availablePlaces = readEngine.SearchAvailablePlaceToStay(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: searchedLocation, adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            var bookingProposals = readEngine.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: searchedLocation, adultsCount: 2, roomNumber: 1, childrenCount: 0);
 
-            Assert.AreEqual(1, availablePlaces.Count());
+            Assert.AreEqual(1, bookingProposals.Count());
         }
 
         [Test]
@@ -81,17 +82,17 @@ namespace BookARoom.Tests.Acceptance
 
             // Integrates a first place
             placesAdapter.LoadPlaceFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
-            var availablePlaces = readEngine.SearchAvailablePlaceToStay(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
-            Assert.AreEqual(1, availablePlaces.Count());
+            var bookingProposals = readEngine.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            Assert.AreEqual(1, bookingProposals.Count());
 
             // Loads a new place that has available room matching our research
             placesAdapter.LoadPlaceFile("Danubius Health Spa Resort Helia-availabilities.json");
-            availablePlaces = readEngine.SearchAvailablePlaceToStay(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
-            Assert.AreEqual(2, availablePlaces.Count()); // find one more available place
+            bookingProposals = readEngine.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            Assert.AreEqual(2, bookingProposals.Count()); // find one more available place
         }
 
         [Test]
-        public void Should_get_place_details()
+        public void Should_get_place_from_its_id()
         {
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");

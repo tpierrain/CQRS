@@ -5,11 +5,11 @@ namespace BookARoom.Domain.ReadModel
 {
     /// <summary>
     /// Find rooms.
-    /// <remarks>Repository of Rooms.</remarks>
+    /// <remarks>Repository of AvailableRoomsWithPrices.</remarks>
     /// </summary>
     public interface IProvideRooms
     {
-        // TODO: return IEnumerable<Rooms> instead
-        IEnumerable<Place> SearchAvailablePlacesInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate);
+        // TODO: return IEnumerable<AvailableRoomsWithPrices> instead
+        IEnumerable<BookingProposal> SearchAvailablePlacesInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate);
     }
 }
