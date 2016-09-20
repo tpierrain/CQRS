@@ -34,7 +34,7 @@ namespace BookARoom.Infra.Adapters
                 var jsonContent = streamReader.ReadToEnd();
                 var integrationFileAvailabilities = JsonConvert.DeserializeObject<RoomsAvailability>(jsonContent);
 
-                AdaptAndStore(integrationFileAvailabilities);
+                AdaptAndStoreIntegrationFileContentForAPlace(integrationFileAvailabilities);
             }
         }
 
@@ -47,13 +47,13 @@ namespace BookARoom.Infra.Adapters
                 select place;
         }
 
-        public IEnumerable<Place> SearchPlaces(string location, DateTime checkInDate, DateTime checkOutDate)
+        public IEnumerable<Place> SearchPlacesInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate)
         {
             var result = (from placeWithAvailabilities in this.placesWithPerDateRoomsStatus
                 from dateAndRooms in this.placesWithPerDateRoomsStatus.Values
                 from date in dateAndRooms.Keys
                 from availableRooms in dateAndRooms.Values
-                where placeWithAvailabilities.Key.Location == location
+                where string.Equals(placeWithAvailabilities.Key.Location, location, StringComparison.CurrentCultureIgnoreCase)
                       && (date >= checkInDate && date <= checkOutDate)
                       && availableRooms.Count > 0
                       && dateAndRooms.Values.Contains(availableRooms)
@@ -68,7 +68,7 @@ namespace BookARoom.Infra.Adapters
 
         #region adapter from integration model to domain model
 
-        private void AdaptAndStore(RoomsAvailability integrationFileAvailabilities)
+        private void AdaptAndStoreIntegrationFileContentForAPlace(RoomsAvailability integrationFileAvailabilities)
         {
             var place = AdaptPlace(integrationFileAvailabilities.PlaceName, integrationFileAvailabilities.Location);
             var roomsPerDateAvailabilities = AdaptPlaceAvailabilities(integrationFileAvailabilities.AvailabilitiesAt);

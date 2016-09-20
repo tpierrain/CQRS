@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace BookARoom.Domain
 {
-    public class RoomBookingEngine
+    public class RoomSearchEngine
     {
         private readonly ICatalogPlaces places;
 
-        public RoomBookingEngine(ICatalogPlaces places)
+        public RoomSearchEngine(ICatalogPlaces places)
         {
             this.places = places;
         }
@@ -19,7 +19,7 @@ namespace BookARoom.Domain
                 throw new InvalidOperationException($"Check out date ({checkOutDate}) must be after Check in date ({checkInDate}).");
             }
 
-            return this.places.SearchPlaces(location, checkInDate, checkOutDate);
+            return this.places.SearchPlacesInACaseInsensitiveWay(location, checkInDate, checkOutDate);
         }
     }
 }
