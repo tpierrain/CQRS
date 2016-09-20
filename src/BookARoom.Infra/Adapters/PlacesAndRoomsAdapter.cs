@@ -9,11 +9,16 @@ using Price = BookARoom.Domain.ReadModel.Price;
 
 namespace BookARoom.Infra.Adapters
 {
-    public class PlaceCatalogFileAdapter : ICatalogPlaces, IProvidePlacesDetails
+    /// <summary>
+    /// Adapter between the Integration model (json external files) and the domain one.
+    /// <remarks>Implementation of the Ports and Adapters patterns (a.k.a. hexagonal architecture).</remarks>
+    /// </summary>
+    public class PlacesAndRoomsAdapter : IProvideRooms, IProvidePlaces
     {
         private readonly Dictionary<Place, Dictionary<DateTime, List<RoomStatus>>> placesWithPerDateRoomsStatus;
+        private readonly Dictionary<int, Place> placesPerId = new Dictionary<int, Place>();
 
-        public PlaceCatalogFileAdapter(string integrationFilesDirectoryPath)
+        public PlacesAndRoomsAdapter(string integrationFilesDirectoryPath)
         {
             this.placesWithPerDateRoomsStatus = new Dictionary<Place, Dictionary<DateTime, List<RoomStatus>>>();
             this.IntegrationFilesDirectoryPath = integrationFilesDirectoryPath;
@@ -30,16 +35,28 @@ namespace BookARoom.Infra.Adapters
                 placeFileNameOrFilePath = Path.Combine(this.IntegrationFilesDirectoryPath, placeFileNameOrFilePath);
             }
 
+            var externalDataForThisPlace = GetIntegrationModelForThisPlace(placeFileNameOrFilePath);
+
+            this.AdaptAndStoreData(externalDataForThisPlace);
+        }
+        
+        private static PlaceDetailsWithRoomsAvailabilities GetIntegrationModelForThisPlace(string placeFileNameOrFilePath)
+        {
+            IntegrationModel.PlaceDetailsWithRoomsAvailabilities integrationFileAvailabilitieses = null;
             using (var streamReader = File.OpenText(placeFileNameOrFilePath))
             {
                 var jsonContent = streamReader.ReadToEnd();
-                var integrationFileAvailabilities = JsonConvert.DeserializeObject<RoomsAvailability>(jsonContent);
-
-                AdaptAndStoreIntegrationFileContentForAPlace(integrationFileAvailabilities);
+                integrationFileAvailabilitieses = JsonConvert.DeserializeObject<PlaceDetailsWithRoomsAvailabilities>(jsonContent);
             }
+            return integrationFileAvailabilitieses;
         }
 
-        #region ICatalogPlaces methods
+        private void StorePlaceWithId(int placeId, Place place)
+        {
+            this.placesPerId[placeId] = place;
+        }
+
+        #region IProvideRooms methods
 
         public IEnumerable<Place> SearchFromLocation(string location)
         {
@@ -66,21 +83,27 @@ namespace BookARoom.Infra.Adapters
 
         #endregion
 
-        #region IProvidePlacesDetails
+        #region IProvidePlaces
 
-        public PlaceDetails GetDetails(int placeId)
+        public Place GetPlace(int placeId)
         {
-            throw new NotImplementedException();
+            return this.placesPerId[placeId];
         }
 
         #endregion
 
         #region adapter from integration model to domain model
 
-        private void AdaptAndStoreIntegrationFileContentForAPlace(RoomsAvailability integrationFileAvailabilities)
+        private void AdaptAndStoreData(PlaceDetailsWithRoomsAvailabilities dataForThisPlace)
         {
-            var place = AdaptPlace(integrationFileAvailabilities.PlaceName, integrationFileAvailabilities.Location);
-            var roomsPerDateAvailabilities = AdaptPlaceAvailabilities(integrationFileAvailabilities.AvailabilitiesAt);
+            var place = AdaptPlace(dataForThisPlace.PlaceId, dataForThisPlace.PlaceName, dataForThisPlace.Location, dataForThisPlace.NumberOfRooms);
+            this.AdaptAndStoreIntegrationFileContentForAPlace(place, dataForThisPlace);
+            this.StorePlaceWithId(dataForThisPlace.PlaceId, place);
+        }
+
+        private void AdaptAndStoreIntegrationFileContentForAPlace(Place place, PlaceDetailsWithRoomsAvailabilities integrationFileAvailabilitieses)
+        {
+            var roomsPerDateAvailabilities = AdaptPlaceAvailabilities(integrationFileAvailabilitieses.AvailabilitiesAt);
 
             placesWithPerDateRoomsStatus[place] = roomsPerDateAvailabilities;
         }
@@ -114,9 +137,9 @@ namespace BookARoom.Infra.Adapters
             return new Price(price.Currency, price.Value);
         }
 
-        private static Place AdaptPlace(string placeName, string location)
+        private static Place AdaptPlace(int placeId, string placeName, string location, int numberOfRooms)
         {
-            return new Place(placeName, location);
+            return new Place(placeId, placeName, location, numberOfRooms);
         }
 
         #endregion

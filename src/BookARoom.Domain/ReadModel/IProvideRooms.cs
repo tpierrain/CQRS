@@ -3,9 +3,13 @@ using System.Collections.Generic;
 
 namespace BookARoom.Domain.ReadModel
 {
-    public interface ICatalogPlaces
+    /// <summary>
+    /// Find rooms.
+    /// <remarks>Repository of Rooms.</remarks>
+    /// </summary>
+    public interface IProvideRooms
     {
-        IEnumerable<Place> SearchFromLocation(string location);
+        // TODO: return IEnumerable<Rooms> instead
         IEnumerable<Place> SearchAvailablePlacesInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate);
     }
 }

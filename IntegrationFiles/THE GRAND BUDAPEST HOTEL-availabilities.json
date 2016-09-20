@@ -1,6 +1,8 @@
 ﻿{
+  "PlaceId": 2,
   "PlaceName": "THE GRAND BUDAPEST HOTEL",
   "Location": "Budapest",
+  "NumberOfRooms": 240,
   "AvailabilitiesAt": {
     "2017-09-16T00:00:00": [
       {

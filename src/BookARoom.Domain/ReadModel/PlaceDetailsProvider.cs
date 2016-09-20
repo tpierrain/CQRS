@@ -4,14 +4,14 @@ namespace BookARoom.Domain.ReadModel
 {
     public class PlaceDetailsProvider
     {
-        public IProvidePlacesDetails PlacesDetails { get; }
+        public IProvidePlaces Places { get; }
 
-        public PlaceDetailsProvider(IProvidePlacesDetails placesDetails)
+        public PlaceDetailsProvider(IProvidePlaces places)
         {
-            this.PlacesDetails = placesDetails;
+            this.Places = places;
         }
 
-        public PlaceDetails GetDetails(int placeId)
+        public Place GetDetails(int placeId)
         {
             throw new NotImplementedException();
         }
