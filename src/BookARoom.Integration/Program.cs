@@ -11,6 +11,9 @@ namespace BookARoom.Integration
             Console.WriteLine("Generates integration (json) files for a few hotels.");
 
             IntegrationFilesGenerator.GenerateJsonFileForNewYorkSofitel();
+            IntegrationFilesGenerator.GenerateJsonFileForGrandBudapestHotel();
+            IntegrationFilesGenerator.GenerateJsonFileForDanubiusHealthSpaResortHelia();
+            IntegrationFilesGenerator.GenerateJsonFileForBudaFullAlwaysUnavailable();
         }
     }
 }

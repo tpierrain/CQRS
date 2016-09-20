@@ -7,13 +7,49 @@ namespace BookARoom.Integration
 {
     public static class IntegrationFilesGenerator
     {
+        private const string myFavorite2017Saturday = "2017-09-16";
+
         public static string WhereToGenerateDirectoryFullPath => Path.GetFullPath(AppContext.BaseDirectory + @"..\..\..\..\..\..\IntegrationFiles\");
 
         public static void GenerateJsonFileForNewYorkSofitel()
         {
             var hotelName = "New York Sofitel";
-            var roomsAvailability =  new RoomsAvailability(hotelName);
-            roomsAvailability.AvailabilitiesAt.Add(DateTime.Parse("2016-09-11"), new RoomStatusAndPrices[] { new RoomStatusAndPrices("101", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("102", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("201", new Price("EUR", 209), new Price("EUR", 240)) });
+            var location = "New York";
+            var roomsAvailability =  new RoomsAvailability(hotelName, location);
+            roomsAvailability.AvailabilitiesAt.Add(DateTime.Parse(myFavorite2017Saturday), new RoomStatusAndPrices[] { new RoomStatusAndPrices("101", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("102", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("201", new Price("EUR", 209), new Price("EUR", 240)) });
+
+            var generatedFilePath = SerializeToJsonFile(roomsAvailability);
+            Console.WriteLine($"Integration file generated: {generatedFilePath}");
+        }
+
+        public static void GenerateJsonFileForGrandBudapestHotel()
+        {
+            var hotelName = "THE GRAND BUDAPEST HOTEL";
+            var location = "Budapest";
+            var roomsAvailability =  new RoomsAvailability(hotelName, location);
+            roomsAvailability.AvailabilitiesAt.Add(DateTime.Parse(myFavorite2017Saturday), new RoomStatusAndPrices[] { new RoomStatusAndPrices("101", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("102", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("201", new Price("EUR", 209), new Price("EUR", 240)) });
+
+            var generatedFilePath = SerializeToJsonFile(roomsAvailability);
+            Console.WriteLine($"Integration file generated: {generatedFilePath}");
+        }
+
+        public static void GenerateJsonFileForDanubiusHealthSpaResortHelia()
+        {
+            var hotelName = "Danubius Health Spa Resort Helia";
+            var location = "Budapest";
+            var roomsAvailability =  new RoomsAvailability(hotelName, location);
+            roomsAvailability.AvailabilitiesAt.Add(DateTime.Parse(myFavorite2017Saturday), new RoomStatusAndPrices[] { new RoomStatusAndPrices("101", new Price("EUR", 109), new Price("EUR", 140)) });
+
+            var generatedFilePath = SerializeToJsonFile(roomsAvailability);
+            Console.WriteLine($"Integration file generated: {generatedFilePath}");
+        }
+
+        public static void GenerateJsonFileForBudaFullAlwaysUnavailable()
+        {
+            var hotelName = "BudaFull-the-always-unavailable-hotel";
+            var location = "Budapest";
+            var roomsAvailability =  new RoomsAvailability(hotelName, location);
+            roomsAvailability.AvailabilitiesAt.Add(DateTime.Parse(myFavorite2017Saturday), new RoomStatusAndPrices[] { });
 
             var generatedFilePath = SerializeToJsonFile(roomsAvailability);
             Console.WriteLine($"Integration file generated: {generatedFilePath}");

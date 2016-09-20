@@ -7,11 +7,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		IntegrationFiles\BudaFull-the-always-unavailable-hotel-availabilities.json = IntegrationFiles\BudaFull-the-always-unavailable-hotel-availabilities.json
+		IntegrationFiles\Danubius Health Spa Resort Helia-availabilities.json = IntegrationFiles\Danubius Health Spa Resort Helia-availabilities.json
 		Doc\FollowTheWhiteRabbit.md = Doc\FollowTheWhiteRabbit.md
 		global.json = global.json
 		MiscNotes.md = MiscNotes.md
 		IntegrationFiles\New York Sofitel-availabilities.json = IntegrationFiles\New York Sofitel-availabilities.json
 		README.md = README.md
+		IntegrationFiles\THE GRAND BUDAPEST HOTEL-availabilities.json = IntegrationFiles\THE GRAND BUDAPEST HOTEL-availabilities.json
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookARoom.Domain", "src\BookARoom.Domain\BookARoom.Domain.xproj", "{B50A9368-9FF0-4619-8B50-76D2ACD1A1F3}"

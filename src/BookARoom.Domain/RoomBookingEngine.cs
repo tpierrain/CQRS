@@ -12,9 +12,14 @@ namespace BookARoom.Domain
             this.places = places;
         }
 
-        public IEnumerable<Place> SearchPlaceToStay(DateTime checkInDate, DateTime checkOutDate, string location, int roomNumber, int adultsCount, int childrenCount)
+        public IEnumerable<Place> SearchPlaceToStay(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int roomNumber = 1, int childrenCount = 0)
         {
-            return this.places.SearchFromLocation(location);
+            if (checkInDate > checkOutDate)
+            {
+                throw new InvalidOperationException($"Check out date ({checkOutDate}) must be after Check in date ({checkInDate}).");
+            }
+
+            return this.places.SearchPlaces(location, checkInDate, checkOutDate);
         }
     }
 }
