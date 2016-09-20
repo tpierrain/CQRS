@@ -47,7 +47,7 @@ namespace BookARoom.Infra.Adapters
                 select place;
         }
 
-        public IEnumerable<Place> SearchPlacesInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate)
+        public IEnumerable<Place> SearchAvailablePlacesInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate)
         {
             var result = (from placeWithAvailabilities in this.placesWithPerDateRoomsStatus
                 from dateAndRooms in this.placesWithPerDateRoomsStatus.Values

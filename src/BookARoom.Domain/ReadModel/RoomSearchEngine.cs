@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace BookARoom.Domain
 {
+    /// <summary>
+    /// Search available places to stay.
+    /// </summary>
     public class RoomSearchEngine
     {
         private readonly ICatalogPlaces places;
@@ -12,14 +15,14 @@ namespace BookARoom.Domain
             this.places = places;
         }
 
-        public IEnumerable<Place> SearchPlaceToStay(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int roomNumber = 1, int childrenCount = 0)
+        public IEnumerable<Place> SearchAvailablePlaceToStay(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int roomNumber = 1, int childrenCount = 0)
         {
             if (checkInDate > checkOutDate)
             {
                 throw new InvalidOperationException($"Check out date ({checkOutDate}) must be after Check in date ({checkInDate}).");
             }
 
-            return this.places.SearchPlacesInACaseInsensitiveWay(location, checkInDate, checkOutDate);
+            return this.places.SearchAvailablePlacesInACaseInsensitiveWay(location, checkInDate, checkOutDate);
         }
     }
 }

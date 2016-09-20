@@ -14,8 +14,8 @@ namespace BookARoom.Tests.Acceptance
         [Test]
         public void Should_find_no_room_when_searching_an_empty_location_catalog()
         {
-            var bookingEngine = new RoomSearchEngine(new PlaceCatalogFileAdapter(@"../../IntegrationFiles/"));
-            var availablePlaces = bookingEngine.SearchPlaceToStay(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            var searchEngine = new RoomSearchEngine(new PlaceCatalogFileAdapter(@"../../IntegrationFiles/"));
+            var availablePlaces = searchEngine.SearchAvailablePlaceToStay(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", adultsCount: 2, roomNumber: 1, childrenCount: 0);
             Assert.AreEqual(0, availablePlaces.Count());
         }
 
@@ -25,8 +25,8 @@ namespace BookARoom.Tests.Acceptance
             var places = new PlaceCatalogFileAdapter(@"../../IntegrationFiles/");
             places.LoadPlaceFile("New York Sofitel-availabilities.json");
 
-            var bookingEngine = new RoomSearchEngine(places);
-            var availablePlaces = bookingEngine.SearchPlaceToStay(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "New York", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            var searchEngine = new RoomSearchEngine(places);
+            var availablePlaces = searchEngine.SearchAvailablePlaceToStay(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "New York", adultsCount: 2, roomNumber: 1, childrenCount: 0);
 
             Assert.AreEqual(1, availablePlaces.Count());
 
@@ -43,8 +43,8 @@ namespace BookARoom.Tests.Acceptance
             places.LoadPlaceFile("Danubius Health Spa Resort Helia-availabilities.json"); // available
             places.LoadPlaceFile("BudaFull-the-always-unavailable-hotel-availabilities.json"); // unavailable
 
-            var bookingEngine = new RoomSearchEngine(places);
-            var availablePlaces = bookingEngine.SearchPlaceToStay(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            var searchEngine = new RoomSearchEngine(places);
+            var availablePlaces = searchEngine.SearchAvailablePlaceToStay(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
 
             Assert.AreEqual(2, availablePlaces.Count());
         }
@@ -53,9 +53,9 @@ namespace BookARoom.Tests.Acceptance
         public void Should_throw_exception_when_checkinDate_is_after_checkOutDate()
         {
             var places = new PlaceCatalogFileAdapter(@"../../IntegrationFiles/");
-            var bookingEngine = new RoomSearchEngine(places);
+            var searchEngine = new RoomSearchEngine(places);
 
-            Assert.Throws<InvalidOperationException>( () => bookingEngine.SearchPlaceToStay(checkInDate: DateTime.Now.AddDays(1), checkOutDate: DateTime.Now, location: "Kunming", adultsCount: 1));
+            Assert.Throws<InvalidOperationException>( () => searchEngine.SearchAvailablePlaceToStay(checkInDate: DateTime.Now.AddDays(1), checkOutDate: DateTime.Now, location: "Kunming", adultsCount: 1));
         }
 
         [Test]
@@ -64,11 +64,28 @@ namespace BookARoom.Tests.Acceptance
             var places = new PlaceCatalogFileAdapter(@"../../IntegrationFiles/");
             places.LoadPlaceFile("New York Sofitel-availabilities.json");
 
-            var bookingEngine = new RoomSearchEngine(places);
+            var searchEngine = new RoomSearchEngine(places);
             var searchedLocation = "new york";
-            var availablePlaces = bookingEngine.SearchPlaceToStay(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: searchedLocation, adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            var availablePlaces = searchEngine.SearchAvailablePlaceToStay(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: searchedLocation, adultsCount: 2, roomNumber: 1, childrenCount: 0);
 
             Assert.AreEqual(1, availablePlaces.Count());
+        }
+
+        [Test]
+        public void Should_find_new_matching_places_after_new_place_is_integrated()
+        {
+            var places = new PlaceCatalogFileAdapter(@"../../IntegrationFiles/");
+            var searchEngine = new RoomSearchEngine(places);
+
+            // Integrates a first place
+            places.LoadPlaceFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
+            var availablePlaces = searchEngine.SearchAvailablePlaceToStay(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            Assert.AreEqual(1, availablePlaces.Count());
+
+            // Loads a new place that has available room matching our research
+            places.LoadPlaceFile("Danubius Health Spa Resort Helia-availabilities.json");
+            availablePlaces = searchEngine.SearchAvailablePlaceToStay(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            Assert.AreEqual(2, availablePlaces.Count()); // find one more available place
         }
     }
 }
