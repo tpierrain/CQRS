@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace BookARoom.Tests.Acceptance
 {
     [TestFixture]
-    public class ReadEngineTests
+    public class ReadFacadeTests
     {
         private DateTime myFavoriteSaturdayIn2017 = new DateTime(2017, 09, 16);
 
@@ -16,8 +16,8 @@ namespace BookARoom.Tests.Acceptance
         {
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
 
-            var readEngine = new ReadEngine(placesAdapter, placesAdapter);
-            var bookingProposals = readEngine.SearchBookingProposals(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
+            var bookingProposals = readFacade.SearchBookingProposals(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", adultsCount: 2, roomNumber: 1, childrenCount: 0);
             Assert.AreEqual(0, bookingProposals.Count());
         }
 
@@ -27,8 +27,8 @@ namespace BookARoom.Tests.Acceptance
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
-            var readEngine = new ReadEngine(placesAdapter, placesAdapter);
-            var bookingProposals = readEngine.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "New York", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
+            var bookingProposals = readFacade.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "New York", adultsCount: 2, roomNumber: 1, childrenCount: 0);
 
             Assert.AreEqual(1, bookingProposals.Count());
 
@@ -46,8 +46,8 @@ namespace BookARoom.Tests.Acceptance
             placesAdapter.LoadPlaceFile("Danubius Health Spa Resort Helia-availabilities.json"); // available
             placesAdapter.LoadPlaceFile("BudaFull-the-always-unavailable-hotel-availabilities.json"); // unavailable
 
-            var readEngine = new ReadEngine(placesAdapter, placesAdapter);
-            var bookingProposals = readEngine.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
+            var bookingProposals = readFacade.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
 
             Assert.AreEqual(2, bookingProposals.Count());
         }
@@ -56,9 +56,9 @@ namespace BookARoom.Tests.Acceptance
         public void Should_throw_exception_when_checkinDate_is_after_checkOutDate()
         {
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
-            var readEngine = new ReadEngine(placesAdapter, placesAdapter);
+            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
 
-            Assert.Throws<InvalidOperationException>( () => readEngine.SearchBookingProposals(checkInDate: DateTime.Now.AddDays(1), checkOutDate: DateTime.Now, location: "Kunming", adultsCount: 1));
+            Assert.Throws<InvalidOperationException>( () => readFacade.SearchBookingProposals(checkInDate: DateTime.Now.AddDays(1), checkOutDate: DateTime.Now, location: "Kunming", adultsCount: 1));
         }
 
         [Test]
@@ -67,9 +67,9 @@ namespace BookARoom.Tests.Acceptance
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
-            var readEngine = new ReadEngine(placesAdapter, placesAdapter);
+            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
             var searchedLocation = "new york";
-            var bookingProposals = readEngine.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: searchedLocation, adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            var bookingProposals = readFacade.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: searchedLocation, adultsCount: 2, roomNumber: 1, childrenCount: 0);
 
             Assert.AreEqual(1, bookingProposals.Count());
         }
@@ -78,16 +78,16 @@ namespace BookARoom.Tests.Acceptance
         public void Should_find_new_matching_places_after_new_place_is_integrated()
         {
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
-            var readEngine = new ReadEngine(placesAdapter, placesAdapter);
+            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
 
             // Integrates a first place
             placesAdapter.LoadPlaceFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
-            var bookingProposals = readEngine.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            var bookingProposals = readFacade.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
             Assert.AreEqual(1, bookingProposals.Count());
 
             // Loads a new place that has available room matching our research
             placesAdapter.LoadPlaceFile("Danubius Health Spa Resort Helia-availabilities.json");
-            bookingProposals = readEngine.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
+            bookingProposals = readFacade.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
             Assert.AreEqual(2, bookingProposals.Count()); // find one more available place
         }
 
@@ -97,10 +97,10 @@ namespace BookARoom.Tests.Acceptance
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
-            var readEngine = new ReadEngine(placesAdapter, placesAdapter);
+            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
 
             var placeId = 1;
-            var place = readEngine.GetPlace(placeId: placeId);
+            var place = readFacade.GetPlace(placeId: placeId);
 
             Assert.AreEqual(placeId, place.Identifier);
             Assert.AreEqual("New York Sofitel", place.Name);

@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace BookARoom.Tests
 {
     [TestFixture]
-    public class PlaceCatalogFileAdapterTests
+    public class PlacesAndRoomsAdapterTests
     {
         [Test]
         public void Should_load_a_file()

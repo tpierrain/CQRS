@@ -6,7 +6,7 @@ namespace BookARoom.Domain.ReadModel
     /// <summary>
     /// Search BookingProposals or details about Places.
     /// </summary>
-    public class ReadEngine : ISearchBookingProposals, IProvidePlaces
+    public class ReadFacade : ISearchBookingProposals, IProvidePlaces
     {
         // TODO: question: find a domain name instead or keep focus on the CQRS pattern to ease understanding of the MS experiences'16 audience?
 
@@ -14,11 +14,11 @@ namespace BookARoom.Domain.ReadModel
         private readonly IProvidePlaces placesProvider;
 
         /// <summary>
-        /// Instantiates a <see cref="ReadEngine"/>.
+        /// Instantiates a <see cref="ReadFacade"/>.
         /// </summary>
         /// <param name="roomsProvider"></param>
         /// <param name="placesProvider"></param>
-        public ReadEngine(IProvideRooms roomsProvider, IProvidePlaces placesProvider)
+        public ReadFacade(IProvideRooms roomsProvider, IProvidePlaces placesProvider)
         {
             this.roomsProvider = roomsProvider;
             this.placesProvider = placesProvider;
