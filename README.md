@@ -26,21 +26,13 @@ Of course, booking a room (write model) will impact the read model accordingly.
 
 
 ### Projects & Dependencies
-- __BookARoom.Domain__ Project containing all the domain logic of the solution (for both read and write models).
+- __BookARoom.Domain__ Project containing all the domain logic of the solution (for both read and write models). __(has no dependency)__
 
-   - (has no dependency)
+- __BookARoom.Infra__ ASP.NET core project hosting the infrastructure code (i.e. non-domain one) for both read and write models. __(depends on both Domain and IntegrationModel projects and is also an ASP.NET dotnet core project)__
 
-- __BookARoom.Infra__ ASP.NET core project hosting the infrastructure code (i.e. non-domain one) for both read and write models.
+- __BookARoom.Tests__ Tests for all projects. __(depends on all the other BookARoom projects)__
 
-   - (depends on both Domain and Integration projects and is also an ASP.NET dotnet core project)
-
-- __BookARoom.Tests__ Tests for all projects
-
-   - (depends on all the other BookARoom projects)
-
-- __BookARoom.IntegrationModel__ A command-line project to generate integration json files for hotel (from code)
-
-   - (has no dependency)
+- __BookARoom.IntegrationModel__ A command-line project to generate integration json files for hotel (from code). __(has no dependency)__
 
 
 ...
