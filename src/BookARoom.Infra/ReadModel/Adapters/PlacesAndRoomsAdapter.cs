@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +7,7 @@ using BookARoom.IntegrationModel;
 using Newtonsoft.Json;
 using Price = BookARoom.Domain.ReadModel.Price;
 
-namespace BookARoom.Infra.Adapters
+namespace BookARoom.Infra.ReadModel.Adapters
 {
     /// <summary>
     /// Adapter between the Integration model (json external files) and the domain one.
@@ -15,18 +15,17 @@ namespace BookARoom.Infra.Adapters
     /// </summary>
     public class PlacesAndRoomsAdapter : IProvideRooms, IProvidePlaces
     {
-        private readonly Dictionary<Place, Dictionary<DateTime, List<RoomWithPrices>>> placesWithPerDateRoomsStatus;
-        private readonly Dictionary<int, Place> placesPerId = new Dictionary<int, Place>();
+        private readonly ReadModelDatabase readModelDatabase;
 
         public PlacesAndRoomsAdapter(string integrationFilesDirectoryPath)
         {
-            this.placesWithPerDateRoomsStatus = new Dictionary<Place, Dictionary<DateTime, List<RoomWithPrices>>>();
             this.IntegrationFilesDirectoryPath = integrationFilesDirectoryPath;
+            this.readModelDatabase = new ReadModelDatabase();
         }
 
-        public IEnumerable<Place> Places => this.placesWithPerDateRoomsStatus.Keys;
-
         public string IntegrationFilesDirectoryPath { get; }
+
+        public IEnumerable<Place> Places => this.readModelDatabase.Places;
 
         public void LoadPlaceFile(string placeFileNameOrFilePath)
         {
@@ -51,27 +50,11 @@ namespace BookARoom.Infra.Adapters
             return integrationFileAvailabilitieses;
         }
 
-        private void StorePlaceWithId(int placeId, Place place)
-        {
-            this.placesPerId[placeId] = place;
-        }
-
         #region IProvideRooms methods
 
         public IEnumerable<BookingProposal> SearchAvailablePlacesInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate)
         {
-            var result = (from placeWithAvailabilities in this.placesWithPerDateRoomsStatus
-                from dateAndRooms in this.placesWithPerDateRoomsStatus.Values
-                from date in dateAndRooms.Keys
-                from availableRooms in dateAndRooms.Values
-                where string.Equals(placeWithAvailabilities.Key.Location, location, StringComparison.CurrentCultureIgnoreCase)
-                      && (date >= checkInDate && date <= checkOutDate)
-                      && availableRooms.Count > 0
-                      && dateAndRooms.Values.Contains(availableRooms)
-                      && placeWithAvailabilities.Value == dateAndRooms
-                select new BookingProposal(placeWithAvailabilities.Key, availableRooms) ).ToList().Distinct();
-
-            return result;
+            return readModelDatabase.SearchAvailablePlacesInACaseInsensitiveWay(location, checkInDate, checkOutDate);
         }
 
         #endregion
@@ -80,14 +63,12 @@ namespace BookARoom.Infra.Adapters
 
         public IEnumerable<Place> SearchFromLocation(string location)
         {
-            return from place in this.placesWithPerDateRoomsStatus.Keys
-                   where place.Location == location
-                   select place;
+            return readModelDatabase.SearchFromLocation(location);
         }
 
         public Place GetPlace(int placeId)
         {
-            return this.placesPerId[placeId];
+            return readModelDatabase.GetPlace(placeId);
         }
 
         #endregion
@@ -98,14 +79,15 @@ namespace BookARoom.Infra.Adapters
         {
             var place = AdaptPlace(dataForThisPlace.PlaceId, dataForThisPlace.PlaceName, dataForThisPlace.Location, dataForThisPlace.NumberOfRooms);
             this.AdaptAndStoreIntegrationFileContentForAPlace(place, dataForThisPlace);
-            this.StorePlaceWithId(dataForThisPlace.PlaceId, place);
+
+            this.readModelDatabase.StorePlaceWithId(dataForThisPlace.PlaceId, place);
         }
 
         private void AdaptAndStoreIntegrationFileContentForAPlace(Place place, PlaceDetailsWithRoomsAvailabilities integrationFileAvailabilitieses)
         {
             var roomsPerDateAvailabilities = AdaptPlaceAvailabilities(integrationFileAvailabilitieses.AvailabilitiesAt);
 
-            placesWithPerDateRoomsStatus[place] = roomsPerDateAvailabilities;
+            this.readModelDatabase.placesWithPerDateRoomsStatus[place] = roomsPerDateAvailabilities;
         }
 
         private Dictionary<DateTime, List<RoomWithPrices>> AdaptPlaceAvailabilities(Dictionary<DateTime, RoomStatusAndPrices[]> receivedAvailabilities)

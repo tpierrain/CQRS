@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BookARoom.Domain.ReadModel;
-using BookARoom.Infra.Adapters;
+using BookARoom.Infra.ReadModel.Adapters;
 using NUnit.Framework;
 
 namespace BookARoom.Tests.Acceptance
