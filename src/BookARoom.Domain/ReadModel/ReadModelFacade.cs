@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace BookARoom.Domain.ReadModel
 {
     /// <summary>
-    /// Search BookingProposals or details about Places.
+    /// Allow to search BookingProposals or to get details about Places.
     /// </summary>
-    public class ReadFacade : ISearchBookingProposals, IProvidePlaces
+    public class ReadModelFacade : ISearchBookingProposals, IProvidePlaces
     {
         // TODO: question: find a domain name instead or keep focus on the CQRS pattern to ease understanding of the MS experiences'16 audience?
 
@@ -14,11 +14,11 @@ namespace BookARoom.Domain.ReadModel
         private readonly IProvidePlaces placesProvider;
 
         /// <summary>
-        /// Instantiates a <see cref="ReadFacade"/>.
+        /// Instantiates a <see cref="ReadModelFacade"/>.
         /// </summary>
         /// <param name="roomsProvider"></param>
         /// <param name="placesProvider"></param>
-        public ReadFacade(IProvideRooms roomsProvider, IProvidePlaces placesProvider)
+        public ReadModelFacade(IProvideRooms roomsProvider, IProvidePlaces placesProvider)
         {
             this.roomsProvider = roomsProvider;
             this.placesProvider = placesProvider;

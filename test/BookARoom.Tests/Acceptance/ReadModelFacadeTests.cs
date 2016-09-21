@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace BookARoom.Tests.Acceptance
 {
     [TestFixture]
-    public class ReadFacadeTests
+    public class ReadModelFacadeTests
     {
         private DateTime myFavoriteSaturdayIn2017 = new DateTime(2017, 09, 16);
 
@@ -16,7 +16,7 @@ namespace BookARoom.Tests.Acceptance
         {
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
 
-            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
+            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
             var bookingProposals = readFacade.SearchBookingProposals(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", adultsCount: 2, roomNumber: 1, childrenCount: 0);
             Assert.AreEqual(0, bookingProposals.Count());
         }
@@ -27,7 +27,7 @@ namespace BookARoom.Tests.Acceptance
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
-            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
+            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
             var bookingProposals = readFacade.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "New York", adultsCount: 2, roomNumber: 1, childrenCount: 0);
 
             Assert.AreEqual(1, bookingProposals.Count());
@@ -46,7 +46,7 @@ namespace BookARoom.Tests.Acceptance
             placesAdapter.LoadPlaceFile("Danubius Health Spa Resort Helia-availabilities.json"); // available
             placesAdapter.LoadPlaceFile("BudaFull-the-always-unavailable-hotel-availabilities.json"); // unavailable
 
-            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
+            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
             var bookingProposals = readFacade.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, roomNumber: 1, childrenCount: 0);
 
             Assert.AreEqual(2, bookingProposals.Count());
@@ -56,7 +56,7 @@ namespace BookARoom.Tests.Acceptance
         public void Should_throw_exception_when_checkinDate_is_after_checkOutDate()
         {
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
-            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
+            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
 
             Assert.Throws<InvalidOperationException>( () => readFacade.SearchBookingProposals(checkInDate: DateTime.Now.AddDays(1), checkOutDate: DateTime.Now, location: "Kunming", adultsCount: 1));
         }
@@ -67,7 +67,7 @@ namespace BookARoom.Tests.Acceptance
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
-            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
+            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
             var searchedLocation = "new york";
             var bookingProposals = readFacade.SearchBookingProposals(myFavoriteSaturdayIn2017, checkOutDate: myFavoriteSaturdayIn2017.AddDays(1), location: searchedLocation, adultsCount: 2, roomNumber: 1, childrenCount: 0);
 
@@ -78,7 +78,7 @@ namespace BookARoom.Tests.Acceptance
         public void Should_find_new_matching_places_after_new_place_is_integrated()
         {
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
-            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
+            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
 
             // Integrates a first place
             placesAdapter.LoadPlaceFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
@@ -97,7 +97,7 @@ namespace BookARoom.Tests.Acceptance
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
-            var readFacade = new ReadFacade(placesAdapter, placesAdapter);
+            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
 
             var placeId = 1;
             var place = readFacade.GetPlace(placeId: placeId);
