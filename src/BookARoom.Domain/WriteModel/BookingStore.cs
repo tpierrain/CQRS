@@ -1,22 +1,22 @@
 ﻿namespace BookARoom.Domain.WriteModel
 {
-    public class BookingStore : IBookingStore
+    public class BookingStore : IBookRooms
     {
-        private readonly IClientAndBookingRepository repository;
+        private readonly ISaveBookingCommandsAndClients repository;
 
-        public BookingStore(IClientAndBookingRepository repository)
+        public BookingStore(ISaveBookingCommandsAndClients repository)
         {
             this.repository = repository;
         }
 
-        public void BookARoom(BookARoomCommand bookingRequest)
+        public void BookARoom(BookARoomCommand bookingCommand)
         {
-            if (!this.repository.IsClientAlready(bookingRequest.ClientId))
+            if (!this.repository.IsClientAlready(bookingCommand.ClientId))
             {
-                this.repository.CreateClient(bookingRequest.ClientId);    
+                this.repository.CreateClient(bookingCommand.ClientId);    
             }
 
-            this.repository.Save(bookingRequest);
+            this.repository.Save(bookingCommand);
         }
     }
 }

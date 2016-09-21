@@ -17,10 +17,10 @@ namespace BookARoom.Tests.Acceptance
 
             Assert.AreEqual(0, bookingDatabase.BookingCount);
 
-            var bookingRequest = new BookARoomCommand(clientId: "thomas@pierrain.net", placeId: 1, roomNumber: "2", checkInDate: DateTime.Parse("2016-09-17"), checkOutDate: DateTime.Parse("2016-09-18"));
-            bookingHandler.Handle(bookingRequest);
+            var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", placeId: 1, roomNumber: "2", checkInDate: DateTime.Parse("2016-09-17"), checkOutDate: DateTime.Parse("2016-09-18"));
+            bookingHandler.Handle(bookingCommand);
 
-            Assert.AreEqual(1, bookingDatabase.GetBookingRequestsFrom("thomas@pierrain.net").Count());
+            Assert.AreEqual(1, bookingDatabase.GetBookingCommandsFrom("thomas@pierrain.net").Count());
         }
     }
 }

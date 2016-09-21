@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BookARoom.Domain.ReadModel
 {
-    public interface IPlacesAndRoomsRepository
+    public interface IProvidePlacesAndRooms
     {
         Place GetPlace(int placeId);
         IEnumerable<Place> Places { get; }

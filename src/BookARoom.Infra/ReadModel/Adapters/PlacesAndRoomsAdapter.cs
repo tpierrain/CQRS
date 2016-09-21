@@ -15,7 +15,7 @@ namespace BookARoom.Infra.ReadModel.Adapters
     /// </summary>
     public class PlacesAndRoomsAdapter : IProvideRooms, IProvidePlaces
     {
-        private readonly IPlacesAndRoomsRepository readModelDatabase;
+        private readonly IProvidePlacesAndRooms readModelDatabase;
 
         public PlacesAndRoomsAdapter(string integrationFilesDirectoryPath)
         {

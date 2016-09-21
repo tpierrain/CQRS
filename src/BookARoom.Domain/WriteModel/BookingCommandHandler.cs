@@ -2,9 +2,9 @@
 {
     public class BookingCommandHandler
     {
-        public IBookingStore BookingStore { get; }
+        public IBookRooms BookingStore { get; }
 
-        public BookingCommandHandler(IBookingStore bookingStore)
+        public BookingCommandHandler(IBookRooms bookingStore)
         {
             this.BookingStore = bookingStore;
         }

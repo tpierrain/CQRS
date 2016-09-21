@@ -1,8 +1,8 @@
 ﻿namespace BookARoom.Domain.WriteModel
 {
-    public interface IClientAndBookingRepository
+    public interface ISaveBookingCommandsAndClients
     {
-        void Save(BookARoomCommand command);
+        void Save(BookARoomCommand bookingCommand);
         bool IsClientAlready(string clientIdentifier);
         void CreateClient(string clientIdentifier);
         long BookingCount { get; }
