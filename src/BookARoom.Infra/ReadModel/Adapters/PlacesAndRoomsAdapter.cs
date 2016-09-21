@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace BookARoom.Infra.ReadModel.Adapters
     /// </summary>
     public class PlacesAndRoomsAdapter : IProvideRooms, IProvidePlaces
     {
-        private readonly ReadModelDatabase readModelDatabase;
+        private readonly IPlacesAndRoomsRepository readModelDatabase;
 
         public PlacesAndRoomsAdapter(string integrationFilesDirectoryPath)
         {
@@ -80,14 +80,14 @@ namespace BookARoom.Infra.ReadModel.Adapters
             var place = AdaptPlace(dataForThisPlace.PlaceId, dataForThisPlace.PlaceName, dataForThisPlace.Location, dataForThisPlace.NumberOfRooms);
             this.AdaptAndStoreIntegrationFileContentForAPlace(place, dataForThisPlace);
 
-            this.readModelDatabase.StorePlaceWithId(dataForThisPlace.PlaceId, place);
+            this.readModelDatabase.StorePlace(dataForThisPlace.PlaceId, place);
         }
 
         private void AdaptAndStoreIntegrationFileContentForAPlace(Place place, PlaceDetailsWithRoomsAvailabilities integrationFileAvailabilitieses)
         {
             var roomsPerDateAvailabilities = AdaptPlaceAvailabilities(integrationFileAvailabilitieses.AvailabilitiesAt);
 
-            this.readModelDatabase.placesWithPerDateRoomsStatus[place] = roomsPerDateAvailabilities;
+            this.readModelDatabase.StorePlaceAvailabilities(place, roomsPerDateAvailabilities);
         }
 
         private Dictionary<DateTime, List<RoomWithPrices>> AdaptPlaceAvailabilities(Dictionary<DateTime, RoomStatusAndPrices[]> receivedAvailabilities)

@@ -3,7 +3,7 @@ using BookARoom.Domain.WriteModel;
 
 namespace BookARoom.Infra.WriteModel
 {
-    public class WriteModelDatabase : IBookingStore
+    public class WriteModelDatabase : IClientAndBookingRepository
     {
         public long BookingCount { get; private set; }
 
@@ -14,15 +14,28 @@ namespace BookARoom.Infra.WriteModel
             this.perClientCommands = new Dictionary<string, List<ICommand>>();
         }
 
-        public void BookARoom(BookARoomCommand bookingRequest)
+        public void Save(BookARoomCommand bookingRequest)
         {
-            if (!this.perClientCommands.ContainsKey(bookingRequest.ClientId))
-            {
-                this.perClientCommands[bookingRequest.ClientId] = new List<ICommand>();
-            }
-
             this.perClientCommands[bookingRequest.ClientId].Add(bookingRequest);
             this.BookingCount++;
+        }
+
+        public bool IsClientAlready(string clientIdentifier)
+        {
+            return this.perClientCommands.ContainsKey(clientIdentifier);
+        }
+
+        public void CreateClient(string clientIdentifier)
+        {
+            if (!this.perClientCommands.ContainsKey(clientIdentifier))
+            {
+                this.perClientCommands[clientIdentifier] = new List<ICommand>();
+            }
+        }
+
+        public IEnumerable<ICommand> GetBookingRequestsFrom(string clientIdentifier)
+        {
+            return this.perClientCommands[clientIdentifier];
         }
     }
 }

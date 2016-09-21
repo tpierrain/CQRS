@@ -5,7 +5,7 @@ using BookARoom.Domain.ReadModel;
 
 namespace BookARoom.Infra.ReadModel
 {
-    public class ReadModelDatabase
+    public class ReadModelDatabase : IPlacesAndRoomsRepository
     {
         public readonly Dictionary<Place, Dictionary<DateTime, List<RoomWithPrices>>> placesWithPerDateRoomsStatus;
         private readonly Dictionary<int, Place> placesPerId = new Dictionary<int, Place>();
@@ -33,6 +33,11 @@ namespace BookARoom.Infra.ReadModel
             return result;
         }
 
+        public void StorePlaceAvailabilities(Place place, Dictionary<DateTime, List<RoomWithPrices>> perDateRoomsAvailabilities)
+        {
+            this.placesWithPerDateRoomsStatus[place] = perDateRoomsAvailabilities;
+        }
+
         public IEnumerable<Place> SearchFromLocation(string location)
         {
             return from place in this.placesWithPerDateRoomsStatus.Keys
@@ -45,7 +50,7 @@ namespace BookARoom.Infra.ReadModel
             return this.placesPerId[placeId];
         }
 
-        public void StorePlaceWithId(int placeId, Place place)
+        public void StorePlace(int placeId, Place place)
         {
             this.placesPerId[placeId] = place;
         }
