@@ -10,7 +10,7 @@ The project is a dotnet core ASP.NET web site (in order to be containerized), al
 
 Of course, booking a room (write model) will impact the read model accordingly.
 
-## Highlights
+## Highlights for the talk
 
 1. How __Outside-in__ TDD works
 2. How Hexagonal Architecture can help us to focus on __Domain first__, before tackling the __infra (ASP.NET) in a second time__
@@ -34,5 +34,24 @@ Of course, booking a room (write model) will impact the read model accordingly.
 
 - __BookARoom.IntegrationModel__ A command-line project to generate integration json files for hotel (from code). __(has no dependency)__
 
+---
+
+## Remaining tasks
+1. To update the read model when the write model changes (use a fake bus?)
+2. To plug the web app
+3. To fight against the current anemic model
+4. To identify the use case that will be usefull to live-code at MS event (to zoom on CQRS)
+
+---
+
+## Tips and tricks
+
+### How to run the tests
+
+Note: resharper and ncrunch don't support yet dotnet core; you can only run them via Visual Studio test runner (e.g. Ctrl-R, A) or by executing:
+
+     dotnet test 
+
+within the test project directory.
 
 ...
