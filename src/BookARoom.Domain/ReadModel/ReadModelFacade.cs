@@ -26,7 +26,7 @@ namespace BookARoom.Domain.ReadModel
 
         #region ISearchBookingProposals members
 
-        public IEnumerable<BookingProposal> SearchBookingProposals(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int roomNumber = 1, int childrenCount = 0)
+        public IEnumerable<BookingProposal> SearchBookingProposals(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int numberOfRoomsNeeded = 1, int childrenCount = 0)
         {
             if (checkInDate > checkOutDate)
             {

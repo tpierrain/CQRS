@@ -8,6 +8,6 @@ namespace BookARoom.Domain.ReadModel
     /// </summary>
     public interface ISearchBookingProposals
     {
-        IEnumerable<BookingProposal> SearchBookingProposals(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int roomNumber = 1, int childrenCount = 0);
+        IEnumerable<BookingProposal> SearchBookingProposals(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int numberOfRoomsNeeded = 1, int childrenCount = 0);
     }
 }
