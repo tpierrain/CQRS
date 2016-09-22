@@ -5,12 +5,12 @@ using BookARoom.Domain.ReadModel;
 
 namespace BookARoom.Infra.ReadModel
 {
-    public class ReadModelDatabase : IProvidePlacesAndRooms
+    public class PlacesAndRoomsRepository : IProvidePlacesAndRooms
     {
         public readonly Dictionary<Place, Dictionary<DateTime, List<RoomWithPrices>>> placesWithPerDateRoomsStatus;
         private readonly Dictionary<int, Place> placesPerId = new Dictionary<int, Place>();
 
-        public ReadModelDatabase()
+        public PlacesAndRoomsRepository()
         {
             this.placesWithPerDateRoomsStatus = new Dictionary<Place, Dictionary<DateTime, List<RoomWithPrices>>>();
         }

@@ -3,13 +3,13 @@ using BookARoom.Domain.WriteModel;
 
 namespace BookARoom.Infra.WriteModel
 {
-    public class WriteModelDatabase : ISaveBookingCommandsAndClients
+    public class BookingAndClientsRepository : ISaveBookingCommandsAndClients
     {
         public long BookingCount { get; private set; }
 
         private readonly Dictionary<string, List<ICommand>> perClientCommands;
 
-        public WriteModelDatabase()
+        public BookingAndClientsRepository()
         {
             this.perClientCommands = new Dictionary<string, List<ICommand>>();
         }

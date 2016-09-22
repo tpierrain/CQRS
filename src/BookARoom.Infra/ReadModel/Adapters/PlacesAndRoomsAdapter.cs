@@ -15,17 +15,17 @@ namespace BookARoom.Infra.ReadModel.Adapters
     /// </summary>
     public class PlacesAndRoomsAdapter : IProvideRooms, IProvidePlaces
     {
-        private readonly IProvidePlacesAndRooms readModelDatabase;
+        private readonly IProvidePlacesAndRooms repository;
 
         public PlacesAndRoomsAdapter(string integrationFilesDirectoryPath)
         {
             this.IntegrationFilesDirectoryPath = integrationFilesDirectoryPath;
-            this.readModelDatabase = new ReadModelDatabase();
+            this.repository = new PlacesAndRoomsRepository();
         }
 
         public string IntegrationFilesDirectoryPath { get; }
 
-        public IEnumerable<Place> Places => this.readModelDatabase.Places;
+        public IEnumerable<Place> Places => this.repository.Places;
 
         public void LoadPlaceFile(string placeFileNameOrFilePath)
         {
@@ -54,7 +54,7 @@ namespace BookARoom.Infra.ReadModel.Adapters
 
         public IEnumerable<BookingProposal> SearchAvailablePlacesInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate)
         {
-            return readModelDatabase.SearchAvailablePlacesInACaseInsensitiveWay(location, checkInDate, checkOutDate);
+            return repository.SearchAvailablePlacesInACaseInsensitiveWay(location, checkInDate, checkOutDate);
         }
 
         #endregion
@@ -63,12 +63,12 @@ namespace BookARoom.Infra.ReadModel.Adapters
 
         public IEnumerable<Place> SearchFromLocation(string location)
         {
-            return readModelDatabase.SearchFromLocation(location);
+            return repository.SearchFromLocation(location);
         }
 
         public Place GetPlace(int placeId)
         {
-            return readModelDatabase.GetPlace(placeId);
+            return repository.GetPlace(placeId);
         }
 
         #endregion
@@ -80,14 +80,14 @@ namespace BookARoom.Infra.ReadModel.Adapters
             var place = AdaptPlace(dataForThisPlace.PlaceId, dataForThisPlace.PlaceName, dataForThisPlace.Location, dataForThisPlace.NumberOfRooms);
             this.AdaptAndStoreIntegrationFileContentForAPlace(place, dataForThisPlace);
 
-            this.readModelDatabase.StorePlace(dataForThisPlace.PlaceId, place);
+            this.repository.StorePlace(dataForThisPlace.PlaceId, place);
         }
 
         private void AdaptAndStoreIntegrationFileContentForAPlace(Place place, PlaceDetailsWithRoomsAvailabilities integrationFileAvailabilitieses)
         {
             var roomsPerDateAvailabilities = AdaptPlaceAvailabilities(integrationFileAvailabilitieses.AvailabilitiesAt);
 
-            this.readModelDatabase.StorePlaceAvailabilities(place, roomsPerDateAvailabilities);
+            this.repository.StorePlaceAvailabilities(place, roomsPerDateAvailabilities);
         }
 
         private Dictionary<DateTime, List<RoomWithPrices>> AdaptPlaceAvailabilities(Dictionary<DateTime, RoomStatusAndPrices[]> receivedAvailabilities)
