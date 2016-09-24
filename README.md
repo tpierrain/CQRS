@@ -1,4 +1,4 @@
-# Book a room (*a simple CQRS project*) ![BookARoom](https://github.com/tpierrain/cqrs/blob/master/images/bookaroom.png?raw=true)
+![BookARoom](https://github.com/tpierrain/cqrs/blob/master/images/bookARoom.gif?raw=true)
 
 BookARoom is a simple project __to explain CQRS__ during a live coding session at MS experiences'16
 
