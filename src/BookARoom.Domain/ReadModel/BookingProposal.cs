@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace BookARoom.Domain.ReadModel
 {
@@ -12,6 +13,11 @@ namespace BookARoom.Domain.ReadModel
         {
             this.Place = place;
             this.AvailableRoomsWithPrices = availableRoomsWithPrices;
+        }
+
+        public override string ToString()
+        {
+            return $"Booking proposal for place: '{this.Place}' - {this.AvailableRoomsWithPrices.Count()} possible room(s)";
         }
     }
 }

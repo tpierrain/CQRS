@@ -4,6 +4,7 @@ using BookARoom.Domain.ReadModel;
 using BookARoom.Domain.WriteModel;
 using BookARoom.Infra.ReadModel.Adapters;
 using BookARoom.Infra.WriteModel;
+using NFluent;
 using NUnit.Framework;
 
 namespace BookARoom.Tests.Acceptance
@@ -39,10 +40,10 @@ namespace BookARoom.Tests.Acceptance
 
             var bookingProposals = readFacade.SearchBookingProposals(checkInDate, checkOutDate, location: "New York", adultsCount: 2);
             // We should get 1 booking proposal with 3 available rooms in it.
-            Assert.AreEqual(1, bookingProposals.Count());
+            Check.That(bookingProposals).HasSize(1);
 
             var bookingProposal = bookingProposals.First();
-            Assert.AreEqual(3, bookingProposal.AvailableRoomsWithPrices.Count());
+            Check.That(bookingProposal.AvailableRoomsWithPrices).HasSize(3);
 
             // Initialize Write-model side
             var bookingRepository = new BookingAndClientsRepository();
@@ -50,12 +51,13 @@ namespace BookARoom.Tests.Acceptance
 
             // We book a room from that booking proposal
             BookARoomFromAProposal(bookingProposal, checkInDate, checkOutDate, bookingHandler);
-            Assert.AreEqual(1, bookingRepository.GetBookingCommandsFrom("thomas@pierrain.net").Count());
+            Check.That(bookingRepository.GetBookingCommandsFrom("thomas@pierrain.net").Count()).IsEqualTo(1);
 
             // Fetch rooms availabilities now. One room should have disappeared
             bookingProposals = readFacade.SearchBookingProposals(checkInDate, checkOutDate, location: "New York", adultsCount: 2);
-            Assert.AreEqual(1, bookingProposals.Count());
-            Assert.AreEqual(3-1, bookingProposal.AvailableRoomsWithPrices.Count());
+            
+            Check.That(bookingProposals).HasSize(1);
+            Check.That(bookingProposal.AvailableRoomsWithPrices).As("available matching rooms").HasSize(3-1);
         }
 
         private static void BookARoomFromAProposal(BookingProposal bookingProposal, DateTime checkInDate, DateTime checkOutDate, BookingCommandHandler bookingHandler)

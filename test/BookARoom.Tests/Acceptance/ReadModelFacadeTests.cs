@@ -2,6 +2,7 @@
 using System.Linq;
 using BookARoom.Domain.ReadModel;
 using BookARoom.Infra.ReadModel.Adapters;
+using NFluent;
 using NUnit.Framework;
 
 namespace BookARoom.Tests.Acceptance
@@ -16,7 +17,7 @@ namespace BookARoom.Tests.Acceptance
 
             var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
             var bookingProposals = readFacade.SearchBookingProposals(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
-            Assert.AreEqual(0, bookingProposals.Count());
+            Check.That(bookingProposals).IsEmpty();
         }
 
         [Test]
@@ -26,14 +27,15 @@ namespace BookARoom.Tests.Acceptance
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
             var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
-            var bookingProposals = readFacade.SearchBookingProposals(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: "New York", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
+            var requestedLocation = "New York";
+            var bookingProposals = readFacade.SearchBookingProposals(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: requestedLocation, adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
 
-            Assert.AreEqual(1, bookingProposals.Count());
+            Check.That(bookingProposals).HasSize(1);
 
             var bookingProposal = bookingProposals.First();
-            Assert.AreEqual("New York", bookingProposal.Place.Location);
-            Assert.AreEqual("New York Sofitel", bookingProposal.Place.Name);
-            Assert.AreEqual(3, bookingProposal.AvailableRoomsWithPrices.Count());
+            Check.That(bookingProposal.Place.Location).IsEqualTo(requestedLocation);
+            Check.That(bookingProposal.Place.Name).IsEqualTo("New York Sofitel");
+            Check.That(bookingProposal.AvailableRoomsWithPrices).HasSize(3);
         }
 
         [Test]
@@ -47,7 +49,7 @@ namespace BookARoom.Tests.Acceptance
             var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
             var bookingProposals = readFacade.SearchBookingProposals(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
 
-            Assert.AreEqual(2, bookingProposals.Count());
+            Check.That(bookingProposals).HasSize(2);
         }
 
         [Test]
@@ -56,7 +58,8 @@ namespace BookARoom.Tests.Acceptance
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
             var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
 
-            Assert.Throws<InvalidOperationException>( () => readFacade.SearchBookingProposals(checkInDate: DateTime.Now.AddDays(1), checkOutDate: DateTime.Now, location: "Kunming", adultsCount: 1));
+            Check.ThatCode(() => readFacade.SearchBookingProposals(checkInDate: DateTime.Now.AddDays(1), checkOutDate: DateTime.Now, location: "Kunming", adultsCount: 1))
+                .Throws<InvalidOperationException>();
         }
 
         [Test]
@@ -69,7 +72,7 @@ namespace BookARoom.Tests.Acceptance
             var searchedLocation = "new york";
             var bookingProposals = readFacade.SearchBookingProposals(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: searchedLocation, adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
 
-            Assert.AreEqual(1, bookingProposals.Count());
+            Check.That(bookingProposals).HasSize(1);
         }
 
         [Test]
@@ -81,12 +84,12 @@ namespace BookARoom.Tests.Acceptance
             // Integrates a first place
             placesAdapter.LoadPlaceFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
             var bookingProposals = readFacade.SearchBookingProposals(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
-            Assert.AreEqual(1, bookingProposals.Count());
+            Check.That(bookingProposals).HasSize(1);
 
             // Loads a new place that has available room matching our research
             placesAdapter.LoadPlaceFile("Danubius Health Spa Resort Helia-availabilities.json");
             bookingProposals = readFacade.SearchBookingProposals(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
-            Assert.AreEqual(2, bookingProposals.Count()); // find one more available place
+            Check.That(bookingProposals).HasSize(2); // has found one more available place
         }
 
         [Test]
@@ -100,10 +103,10 @@ namespace BookARoom.Tests.Acceptance
             var placeId = 1;
             var place = readFacade.GetPlace(placeId: placeId);
 
-            Assert.AreEqual(placeId, place.Identifier);
-            Assert.AreEqual("New York Sofitel", place.Name);
-            Assert.AreEqual("New York", place.Location);
-            Assert.AreEqual(405, place.NumberOfRooms);
+            Check.That(place.Identifier).IsEqualTo(placeId);
+            Check.That(place.Name).IsEqualTo("New York Sofitel");
+            Check.That(place.Location).IsEqualTo("New York");
+            Check.That(place.NumberOfRooms).IsEqualTo(405);
         }
     }
 }

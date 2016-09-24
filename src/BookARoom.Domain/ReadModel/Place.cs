@@ -14,5 +14,10 @@ namespace BookARoom.Domain.ReadModel
         public string Name { get; }
         public int Identifier { get; }
         public int NumberOfRooms { get; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

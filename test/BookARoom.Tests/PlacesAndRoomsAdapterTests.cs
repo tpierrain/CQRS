@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using BookARoom.Infra.ReadModel.Adapters;
+using NFluent;
 using NUnit.Framework;
 
 namespace BookARoom.Tests
@@ -13,10 +14,10 @@ namespace BookARoom.Tests
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
 
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
-            Assert.AreEqual(1, placesAdapter.Places.Count());
+            Check.That(placesAdapter.Places).HasSize(1);
 
             placesAdapter.LoadPlaceFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
-            Assert.AreEqual(2, placesAdapter.Places.Count());
+            Check.That(placesAdapter.Places).HasSize(2);
         }
     }
 }
