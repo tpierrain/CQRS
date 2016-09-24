@@ -39,13 +39,13 @@ This project is not a real one nor a prod-ready code. The intent here is to illu
 ---
 
 #### Projects & Dependencies
-- ![loves](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true)__BookARoom.Domain__:  containing all the domain logic of the solution (for both read and write models). __(has no dependency)__
+- ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.Domain__:  containing all the domain logic of the solution (for both read and write models). __(has no dependency)__
 
-- ![loves](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true)__BookARoom.Infra__: ASP.NET core project hosting the infrastructure code (i.e. non-domain one like adapters) for both read and write models. __(depends on both Domain and IntegrationModel projects and is also an ASP.NET dotnet core project)__
+- ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.Infra__: ASP.NET core project hosting the infrastructure code (i.e. non-domain one like adapters) for both read and write models. __(depends on both Domain and IntegrationModel projects and is also an ASP.NET dotnet core project)__
 
-- ![loves](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true)__BookARoom.Tests__: containing tests for all projects. __(depends on all the other BookARoom projects)__
+- ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.Tests__: containing tests for all projects. __(depends on all the other BookARoom projects)__
 
-- ![loves](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true)__BookARoom.IntegrationModel__: command-line project to generate integration json files for hotel (from code). __(has no dependency)__
+- ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.IntegrationModel__: command-line project to generate integration json files for hotel (from code). __(has no dependency)__
 
 ---
 
