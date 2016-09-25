@@ -65,7 +65,11 @@ Note: resharper and ncrunch don't support yet dotnet core; you can only run them
 
 within the BookARoom.Tests project directory.
 
-##### CQRS in a nutshell
+---
+
+### CQRS in a nutshell
+
+There are many forms of CQRS implementation. The implementation of the BookARoom project follows this version:
 
 ![directory](https://github.com/tpierrain/cqrs/blob/master/images/CQRSdiagram.png?raw=true)
 
