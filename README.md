@@ -21,10 +21,10 @@ I also find important that people understand that __CQRS ![loves](https://github
 ---
 
 ### Remaining tasks before the D-day
-1. Update the read model when the write model changes (use a fake bus?)
-2. Plug the ASP.NET web app
-3. Fight against the current anemic model (mainly because I never worked on that topic and that I don't have any expert available to help me ;-( and embrace more the ubiquitous language of this domain.
-4. Identify which use case(s) will be usefull to live-code at MS event (to zoom on CQRS) and to find the best pedagogical workflow for it.
+
+1. Plug the ASP.NET web app
+1. Fight against the current anemic model (mainly because I never worked on that topic and that I don't have any expert available to help me ;-( and embrace more the ubiquitous language of this domain.
+1. Identify which use case(s) will be usefull to live-code at MS event (to zoom on CQRS) and to find the best pedagogical workflow for it.
 
 
 
