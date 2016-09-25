@@ -11,7 +11,7 @@ namespace BookARoom.Tests
         [Test]
         public void Should_load_a_file()
         {
-            var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
+            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/");
 
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
             Check.That(placesAdapter.Places).HasSize(1);

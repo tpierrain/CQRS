@@ -30,7 +30,7 @@ namespace BookARoom.Tests.Acceptance
         public void Should_impact_read_model_when_booking_a_room()
         {
             // Initialize Read-model side
-            var placesAdapter = new PlacesAndRoomsAdapter(@"../../IntegrationFiles/");
+            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/");
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
             var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
 
