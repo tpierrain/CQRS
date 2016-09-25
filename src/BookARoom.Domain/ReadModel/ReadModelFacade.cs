@@ -6,7 +6,7 @@ namespace BookARoom.Domain.ReadModel
     /// <summary>
     /// Allow to search BookingProposals or to get details about Places.
     /// </summary>
-    public class ReadModelFacade : ISearchBookingProposals, IProvidePlaces
+    public class ReadModelFacade : IQueryBookingProposals, IProvidePlaces
     {
         // TODO: question: find a domain name instead or keep focus on the CQRS pattern to ease understanding of the MS experiences'16 audience?
 
@@ -24,9 +24,14 @@ namespace BookARoom.Domain.ReadModel
             this.placesProvider = placesProvider;
         }
 
-        #region ISearchBookingProposals members
+        #region IQueryBookingProposals members
 
-        public IEnumerable<BookingProposal> SearchBookingProposals(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int numberOfRoomsNeeded = 1, int childrenCount = 0)
+        public IEnumerable<BookingProposal> SearchBookingProposals(SearchBookingProposalQuery query)
+        {
+            return this.SearchBookingProposals(query.CheckInDate, query.CheckOutDate, query.Location, query.AdultsCount, query.NumberOfRoomsNeeded, query.ChildrenCount);
+        }
+
+        private IEnumerable<BookingProposal> SearchBookingProposals(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int numberOfRoomsNeeded = 1, int childrenCount = 0)
         {
             if (checkInDate > checkOutDate)
             {

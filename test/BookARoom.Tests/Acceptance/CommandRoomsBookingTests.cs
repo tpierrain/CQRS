@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace BookARoom.Tests.Acceptance
 {
     [TestFixture]
-    public class BookingEngineTests
+    public class CommandRoomsBookingTests
     {
         [Test]
         public void Should_Book_a_room()
@@ -38,12 +38,14 @@ namespace BookARoom.Tests.Acceptance
             var checkInDate = Constants.MyFavoriteSaturdayIn2017;
             var checkOutDate = checkInDate.AddDays(1);
 
-            var bookingProposals = readFacade.SearchBookingProposals(checkInDate, checkOutDate, location: "New York", adultsCount: 2);
+            var searchQuery = new SearchBookingProposalQuery(checkInDate, checkOutDate, location: "New York", adultsCount: 2);
+            var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
             // We should get 1 booking proposal with 3 available rooms in it.
             Check.That(bookingProposals).HasSize(1);
 
             var bookingProposal = bookingProposals.First();
-            Check.That(bookingProposal.AvailableRoomsWithPrices).HasSize(3);
+            var initialRoomsNumbers = 3;
+            Check.That(bookingProposal.AvailableRoomsWithPrices).HasSize(initialRoomsNumbers);
 
             // Initialize Write-model side
             var bookingRepository = new BookingAndClientsRepository();
@@ -54,10 +56,10 @@ namespace BookARoom.Tests.Acceptance
             Check.That(bookingRepository.GetBookingCommandsFrom("thomas@pierrain.net").Count()).IsEqualTo(1);
 
             // Fetch rooms availabilities now. One room should have disappeared
-            bookingProposals = readFacade.SearchBookingProposals(checkInDate, checkOutDate, location: "New York", adultsCount: 2);
+            bookingProposals = readFacade.SearchBookingProposals(searchQuery);
             
             Check.That(bookingProposals).HasSize(1);
-            Check.That(bookingProposal.AvailableRoomsWithPrices).As("available matching rooms").HasSize(3-1);
+            Check.That(bookingProposal.AvailableRoomsWithPrices).As("available matching rooms").HasSize(initialRoomsNumbers-1);
         }
 
         private static void BookARoomFromAProposal(BookingProposal bookingProposal, DateTime checkInDate, DateTime checkOutDate, BookingCommandHandler bookingHandler)

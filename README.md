@@ -39,7 +39,7 @@ I also find important that people understand that __CQRS ![loves](https://github
     - Pattern origin
     - How read and write models articulate
     - Eventual consistency
-    - Short explanation about why __CQRS ![loves](https://github.com/tpierrain/cqrs/blob/master/images/heart.png?raw=true) Event sourcing__
+    - Short clarification between __CQRS & Event sourcing__
 4. What is __dotnet core__ and how it articulates with the new version of ASP.NET
 
 ---
