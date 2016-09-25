@@ -24,7 +24,7 @@ I also find important that people understand that __CQRS ![loves](https://github
 1. Update the read model when the write model changes (use a fake bus?)
 2. Plug the ASP.NET web app
 3. Fight against the current anemic model (mainly because I never worked on that topic and that I don't have any expert available to help me ;-( and embrace more the ubiquitous language of this domain.
-4. Identify which use case(s) will be usefull to live-code at MS event (to zoom on CQRS) and to find the best possible workflow for it.
+4. Identify which use case(s) will be usefull to live-code at MS event (to zoom on CQRS) and to find the best pedagogical workflow for it.
 
 
 
@@ -32,15 +32,16 @@ I also find important that people understand that __CQRS ![loves](https://github
 
 ### Highlights of the talk
 
-1. How __Outside-in TDD__ works.
-2. How __Hexagonal Architecture__ can help us to focus on __Domain first__, before tackling the infra code (ASP.NET) in a second time.
-3. __CQRS (WITHOUT Event Sourcing)__:
+1. __CQRS (WITHOUT Event Sourcing)__:
     - why CQRS?
     - Pattern origin
     - How read and write models articulate
     - Eventual consistency
     - Short clarification between __CQRS & Event sourcing__
-4. What is __dotnet core__ and how it articulates with the new version of ASP.NET
+1. How __Outside-in TDD__ works
+1. How __Hexagonal Architecture__ can help us to focus on __Domain first__, before tackling the infra code (ASP.NET) in a second time
+1. What is __dotnet core__ and how it articulates with the new version of ASP.NET
+
 
 ---
 
