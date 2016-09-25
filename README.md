@@ -20,7 +20,7 @@ I also find important that people understand that __CQRS ![loves](https://github
 
 ---
 
-#### Remaining tasks before the D-day
+### Remaining tasks before the D-day
 1. Update the read model when the write model changes (use a fake bus?)
 2. Plug the ASP.NET web app
 3. Fight against the current anemic model (mainly because I never worked on that topic and that I don't have any expert available to help me ;-( and embrace more the ubiquitous language of this domain.
@@ -30,7 +30,7 @@ I also find important that people understand that __CQRS ![loves](https://github
 
 ---
 
-#### Highlights of the talk
+### Highlights of the talk
 
 1. How __Outside-in TDD__ works.
 2. How __Hexagonal Architecture__ can help us to focus on __Domain first__, before tackling the infra code (ASP.NET) in a second time.
@@ -44,7 +44,7 @@ I also find important that people understand that __CQRS ![loves](https://github
 
 ---
 
-#### Projects & Dependencies
+### Projects & Dependencies
 - ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.Domain__:  containing all the domain logic of the solution (for both read and write models). __(has no dependency)__
 
 - ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.Infra__: ASP.NET core project hosting the infrastructure code (i.e. non-domain one like adapters) for both read and write models. __(depends on both Domain and IntegrationModel projects and is also an ASP.NET dotnet core project)__
@@ -55,7 +55,7 @@ I also find important that people understand that __CQRS ![loves](https://github
 
 ---
 
-#### Tips and tricks
+### Tips and tricks
 
 ##### How to run the tests
 
