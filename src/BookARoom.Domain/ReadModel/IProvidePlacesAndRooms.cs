@@ -13,5 +13,7 @@ namespace BookARoom.Domain.ReadModel
 
         void StorePlace(int placeId, Place place);
         void StorePlaceAvailabilities(Place place, Dictionary<DateTime, List<RoomWithPrices>> perDateRoomsAvailabilities);
+
+        void DeclareRoomBooked(int placeId, string roomNumber, DateTime checkInDate, DateTime checkOutDate);
     }
 }

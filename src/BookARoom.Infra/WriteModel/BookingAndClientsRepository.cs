@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BookARoom.Domain;
 using BookARoom.Domain.WriteModel;
 
 namespace BookARoom.Infra.WriteModel

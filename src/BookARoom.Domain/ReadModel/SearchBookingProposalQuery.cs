@@ -4,12 +4,12 @@ namespace BookARoom.Domain.ReadModel
 {
     public class SearchBookingProposalQuery
     {
-        public DateTime CheckInDate { get; set; }
-        public DateTime CheckOutDate { get; set; }
-        public string Location { get; set; }
-        public int AdultsCount { get; set; }
-        public int NumberOfRoomsNeeded { get; set; }
-        public int ChildrenCount { get; set; }
+        public DateTime CheckInDate { get; }
+        public DateTime CheckOutDate { get; }
+        public string Location { get; }
+        public int AdultsCount { get; }
+        public int NumberOfRoomsNeeded { get; }
+        public int ChildrenCount { get; }
 
         public SearchBookingProposalQuery(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int numberOfRoomsNeeded = 1, int childrenCount = 0)
         {

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BookARoom.Domain;
 using BookARoom.Domain.ReadModel;
+using BookARoom.Domain.WriteModel;
 using BookARoom.IntegrationModel;
 using Newtonsoft.Json;
 using Price = BookARoom.Domain.ReadModel.Price;
@@ -15,12 +17,24 @@ namespace BookARoom.Infra.ReadModel.Adapters
     /// </summary>
     public class PlacesAndRoomsAdapter : IProvideRooms, IProvidePlaces
     {
+        // TODO: extract behaviours from this adapter to put it on the domain-side
+        private readonly ISubscribeToEvents eventsSubscriber;
         private readonly IProvidePlacesAndRooms repository;
 
-        public PlacesAndRoomsAdapter(string integrationFilesDirectoryPath)
+        public PlacesAndRoomsAdapter(string integrationFilesDirectoryPath, ISubscribeToEvents eventsSubscriber)
         {
             this.IntegrationFilesDirectoryPath = integrationFilesDirectoryPath;
             this.repository = new PlacesAndRoomsRepository();
+
+            this.eventsSubscriber = eventsSubscriber;
+            this.eventsSubscriber.RegisterHandler<RoomBooked>(this.Handle); 
+            // TODO: question: should we 'functionally subscribe' within the domain code instead?
+            // TODO: handle the unsubscription
+        }
+
+        private void Handle(RoomBooked roomBooked)
+        {
+            this.repository.DeclareRoomBooked(roomBooked.PlaceId, roomBooked.RoomNumber, roomBooked.CheckInDate, roomBooked.CheckOutDate);
         }
 
         public string IntegrationFilesDirectoryPath { get; }
@@ -49,6 +63,8 @@ namespace BookARoom.Infra.ReadModel.Adapters
             }
             return integrationFileAvailabilitieses;
         }
+
+        // TODO: get rid of regions by extracting more cohesive types
 
         #region IProvideRooms methods
 

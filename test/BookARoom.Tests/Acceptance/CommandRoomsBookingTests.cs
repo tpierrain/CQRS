@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using BookARoom.Domain.ReadModel;
 using BookARoom.Domain.WriteModel;
+using BookARoom.Infra;
 using BookARoom.Infra.ReadModel.Adapters;
 using BookARoom.Infra.WriteModel;
 using NFluent;
@@ -16,7 +18,7 @@ namespace BookARoom.Tests.Acceptance
         public void Should_Book_a_room()
         {
             var bookingRepository = new BookingAndClientsRepository();
-            var bookingHandler = new BookingCommandHandler(new BookingStore(bookingRepository));
+            var bookingHandler = new BookingCommandHandler(new BookingStore(bookingRepository, new FakeBus()));
 
             Assert.AreEqual(0, bookingRepository.BookingCount);
 
@@ -30,7 +32,8 @@ namespace BookARoom.Tests.Acceptance
         public void Should_impact_read_model_when_booking_a_room()
         {
             // Initialize Read-model side
-            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/");
+            var bus = new FakeBus();
+            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", bus);
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
             var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
 
@@ -49,7 +52,7 @@ namespace BookARoom.Tests.Acceptance
 
             // Initialize Write-model side
             var bookingRepository = new BookingAndClientsRepository();
-            var bookingHandler = new BookingCommandHandler(new BookingStore(bookingRepository));
+            var bookingHandler = new BookingCommandHandler(new BookingStore(bookingRepository, bus));
 
             // We book a room from that booking proposal
             BookARoomFromAProposal(bookingProposal, checkInDate, checkOutDate, bookingHandler);

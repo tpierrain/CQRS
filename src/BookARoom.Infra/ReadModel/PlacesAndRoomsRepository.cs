@@ -33,6 +33,18 @@ namespace BookARoom.Infra.ReadModel
             return result;
         }
 
+        public void DeclareRoomBooked(int placeId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
+        {
+            var place = this.placesPerId[placeId];
+            var availabilitiesPerDate = this.placesWithPerDateRoomsStatus[place];
+
+            var availabilities = availabilitiesPerDate[checkInDate];
+
+            RoomWithPrices roomAvailabilityToRemove = availabilities.FirstOrDefault(roomWithPrices => roomWithPrices.RoomIdentifier == roomNumber);
+
+            availabilities.Remove(roomAvailabilityToRemove);
+        }
+
         public void StorePlaceAvailabilities(Place place, Dictionary<DateTime, List<RoomWithPrices>> perDateRoomsAvailabilities)
         {
             this.placesWithPerDateRoomsStatus[place] = perDateRoomsAvailabilities;

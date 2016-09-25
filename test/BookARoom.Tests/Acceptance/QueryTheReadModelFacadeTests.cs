@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BookARoom.Domain.ReadModel;
+using BookARoom.Infra;
 using BookARoom.Infra.ReadModel.Adapters;
 using NFluent;
 using NUnit.Framework;
@@ -13,7 +14,7 @@ namespace BookARoom.Tests.Acceptance
         [Test]
         public void Should_find_no_room_when_searching_an_empty_location_catalog()
         {
-            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/");
+            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", new FakeBus());
 
             var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
             var searchQuery = new SearchBookingProposalQuery(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
@@ -24,7 +25,7 @@ namespace BookARoom.Tests.Acceptance
         [Test]
         public void Should_find_matching_and_available_place()
         {
-            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/");
+            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", new FakeBus());
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
             var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
@@ -43,7 +44,7 @@ namespace BookARoom.Tests.Acceptance
         [Test]
         public void Should_find_only_places_that_match_location_and_available_for_this_period()
         {
-            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/");
+            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", new FakeBus());
             placesAdapter.LoadPlaceFile("THE GRAND BUDAPEST HOTEL-availabilities.json"); // available
             placesAdapter.LoadPlaceFile("Danubius Health Spa Resort Helia-availabilities.json"); // available
             placesAdapter.LoadPlaceFile("BudaFull-the-always-unavailable-hotel-availabilities.json"); // unavailable
@@ -58,7 +59,7 @@ namespace BookARoom.Tests.Acceptance
         [Test]
         public void Should_throw_exception_when_checkinDate_is_after_checkOutDate()
         {
-            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/");
+            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", new FakeBus());
             var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
 
             Check.ThatCode(() =>
@@ -72,7 +73,7 @@ namespace BookARoom.Tests.Acceptance
         [Test]
         public void Should_find_places_despite_wrong_case_location()
         {
-            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/");
+            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", new FakeBus());
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
             var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
@@ -86,7 +87,7 @@ namespace BookARoom.Tests.Acceptance
         [Test]
         public void Should_find_new_matching_places_after_new_place_is_integrated()
         {
-            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/");
+            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", new FakeBus());
             var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
 
             // Integrates a first place
@@ -105,7 +106,7 @@ namespace BookARoom.Tests.Acceptance
         [Test]
         public void Should_get_place_from_its_id()
         {
-            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/");
+            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", new FakeBus());
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
             var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
