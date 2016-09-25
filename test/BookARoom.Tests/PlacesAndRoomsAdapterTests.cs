@@ -1,4 +1,5 @@
 ﻿using BookARoom.Infra;
+using BookARoom.Infra.MessageBus;
 using BookARoom.Infra.ReadModel.Adapters;
 using NFluent;
 using NUnit.Framework;

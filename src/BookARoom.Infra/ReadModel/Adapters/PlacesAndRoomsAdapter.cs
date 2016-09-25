@@ -5,6 +5,7 @@ using System.Linq;
 using BookARoom.Domain;
 using BookARoom.Domain.ReadModel;
 using BookARoom.Domain.WriteModel;
+using BookARoom.Infra.MessageBus;
 using BookARoom.IntegrationModel;
 using Newtonsoft.Json;
 using Price = BookARoom.Domain.ReadModel.Price;

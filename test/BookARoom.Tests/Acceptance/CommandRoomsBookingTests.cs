@@ -4,6 +4,7 @@ using System.Threading;
 using BookARoom.Domain.ReadModel;
 using BookARoom.Domain.WriteModel;
 using BookARoom.Infra;
+using BookARoom.Infra.MessageBus;
 using BookARoom.Infra.ReadModel.Adapters;
 using BookARoom.Infra.WriteModel;
 using NFluent;

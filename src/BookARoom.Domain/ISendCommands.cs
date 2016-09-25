@@ -1,8 +1,7 @@
 namespace BookARoom.Domain
 {
-    public interface ICommandSender
+    public interface ISendCommands
     {
         void Send<T>(T command) where T : ICommand;
-
     }
 }

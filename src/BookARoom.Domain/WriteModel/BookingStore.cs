@@ -21,7 +21,7 @@
             this.repository.Save(bookingCommand);
 
             var roomBooked = new RoomBooked(bookingCommand.PlaceId, bookingCommand.ClientId, bookingCommand.RoomNumber, bookingCommand.CheckInDate, bookingCommand.CheckOutDate);
-            this.eventPublisher.Publish(roomBooked);
+            this.eventPublisher.PublishTo(roomBooked);
         }
     }
 }

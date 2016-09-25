@@ -2,6 +2,6 @@
 {
     public class Event : Message
     {
-        public int Version;
+        // public int Version; // no time for Event Sourcing here.
     }
 }

@@ -1,17 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using BookARoom.Domain;
 
-namespace BookARoom.Infra
+namespace BookARoom.Infra.MessageBus
 {
     /// <summary>
     /// Class coming from Greg YOUNG's https://github.com/gregoryyoung/m-r repo (thanks Greg!).
-    /// (I just added the <see cref="ISubscribeToEvents"/> interface for my own needs)
+    /// (I just added the <see cref="ISubscribeToEvents"/> interface for my own needs and 
+    /// slightly changed the Publish method to introduce a synchronous/asynchronous strategy).
     /// </summary>
-    public class FakeBus : ICommandSender, IEventPublisher, ISubscribeToEvents
+    public class FakeBus : ISendCommands, IEventPublisher, ISubscribeToEvents
     {
         private readonly Dictionary<Type, List<Action<Message>>> _routes = new Dictionary<Type, List<Action<Message>>>();
+        private readonly IPublishToHandlers publicationStrategy;
+
+        public FakeBus(bool synchronousPublication = true)
+        {
+            if (synchronousPublication)
+            {
+                this.publicationStrategy = new SynchronousPublicationStrategy();
+            }
+            else
+            {
+                this.publicationStrategy = new AsynchronousThreadPoolPublicationStrategy();
+            }
+        }
 
         public void RegisterHandler<T>(Action<T> handler) where T : Message
         {
@@ -41,7 +54,7 @@ namespace BookARoom.Infra
             }
         }
 
-        public void Publish<T>(T @event) where T : Event
+        public void PublishTo<T>(T @event) where T : Event
         {
             List<Action<Message>> handlers;
 
@@ -49,11 +62,7 @@ namespace BookARoom.Infra
 
             foreach(var handler in handlers)
             {
-                //dispatch on thread pool for added awesomeness
-                var handler1 = handler;
-
-                handler1(@event); // synchronous publication to simplify the test of this first step
-                //ThreadPool.QueueUserWorkItem(x => handler1(@event));
+                this.publicationStrategy.PublishTo(handler, @event);
             }
         }
     }
