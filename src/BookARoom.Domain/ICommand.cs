@@ -1,6 +1,6 @@
 ﻿namespace BookARoom.Domain
 {
-    public class ICommand : Message
+    public interface ICommand : IMessage
     {
     }
 }

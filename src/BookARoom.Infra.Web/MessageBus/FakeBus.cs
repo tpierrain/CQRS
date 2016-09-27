@@ -11,7 +11,7 @@ namespace BookARoom.Infra.Web.MessageBus
     /// </summary>
     public class FakeBus : ISendCommands, IEventPublisher, ISubscribeToEvents
     {
-        private readonly Dictionary<Type, List<Action<Message>>> _routes = new Dictionary<Type, List<Action<Message>>>();
+        private readonly Dictionary<Type, List<Action<IMessage>>> _routes = new Dictionary<Type, List<Action<IMessage>>>();
         private readonly IPublishToHandlers publicationStrategy;
 
         public FakeBus(bool synchronousPublication = true)
@@ -26,13 +26,13 @@ namespace BookARoom.Infra.Web.MessageBus
             }
         }
 
-        public void RegisterHandler<T>(Action<T> handler) where T : Message
+        public void RegisterHandler<T>(Action<T> handler) where T : IMessage
         {
-            List<Action<Message>> handlers;
+            List<Action<IMessage>> handlers;
 
             if(!_routes.TryGetValue(typeof(T), out handlers))
             {
-                handlers = new List<Action<Message>>();
+                handlers = new List<Action<IMessage>>();
                 _routes.Add(typeof(T), handlers);
             }
 
@@ -41,7 +41,7 @@ namespace BookARoom.Infra.Web.MessageBus
 
         public void Send<T>(T command) where T : ICommand
         {
-            List<Action<Message>> handlers;
+            List<Action<IMessage>> handlers;
 
             if (_routes.TryGetValue(typeof(T), out handlers))
             {
@@ -54,9 +54,9 @@ namespace BookARoom.Infra.Web.MessageBus
             }
         }
 
-        public void PublishTo<T>(T @event) where T : Event
+        public void PublishTo<T>(T @event) where T : IEvent
         {
-            List<Action<Message>> handlers;
+            List<Action<IMessage>> handlers;
 
             if (!_routes.TryGetValue(@event.GetType(), out handlers)) return;
 

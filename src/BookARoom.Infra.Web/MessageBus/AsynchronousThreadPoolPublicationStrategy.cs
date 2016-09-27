@@ -6,7 +6,7 @@ namespace BookARoom.Infra.Web.MessageBus
 {
     public class AsynchronousThreadPoolPublicationStrategy : IPublishToHandlers
     {
-        public void PublishTo<T>(Action<Message> handler, T @event) where T : Event
+        public void PublishTo<T>(Action<IMessage> handler, T @event) where T : IEvent
         {
             //dispatch on thread pool for added awesomeness
             ThreadPool.QueueUserWorkItem(x => handler(@event));

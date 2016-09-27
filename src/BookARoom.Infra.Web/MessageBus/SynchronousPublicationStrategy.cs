@@ -5,7 +5,7 @@ namespace BookARoom.Infra.Web.MessageBus
 {
     public class SynchronousPublicationStrategy : IPublishToHandlers
     {
-        public void PublishTo<T>(Action<Message> handler, T @event) where T : Event
+        public void PublishTo<T>(Action<IMessage> handler, T @event) where T : IEvent
         {
             handler(@event); // synchronous publication to simplify the test of this first step
         }

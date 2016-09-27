@@ -5,6 +5,6 @@ namespace BookARoom.Infra.Web.MessageBus
 {
     public interface IPublishToHandlers
     {
-        void PublishTo<T>(Action<Message> handler, T @event) where T : Event;
+        void PublishTo<T>(Action<IMessage> handler, T @event) where T : IEvent;
     }
 }

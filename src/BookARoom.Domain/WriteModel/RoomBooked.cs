@@ -2,7 +2,7 @@
 
 namespace BookARoom.Domain.WriteModel
 {
-    public class RoomBooked : Event
+    public class RoomBooked : IEvent
     {
         public int PlaceId { get; }
         public string ClientId { get; }

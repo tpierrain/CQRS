@@ -1,6 +1,6 @@
 ﻿namespace BookARoom.Domain
 {
-    public class Event : Message
+    public interface IEvent : IMessage
     {
         // public int Version; // no time for Event Sourcing here.
     }
