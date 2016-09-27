@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookARoom.Domain;
+using BookARoom.Domain.ReadModel;
+using BookARoom.Domain.WriteModel;
+using BookARoom.Infra.Web.MessageBus;
+using BookARoom.Infra.Web.ReadModel.Adapters;
+using BookARoom.Infra.Web.WriteModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +33,24 @@ namespace BookARoom.Infra.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var bus = new FakeBus();
+
+            var bookingRepository = new BookingAndClientsRepository();
+            var bookingHandler = new BookingCommandHandler(new BookingStore(bookingRepository, bus));
+
+            // Register handlers (note: this should be packaged)
+            bus.RegisterHandler<BookARoomCommand>(bookingHandler.Handle);
+
+            // TODO: register handlers for the query part coming from the bus?
+
+            services.AddSingleton<ISendCommands>(bus);
+
+            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", bus);
+            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
+
+            services.AddSingleton<IQueryBookingProposals>(readFacade);
+            services.AddSingleton<IProvidePlaces>(readFacade);
+
             // Add framework services.
             services.AddMvc();
         }

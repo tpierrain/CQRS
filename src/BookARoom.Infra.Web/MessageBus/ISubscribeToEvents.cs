@@ -1,7 +1,7 @@
 using System;
 using BookARoom.Domain;
 
-namespace BookARoom.Infra.MessageBus
+namespace BookARoom.Infra.Web.MessageBus
 {
     public interface ISubscribeToEvents
     {

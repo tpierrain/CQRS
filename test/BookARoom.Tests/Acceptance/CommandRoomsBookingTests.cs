@@ -4,9 +4,9 @@ using System.Threading;
 using BookARoom.Domain.ReadModel;
 using BookARoom.Domain.WriteModel;
 using BookARoom.Infra;
-using BookARoom.Infra.MessageBus;
-using BookARoom.Infra.ReadModel.Adapters;
-using BookARoom.Infra.WriteModel;
+using BookARoom.Infra.Web.MessageBus;
+using BookARoom.Infra.Web.ReadModel.Adapters;
+using BookARoom.Infra.Web.WriteModel;
 using NFluent;
 using NUnit.Framework;
 

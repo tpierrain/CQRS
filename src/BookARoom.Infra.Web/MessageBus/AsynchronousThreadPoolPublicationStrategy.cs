@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using BookARoom.Domain;
 
-namespace BookARoom.Infra.MessageBus
+namespace BookARoom.Infra.Web.MessageBus
 {
     public class AsynchronousThreadPoolPublicationStrategy : IPublishToHandlers
     {

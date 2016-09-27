@@ -2,8 +2,8 @@
 using System.Linq;
 using BookARoom.Domain.ReadModel;
 using BookARoom.Infra;
-using BookARoom.Infra.MessageBus;
-using BookARoom.Infra.ReadModel.Adapters;
+using BookARoom.Infra.Web.MessageBus;
+using BookARoom.Infra.Web.ReadModel.Adapters;
 using NFluent;
 using NUnit.Framework;
 

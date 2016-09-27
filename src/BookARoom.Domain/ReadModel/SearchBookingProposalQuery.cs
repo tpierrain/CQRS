@@ -2,7 +2,7 @@
 
 namespace BookARoom.Domain.ReadModel
 {
-    public class SearchBookingProposalQuery
+    public class SearchBookingProposalQuery : Query
     {
         public DateTime CheckInDate { get; }
         public DateTime CheckOutDate { get; }
