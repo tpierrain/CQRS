@@ -5,6 +5,5 @@
         void Save(BookARoomCommand bookingCommand);
         bool IsClientAlready(string clientIdentifier);
         void CreateClient(string clientIdentifier);
-        long BookingCount { get; }
     }
 }

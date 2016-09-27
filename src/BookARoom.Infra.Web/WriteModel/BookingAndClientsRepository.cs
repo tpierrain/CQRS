@@ -6,8 +6,6 @@ namespace BookARoom.Infra.Web.WriteModel
 {
     public class BookingAndClientsRepository : ISaveBookingCommandsAndClients
     {
-        public long BookingCount { get; private set; }
-
         private readonly Dictionary<string, List<ICommand>> perClientCommands;
 
         public BookingAndClientsRepository()
@@ -18,7 +16,6 @@ namespace BookARoom.Infra.Web.WriteModel
         public void Save(BookARoomCommand bookingCommand)
         {
             this.perClientCommands[bookingCommand.ClientId].Add(bookingCommand);
-            this.BookingCount++;
         }
 
         public bool IsClientAlready(string clientIdentifier)

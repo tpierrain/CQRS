@@ -12,6 +12,7 @@
       "target": "project"
     },
     "dotnet-test-nunit": "3.4.0-beta-1",
+    "Moq": "4.6.38-alpha",
     "Newtonsoft.Json": "9.0.1",
     "NFluent": "2.0.0-alpha",
     "NUnit": "3.4.1"
