@@ -17,8 +17,6 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookARoom.Domain", "src\Boo
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookARoom.Tests", "test\BookARoom.Tests\BookARoom.Tests.xproj", "{0197FC69-EAA2-4D9E-86AE-58064B296F7A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookARoom.Infra", "src\BookARoom.Infra\BookARoom.Infra.xproj", "{5409BE70-9C3B-4D1A-832A-B72AD561605F}"
-EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookARoom.IntegrationModel", "src\BookARoom.IntegrationModel\BookARoom.IntegrationModel.xproj", "{3C54CC13-C90F-4296-BD22-F9A1CE131C21}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "places-integration-files", "places-integration-files", "{1B5A370C-6727-48BE-B863-8A9FBCDD8650}"
@@ -28,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "places-integration-files", 
 		integration-files\New York Sofitel-availabilities.json = integration-files\New York Sofitel-availabilities.json
 		integration-files\THE GRAND BUDAPEST HOTEL-availabilities.json = integration-files\THE GRAND BUDAPEST HOTEL-availabilities.json
 	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BookARoom.Infra.Web", "src\BookARoom.Infra.Web\BookARoom.Infra.Web.xproj", "{A6C40114-AB7F-4567-94D3-7371109F9EB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +43,14 @@ Global
 		{0197FC69-EAA2-4D9E-86AE-58064B296F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0197FC69-EAA2-4D9E-86AE-58064B296F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0197FC69-EAA2-4D9E-86AE-58064B296F7A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5409BE70-9C3B-4D1A-832A-B72AD561605F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5409BE70-9C3B-4D1A-832A-B72AD561605F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5409BE70-9C3B-4D1A-832A-B72AD561605F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5409BE70-9C3B-4D1A-832A-B72AD561605F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3C54CC13-C90F-4296-BD22-F9A1CE131C21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3C54CC13-C90F-4296-BD22-F9A1CE131C21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C54CC13-C90F-4296-BD22-F9A1CE131C21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C54CC13-C90F-4296-BD22-F9A1CE131C21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6C40114-AB7F-4567-94D3-7371109F9EB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6C40114-AB7F-4567-94D3-7371109F9EB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6C40114-AB7F-4567-94D3-7371109F9EB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6C40114-AB7F-4567-94D3-7371109F9EB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

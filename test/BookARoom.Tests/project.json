@@ -5,7 +5,7 @@
     "BookARoom.Domain": {
       "target": "project"
     },
-    "BookARoom.Infra": {
+    "BookARoom.Infra.Web": {
       "target": "project"
     },
     "BookARoom.IntegrationModel": {
