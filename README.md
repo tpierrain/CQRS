@@ -48,7 +48,7 @@ I also find important that people understand that __CQRS ![loves](https://github
 ### Projects & Dependencies
 - ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.Domain__:  containing all the domain logic of the solution (for both read and write models). __(has no dependency)__
 
-- ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.Infra__: ASP.NET core project hosting the infrastructure code (i.e. non-domain one like adapters) for both read and write models. __(depends on both Domain and IntegrationModel projects and is also an ASP.NET dotnet core project)__
+- ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.Infra.Web__: ASP.NET core project hosting the infrastructure code (i.e. non-domain one like adapters) for both read and write models. __(depends on both Domain and IntegrationModel projects and is also an ASP.NET dotnet core project)__
 
 - ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.Tests__: containing tests for all projects. __(depends on all the other BookARoom projects)__
 
