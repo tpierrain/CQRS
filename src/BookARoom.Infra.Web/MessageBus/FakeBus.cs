@@ -9,7 +9,7 @@ namespace BookARoom.Infra.Web.MessageBus
     /// (I just added the <see cref="ISubscribeToEvents"/> interface for my own needs and 
     /// slightly changed the Publish method to introduce a synchronous/asynchronous strategy).
     /// </summary>
-    public class FakeBus : ISendCommands, IEventPublisher, ISubscribeToEvents
+    public class FakeBus : ISendCommands, IPublishEvents, ISubscribeToEvents
     {
         private readonly Dictionary<Type, List<Action<IMessage>>> _routes = new Dictionary<Type, List<Action<IMessage>>>();
         private readonly IPublishToHandlers publicationStrategy;

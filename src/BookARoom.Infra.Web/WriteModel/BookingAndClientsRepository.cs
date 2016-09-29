@@ -4,7 +4,7 @@ using BookARoom.Domain.WriteModel;
 
 namespace BookARoom.Infra.Web.WriteModel
 {
-    public class BookingAndClientsRepository : ISaveBookingCommandsAndClients
+    public class BookingAndClientsRepository : IBookingRepository, IClientRepository
     {
         private readonly Dictionary<string, List<ICommand>> perClientCommands;
 

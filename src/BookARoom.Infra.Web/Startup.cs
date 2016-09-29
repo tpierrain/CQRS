@@ -34,9 +34,9 @@ namespace BookARoom.Infra.Web
         public void ConfigureServices(IServiceCollection services)
         {
             var bus = new FakeBus();
-
             var bookingRepository = new BookingAndClientsRepository();
-            var bookingHandler = new BookingCommandHandler(new BookingStore(bookingRepository, bus));
+
+            var bookingHandler = CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository, bookingRepository, bus);
 
             // Register handlers (note: this should be packaged)
             bus.RegisterHandler<BookARoomCommand>(bookingHandler.Handle);

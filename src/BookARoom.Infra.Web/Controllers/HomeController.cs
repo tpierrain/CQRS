@@ -31,7 +31,7 @@ namespace BookARoom.Infra.Web.Controllers
             // instantiate a command here and post it to the bus
             var adultsCount = 2; // TODO: hide this default value within the web form
 
-            var searchQuery = new SearchBookingProposalQuery(viewModel.CheckInDate, viewModel.CheckOutDate, viewModel.Destination, adultsCount);
+            var searchQuery = new SearchBookingProposal(viewModel.CheckInDate, viewModel.CheckOutDate, viewModel.Destination, adultsCount);
             
             // TODO: see what's the recommendation regarding the ASP.NET core threading model
             //this.bus.Send(searchQuery);

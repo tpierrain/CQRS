@@ -2,26 +2,28 @@
 {
     public class BookingStore : IBookRooms
     {
-        private readonly ISaveBookingCommandsAndClients repository;
-        private readonly IEventPublisher eventPublisher;
+        private readonly IBookingRepository bookingRepository;
+        private readonly IClientRepository clientRepository;
+        private readonly IPublishEvents publishEvents;
 
-        public BookingStore(ISaveBookingCommandsAndClients repository, IEventPublisher eventPublisher)
+        public BookingStore(IBookingRepository bookingRepository, IClientRepository clientRepository,  IPublishEvents publishEvents)
         {
-            this.repository = repository;
-            this.eventPublisher = eventPublisher;
+            this.bookingRepository = bookingRepository;
+            this.clientRepository = clientRepository;
+            this.publishEvents = publishEvents;
         }
 
         public void BookARoom(BookARoomCommand bookingCommand)
         {
-            if (!this.repository.IsClientAlready(bookingCommand.ClientId))
+            if (!this.clientRepository.IsClientAlready(bookingCommand.ClientId))
             {
-                this.repository.CreateClient(bookingCommand.ClientId);    
+                this.clientRepository.CreateClient(bookingCommand.ClientId);    
             }
 
-            this.repository.Save(bookingCommand);
+            this.bookingRepository.Save(bookingCommand);
 
             var roomBooked = new RoomBooked(bookingCommand.PlaceId, bookingCommand.ClientId, bookingCommand.RoomNumber, bookingCommand.CheckInDate, bookingCommand.CheckOutDate);
-            this.eventPublisher.PublishTo(roomBooked);
+            this.publishEvents.PublishTo(roomBooked);
         }
     }
 }

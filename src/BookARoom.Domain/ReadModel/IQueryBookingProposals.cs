@@ -8,6 +8,6 @@ namespace BookARoom.Domain.ReadModel
     /// </summary>
     public interface IQueryBookingProposals
     {
-        IEnumerable<BookingProposal> SearchBookingProposals(SearchBookingProposalQuery query);
+        IEnumerable<BookingProposal> SearchBookingProposals(SearchBookingProposal query);
     }
 }

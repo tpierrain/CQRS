@@ -2,7 +2,7 @@
 
 namespace BookARoom.Domain.ReadModel
 {
-    public class SearchBookingProposalQuery : Query
+    public class SearchBookingProposal : Query
     {
         public DateTime CheckInDate { get; }
         public DateTime CheckOutDate { get; }
@@ -11,7 +11,7 @@ namespace BookARoom.Domain.ReadModel
         public int NumberOfRoomsNeeded { get; }
         public int ChildrenCount { get; }
 
-        public SearchBookingProposalQuery(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int numberOfRoomsNeeded = 1, int childrenCount = 0)
+        public SearchBookingProposal(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int numberOfRoomsNeeded = 1, int childrenCount = 0)
         {
             CheckInDate = checkInDate;
             CheckOutDate = checkOutDate;

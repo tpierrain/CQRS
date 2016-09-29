@@ -2,6 +2,7 @@
 using System.Linq;
 using BookARoom.Domain.ReadModel;
 using BookARoom.Domain.WriteModel;
+using BookARoom.Infra.Web;
 using BookARoom.Infra.Web.MessageBus;
 using BookARoom.Infra.Web.ReadModel.Adapters;
 using BookARoom.Infra.Web.WriteModel;
@@ -17,8 +18,9 @@ namespace BookARoom.Tests.Acceptance
         [Test]
         public void Should_Book_a_room()
         {
-            var bookingRepository = new Mock<ISaveBookingCommandsAndClients>();
-            var bookingHandler = new BookingCommandHandler(new BookingStore(bookingRepository.Object, new FakeBus()));
+            var bookingRepository = new Mock<IBookingRepository>();
+            var clientRepository = new Mock<IClientRepository>();
+            var bookingHandler = new BookingCommandHandler(new BookingStore(bookingRepository.Object, clientRepository.Object, new FakeBus()));
 
             bookingRepository.Verify(x => x.Save(It.IsAny<BookARoomCommand>()), Times.Never);
 
@@ -35,13 +37,14 @@ namespace BookARoom.Tests.Acceptance
             var bus = new FakeBus();
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", bus);
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
-            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
+
+            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(placesAdapter, placesAdapter);
 
             // Search Rooms availabilities
             var checkInDate = Constants.MyFavoriteSaturdayIn2017;
             var checkOutDate = checkInDate.AddDays(1);
 
-            var searchQuery = new SearchBookingProposalQuery(checkInDate, checkOutDate, location: "New York", adultsCount: 2);
+            var searchQuery = new SearchBookingProposal(checkInDate, checkOutDate, location: "New York", adultsCount: 2);
             var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
             // We should get 1 booking proposal with 3 available rooms in it.
             Check.That(bookingProposals).HasSize(1);
@@ -52,7 +55,8 @@ namespace BookARoom.Tests.Acceptance
 
             // Initialize Write-model side
             var bookingRepository = new BookingAndClientsRepository();
-            var bookingHandler = new BookingCommandHandler(new BookingStore(bookingRepository, bus));
+
+            var bookingHandler = CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository, bookingRepository, bus);
 
             // We book a room from that booking proposal
             BookARoomFromAProposal(bookingProposal, checkInDate, checkOutDate, bookingHandler);

@@ -26,7 +26,7 @@ namespace BookARoom.Domain.ReadModel
 
         #region IQueryBookingProposals members
 
-        public IEnumerable<BookingProposal> SearchBookingProposals(SearchBookingProposalQuery query)
+        public IEnumerable<BookingProposal> SearchBookingProposals(SearchBookingProposal query)
         {
             return this.SearchBookingProposals(query.CheckInDate, query.CheckOutDate, query.Location, query.AdultsCount, query.NumberOfRoomsNeeded, query.ChildrenCount);
         }

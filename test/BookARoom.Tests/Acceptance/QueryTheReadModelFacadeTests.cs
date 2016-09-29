@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BookARoom.Domain.ReadModel;
-using BookARoom.Infra;
+using BookARoom.Infra.Web;
 using BookARoom.Infra.Web.MessageBus;
 using BookARoom.Infra.Web.ReadModel.Adapters;
 using NFluent;
@@ -17,8 +17,8 @@ namespace BookARoom.Tests.Acceptance
         {
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", new FakeBus());
 
-            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
-            var searchQuery = new SearchBookingProposalQuery(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
+            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(placesAdapter, placesAdapter);
+            var searchQuery = new SearchBookingProposal(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
             var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
             Check.That(bookingProposals).IsEmpty();
         }
@@ -29,9 +29,9 @@ namespace BookARoom.Tests.Acceptance
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", new FakeBus());
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
-            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
+            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(placesAdapter, placesAdapter);
             var requestedLocation = "New York";
-            var searchQuery = new SearchBookingProposalQuery(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: requestedLocation, adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
+            var searchQuery = new SearchBookingProposal(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: requestedLocation, adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
             var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
 
             Check.That(bookingProposals).HasSize(1);
@@ -50,8 +50,8 @@ namespace BookARoom.Tests.Acceptance
             placesAdapter.LoadPlaceFile("Danubius Health Spa Resort Helia-availabilities.json"); // available
             placesAdapter.LoadPlaceFile("BudaFull-the-always-unavailable-hotel-availabilities.json"); // unavailable
 
-            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
-            var searchQuery = new SearchBookingProposalQuery(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
+            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(placesAdapter, placesAdapter);
+            var searchQuery = new SearchBookingProposal(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
             var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
 
             Check.That(bookingProposals).HasSize(2);
@@ -61,11 +61,11 @@ namespace BookARoom.Tests.Acceptance
         public void Should_throw_exception_when_checkinDate_is_after_checkOutDate()
         {
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", new FakeBus());
-            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
+            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(placesAdapter, placesAdapter);
 
             Check.ThatCode(() =>
                 {
-                    var searchQuery = new SearchBookingProposalQuery(checkInDate: DateTime.Now.AddDays(1), checkOutDate: DateTime.Now, location: "Kunming", adultsCount: 1);
+                    var searchQuery = new SearchBookingProposal(checkInDate: DateTime.Now.AddDays(1), checkOutDate: DateTime.Now, location: "Kunming", adultsCount: 1);
                     return readFacade.SearchBookingProposals(searchQuery);
                 })
                 .Throws<InvalidOperationException>();
@@ -77,9 +77,9 @@ namespace BookARoom.Tests.Acceptance
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", new FakeBus());
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
-            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
+            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(placesAdapter, placesAdapter);
             var searchedLocation = "new york";
-            var searchQuery = new SearchBookingProposalQuery(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: searchedLocation, adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
+            var searchQuery = new SearchBookingProposal(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: searchedLocation, adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
             var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
 
             Check.That(bookingProposals).HasSize(1);
@@ -89,12 +89,12 @@ namespace BookARoom.Tests.Acceptance
         public void Should_find_new_matching_places_after_new_place_is_integrated()
         {
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", new FakeBus());
-            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
+            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(placesAdapter, placesAdapter);
 
             // Integrates a first place
             placesAdapter.LoadPlaceFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
 
-            var searchQuery = new SearchBookingProposalQuery(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
+            var searchQuery = new SearchBookingProposal(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
             var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
             Check.That(bookingProposals).HasSize(1);
 
@@ -110,7 +110,7 @@ namespace BookARoom.Tests.Acceptance
             var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", new FakeBus());
             placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
 
-            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
+            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(placesAdapter, placesAdapter);
 
             var placeId = 1;
             var place = readFacade.GetPlace(placeId: placeId);
