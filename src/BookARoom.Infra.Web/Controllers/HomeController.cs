@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookARoom.Domain;
+﻿using BookARoom.Domain;
 using BookARoom.Domain.ReadModel;
 using BookARoom.Infra.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -26,18 +22,22 @@ namespace BookARoom.Infra.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(SearchRoomViewModel viewModel)
+        public IActionResult Index(SearchRoomQueryViewModel queryViewModel)
         {
             // instantiate a command here and post it to the bus
             var adultsCount = 2; // TODO: hide this default value within the web form
 
-            var searchQuery = new SearchBookingProposal(viewModel.CheckInDate, viewModel.CheckOutDate, viewModel.Destination, adultsCount);
-            
-            // TODO: see what's the recommendation regarding the ASP.NET core threading model
-            //this.bus.Send(searchQuery);
+            var searchQuery = new SearchBookingProposal(queryViewModel.CheckInDate, queryViewModel.CheckOutDate, queryViewModel.Destination, adultsCount);
             var searchResult = this.searchService.SearchBookingProposals(searchQuery);
 
-            return View();
+            var bookingProposalsViewModel = new BookingProposalsViewModel(searchResult);
+
+            bookingProposalsViewModel.Portnaouaq = "Kamoulox";
+
+            return RedirectToAction("Index", "BookingProposals", bookingProposalsViewModel);
+
+            return View(bookingProposalsViewModel);
+            //return View();
         }
 
         public IActionResult About()

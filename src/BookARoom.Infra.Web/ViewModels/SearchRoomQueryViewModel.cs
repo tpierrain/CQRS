@@ -2,7 +2,7 @@
 
 namespace BookARoom.Infra.Web.ViewModels
 {
-    public class SearchRoomViewModel
+    public class SearchRoomQueryViewModel
     {
         public string Destination { get; set; }
         public DateTime CheckInDate { get; set; }

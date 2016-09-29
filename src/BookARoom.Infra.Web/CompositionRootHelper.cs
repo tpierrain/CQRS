@@ -4,6 +4,9 @@ using BookARoom.Domain.WriteModel;
 
 namespace BookARoom.Infra.Web
 {
+    /// <summary>
+    /// Ease the integration of the various hexagons (one for the read model, the other for the write model).
+    /// </summary>
     public class CompositionRootHelper
     {
         public static ReadModelFacade BuildTheReadModelHexagon(IProvideRooms roomsAdapter, IProvidePlaces placesAdapter)
