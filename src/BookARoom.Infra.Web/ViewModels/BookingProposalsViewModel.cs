@@ -5,15 +5,34 @@ namespace BookARoom.Infra.Web.ViewModels
 {
     public class BookingProposalsViewModel
     {
-        public IEnumerable<BookingProposal> Proposals { get; /* TODO: comment the setter */ set; }
-        public string Portnaouaq { get; /* TODO: comment the setter */ set; }
+        private IEnumerable<BookingProposal> proposals;
+
+        public IEnumerable<BookingProposal> Proposals
+        {
+            get
+            {
+                if (this.proposals == null)
+                {
+                    this.proposals = new List<BookingProposal>(); // TODO/ remove this hack
+                }
+
+                return this.proposals;
+            }
+            set
+            {
+                this.proposals = value;
+            }
+        }
+
+        public string Location { get; /* TODO: comment the setter */ set; }
 
         public BookingProposalsViewModel()
         {
         }
 
-        public BookingProposalsViewModel(IEnumerable<BookingProposal> proposals)
+        public BookingProposalsViewModel(string location, IEnumerable<BookingProposal> proposals)
         {
+            this.Location = location;
             this.Proposals = proposals;
         }
     }

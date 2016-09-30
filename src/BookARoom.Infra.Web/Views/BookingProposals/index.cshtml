@@ -5,6 +5,25 @@
 
 TADA! Here is the list of all proposals for booking.
 <br />
-Portnaouaq = "@{Model.Portnaouaq}"
+Location = "@Model.Location"
 <br />
-Et puis quoi encore ?
+<table>
+    @foreach (var bookingProposal in Model.Proposals)
+    {
+        <tr>
+            <td>@bookingProposal.Place</td>
+            <td>
+                <table>
+                    @foreach (var availableRoomsWithPrice in bookingProposal.AvailableRoomsWithPrices)
+                    {
+                        <tr>
+                            <td>@availableRoomsWithPrice.RoomIdentifier</td>
+                            <td>@availableRoomsWithPrice.PriceForOneAdult</td>
+                            <td>@availableRoomsWithPrice.PriceForTwoAdults</td>
+                        </tr>
+                    }
+                </table>
+            </td>
+        </tr>
+    }
+</table>

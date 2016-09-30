@@ -30,14 +30,11 @@ namespace BookARoom.Infra.Web.Controllers
             var searchQuery = new SearchBookingProposal(queryViewModel.CheckInDate, queryViewModel.CheckOutDate, queryViewModel.Destination, adultsCount);
             var searchResult = this.searchService.SearchBookingProposals(searchQuery);
 
-            var bookingProposalsViewModel = new BookingProposalsViewModel(searchResult);
+            var bookingProposalsViewModel = new BookingProposalsViewModel(queryViewModel.Destination, searchResult);
 
-            bookingProposalsViewModel.Portnaouaq = "Kamoulox";
+            bookingProposalsViewModel.Location = searchQuery.Location;
 
             return RedirectToAction("Index", "BookingProposals", bookingProposalsViewModel);
-
-            return View(bookingProposalsViewModel);
-            //return View();
         }
 
         public IActionResult About()
