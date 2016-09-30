@@ -50,7 +50,7 @@ I also find important that people understand that __CQRS ![loves](https://github
 
 - ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.Infra__: containing the reusable infrastructure code (i.e. non-domain one like adapters, command handler, repositories) for both read and write models. __(depends on both Domain and IntegrationModel projects)__
 
-- ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.Infra.Web__: ASP.NET core project hosting the infrastructure code (i.e. non-domain one like adapters) for both read and write models. __(depends on both Domain, Infra and IntegrationModel projects)__
+- ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.Infra.Web__: ASP.NET core project hosting the web infrastructure code (like ViewModels, Views and Controllers) which relies on the BookARoom.Infra code. __(depends on both Domain, Infra and IntegrationModel projects)__
 
 - ![directory](https://github.com/tpierrain/cqrs/blob/master/images/directory.png?raw=true) __BookARoom.Tests__: containing tests for all projects. __(depends on all the other BookARoom projects)__
 
