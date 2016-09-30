@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookARoom.Domain;
+﻿using BookARoom.Domain;
 using BookARoom.Domain.ReadModel;
-using BookARoom.Domain.WriteModel;
 using BookARoom.Infra.MessageBus;
 using BookARoom.Infra.ReadModel.Adapters;
 using BookARoom.Infra.WriteModel;
@@ -18,6 +13,8 @@ namespace BookARoom.Infra.Web
 {
     public class Startup
     {
+        private IHostingEnvironment env;
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -26,6 +23,8 @@ namespace BookARoom.Infra.Web
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            this.env = env;
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -44,14 +43,14 @@ namespace BookARoom.Infra.Web
             // TODO: register handlers for the query part coming from the bus?
 
             // Build the READ side ---------------------------------
-            var hotelsAdapter = new HotelAndRoomsAdapter(@"hotels/", bus);
+            var hotelsAdapter = new HotelAndRoomsAdapter($"{env.WebRootPath}/hotels/", bus);
 
             // TODO: replaces the next lines by a LoadAllHotelsFiles() method on the HotelAndRoomsAdapter
             // TODO: find the proper path (current error is: 'C:\Dev\CQRS\experiences16\src\BookARoom.Infra.Web\hotels\THE GRAND BUDAPEST HOTEL-availabilities.json'.'.)
-            //hotelsAdapter.LoadHotelFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
-            //hotelsAdapter.LoadHotelFile("Danubius Health Spa Resort Helia-availabilities.json");
-            //hotelsAdapter.LoadHotelFile("BudaFull-the-always-unavailable-hotel-availabilities.json");
-            //hotelsAdapter.LoadHotelFile("New York Sofitel-availabilities.json");
+            hotelsAdapter.LoadHotelFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
+            hotelsAdapter.LoadHotelFile("Danubius Health Spa Resort Helia-availabilities.json");
+            hotelsAdapter.LoadHotelFile("BudaFull-the-always-unavailable-hotel-availabilities.json");
+            hotelsAdapter.LoadHotelFile("New York Sofitel-availabilities.json");
 
             var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter);
 
