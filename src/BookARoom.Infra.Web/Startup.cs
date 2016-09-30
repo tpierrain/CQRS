@@ -45,11 +45,11 @@ namespace BookARoom.Infra.Web
 
             services.AddSingleton<ISendCommands>(bus);
 
-            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", bus);
-            var readFacade = new ReadModelFacade(placesAdapter, placesAdapter);
+            var hotelsAdapter = new HotelAndRoomsAdapter(@"../../integration-files/", bus);
+            var readFacade = new ReadModelFacade(hotelsAdapter, hotelsAdapter);
 
             services.AddSingleton<IQueryBookingProposals>(readFacade);
-            services.AddSingleton<IProvidePlaces>(readFacade);
+            services.AddSingleton<IProvideHotel>(readFacade);
 
             // Add framework services.
             services.AddMvc();

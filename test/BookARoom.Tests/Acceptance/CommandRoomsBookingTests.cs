@@ -5,7 +5,6 @@ using BookARoom.Domain.WriteModel;
 using BookARoom.Infra;
 using BookARoom.Infra.MessageBus;
 using BookARoom.Infra.ReadModel.Adapters;
-using BookARoom.Infra.Web;
 using BookARoom.Infra.WriteModel;
 using Moq;
 using NFluent;
@@ -25,7 +24,7 @@ namespace BookARoom.Tests.Acceptance
 
             bookingRepository.Verify(x => x.Save(It.IsAny<BookARoomCommand>()), Times.Never);
 
-            var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", placeId: 1, roomNumber: "2", checkInDate: DateTime.Parse("2016-09-17"), checkOutDate: DateTime.Parse("2016-09-18"));
+            var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", hotelId: 1, roomNumber: "2", checkInDate: DateTime.Parse("2016-09-17"), checkOutDate: DateTime.Parse("2016-09-18"));
             bookingHandler.Handle(bookingCommand);
 
             bookingRepository.Verify(x => x.Save(It.Is<BookARoomCommand>(y => y.ClientId == "thomas@pierrain.net")), Times.Once);
@@ -36,10 +35,10 @@ namespace BookARoom.Tests.Acceptance
         {
             // Initialize Read-model side
             var bus = new FakeBus();
-            var placesAdapter = new PlacesAndRoomsAdapter(@"../../integration-files/", bus);
-            placesAdapter.LoadPlaceFile("New York Sofitel-availabilities.json");
+            var hotelsAdapter = new HotelAndRoomsAdapter(@"../../integration-files/", bus);
+            hotelsAdapter.LoadHotelFile("New York Sofitel-availabilities.json");
 
-            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(placesAdapter, placesAdapter);
+            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter);
 
             // Search Rooms availabilities
             var checkInDate = Constants.MyFavoriteSaturdayIn2017;
@@ -73,7 +72,7 @@ namespace BookARoom.Tests.Acceptance
         private static void BookARoomFromAProposal(BookingProposal bookingProposal, DateTime checkInDate, DateTime checkOutDate, BookingCommandHandler bookingHandler)
         {
             var firstRoomOfTheUniqueProposal = bookingProposal.AvailableRoomsWithPrices.First();
-            var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", placeId: bookingProposal.Place.Identifier, roomNumber: firstRoomOfTheUniqueProposal.RoomIdentifier, checkInDate: checkInDate, checkOutDate: checkOutDate);
+            var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", hotelId: bookingProposal.Hotel.Identifier, roomNumber: firstRoomOfTheUniqueProposal.RoomIdentifier, checkInDate: checkInDate, checkOutDate: checkOutDate);
             bookingHandler.Handle(bookingCommand);
         }
     }

@@ -1,6 +1,6 @@
 ﻿{
-  "PlaceId": 4,
-  "PlaceName": "BudaFull-the-always-unavailable-hotel",
+  "HotelId": 4,
+  "HotelName": "BudaFull-the-always-unavailable-hotel",
   "Location": "Budapest",
   "NumberOfRooms": 5,
   "AvailabilitiesAt": {

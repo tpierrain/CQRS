@@ -1,6 +1,6 @@
 ﻿{
-  "PlaceId": 3,
-  "PlaceName": "Danubius Health Spa Resort Helia",
+  "HotelId": 3,
+  "HotelName": "Danubius Health Spa Resort Helia",
   "Location": "Budapest",
   "NumberOfRooms": 125,
   "AvailabilitiesAt": {

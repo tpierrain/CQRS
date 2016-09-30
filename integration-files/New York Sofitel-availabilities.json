@@ -1,6 +1,6 @@
 ﻿{
-  "PlaceId": 1,
-  "PlaceName": "New York Sofitel",
+  "HotelId": 1,
+  "HotelName": "New York Sofitel",
   "Location": "New York",
   "NumberOfRooms": 405,
   "AvailabilitiesAt": {

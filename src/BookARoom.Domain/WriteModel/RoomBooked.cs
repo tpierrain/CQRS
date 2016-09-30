@@ -4,19 +4,19 @@ namespace BookARoom.Domain.WriteModel
 {
     public class RoomBooked : IEvent
     {
-        public int PlaceId { get; }
+        public int HotelId { get; }
         public string ClientId { get; }
         public string RoomNumber { get; }
         public DateTime CheckInDate { get; }
         public DateTime CheckOutDate { get; }
 
-        public RoomBooked(int placeId, string clientId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
+        public RoomBooked(int hotelId, string clientId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
         {
-            PlaceId = placeId;
-            ClientId = clientId;
-            RoomNumber = roomNumber;
-            CheckInDate = checkInDate;
-            CheckOutDate = checkOutDate;
+            this.HotelId = hotelId;
+            this.ClientId = clientId;
+            this.RoomNumber = roomNumber;
+            this.CheckInDate = checkInDate;
+            this.CheckOutDate = checkOutDate;
         }
     }
 }

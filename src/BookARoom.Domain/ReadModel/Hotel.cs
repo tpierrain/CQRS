@@ -1,10 +1,10 @@
 namespace BookARoom.Domain.ReadModel
 {
-    public class Place
+    public class Hotel
     {
-        public Place(int placeId, string name, string location, int numberOfRooms)
+        public Hotel(int hotelId, string name, string location, int numberOfRooms)
         {
-            this.Identifier = placeId;
+            this.Identifier = hotelId;
             this.Name = name;
             this.Location = location;
             this.NumberOfRooms = numberOfRooms;

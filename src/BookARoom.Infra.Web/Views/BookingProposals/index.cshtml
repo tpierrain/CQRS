@@ -11,7 +11,7 @@ Location = "@Model.Location"
     @foreach (var bookingProposal in Model.Proposals)
     {
         <tr>
-            <td>@bookingProposal.Place</td>
+            <td>@bookingProposal.Hotel</td>
             <td>
                 <table>
                     @foreach (var availableRoomsWithPrice in bookingProposal.AvailableRoomsWithPrices)

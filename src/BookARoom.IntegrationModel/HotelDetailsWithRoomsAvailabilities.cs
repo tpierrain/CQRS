@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace BookARoom.IntegrationModel
 {
-    public class PlaceDetailsWithRoomsAvailabilities
+    public class HotelDetailsWithRoomsAvailabilities
     {
         // NOTE: the Id should probably be checked/controled on the BookARoom side.
-        public int PlaceId { get; }
-        public string PlaceName { get; }
+        public int HotelId { get; }
+        public string HotelName { get; }
         public string Location { get; }
         public int NumberOfRooms { get; set; }
         public Dictionary<DateTime, RoomStatusAndPrices[]> AvailabilitiesAt { get; }
 
-        public PlaceDetailsWithRoomsAvailabilities(int placeId, string placeName, string location, int numberOfRooms)
+        public HotelDetailsWithRoomsAvailabilities(int hotelId, string hotelName, string location, int numberOfRooms)
         {
-            this.PlaceId = placeId;
-            this.PlaceName = placeName;
+            this.HotelId = hotelId;
+            this.HotelName = hotelName;
             this.Location = location;
-            NumberOfRooms = numberOfRooms;
+            this.NumberOfRooms = numberOfRooms;
             this.AvailabilitiesAt = new Dictionary<DateTime, RoomStatusAndPrices[]>();
         }
     }

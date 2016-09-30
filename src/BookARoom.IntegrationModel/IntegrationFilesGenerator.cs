@@ -16,12 +16,12 @@ namespace BookARoom.IntegrationModel
 
         public static void GenerateJsonFileForNewYorkSofitel()
         {
-            var placeId = 1;
+            var hotelId = 1;
             var hotelName = "New York Sofitel";
             var location = "New York";
             var numberOfRooms = 405;
 
-            var roomsAvailability =  new PlaceDetailsWithRoomsAvailabilities(placeId, hotelName, location, numberOfRooms);
+            var roomsAvailability =  new HotelDetailsWithRoomsAvailabilities(hotelId, hotelName, location, numberOfRooms);
             roomsAvailability.AvailabilitiesAt.Add(DateTime.Parse(myFavorite2017Saturday), new RoomStatusAndPrices[] { new RoomStatusAndPrices("101", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("102", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("201", new Price("EUR", 209), new Price("EUR", 240)) });
 
             var generatedFilePath = SerializeToJsonFile(roomsAvailability);
@@ -30,12 +30,12 @@ namespace BookARoom.IntegrationModel
 
         public static void GenerateJsonFileForGrandBudapestHotel()
         {
-            var placeId = 2;
+            var hotelId = 2;
             var hotelName = "THE GRAND BUDAPEST HOTEL";
             var location = "Budapest";
             var numberOfRooms = 240;
 
-            var roomsAvailability = new PlaceDetailsWithRoomsAvailabilities(placeId, hotelName, location, numberOfRooms);
+            var roomsAvailability = new HotelDetailsWithRoomsAvailabilities(hotelId, hotelName, location, numberOfRooms);
             roomsAvailability.AvailabilitiesAt.Add(DateTime.Parse(myFavorite2017Saturday), new RoomStatusAndPrices[] { new RoomStatusAndPrices("101", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("102", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("201", new Price("EUR", 209), new Price("EUR", 240)) });
 
             var generatedFilePath = SerializeToJsonFile(roomsAvailability);
@@ -44,12 +44,12 @@ namespace BookARoom.IntegrationModel
 
         public static void GenerateJsonFileForDanubiusHealthSpaResortHelia()
         {
-            var placeId = 3;
+            var hotelId = 3;
             var hotelName = "Danubius Health Spa Resort Helia";
             var location = "Budapest";
             var numberOfRooms = 125;
 
-            var roomsAvailability = new PlaceDetailsWithRoomsAvailabilities(placeId, hotelName, location, numberOfRooms);
+            var roomsAvailability = new HotelDetailsWithRoomsAvailabilities(hotelId, hotelName, location, numberOfRooms);
             roomsAvailability.AvailabilitiesAt.Add(DateTime.Parse(myFavorite2017Saturday), new RoomStatusAndPrices[] { new RoomStatusAndPrices("101", new Price("EUR", 109), new Price("EUR", 140)) });
 
             var generatedFilePath = SerializeToJsonFile(roomsAvailability);
@@ -58,22 +58,22 @@ namespace BookARoom.IntegrationModel
 
         public static void GenerateJsonFileForBudaFullAlwaysUnavailable()
         {
-            var placeId = 4;
+            var hotelId = 4;
             var hotelName = "BudaFull-the-always-unavailable-hotel";
             var location = "Budapest";
             var numberOfRooms = 5;
 
-            var roomsAvailability = new PlaceDetailsWithRoomsAvailabilities(placeId, hotelName, location, numberOfRooms);
+            var roomsAvailability = new HotelDetailsWithRoomsAvailabilities(hotelId, hotelName, location, numberOfRooms);
             roomsAvailability.AvailabilitiesAt.Add(DateTime.Parse(myFavorite2017Saturday), new RoomStatusAndPrices[] { });
 
             var generatedFilePath = SerializeToJsonFile(roomsAvailability);
             Console.WriteLine($"Integration file generated: {generatedFilePath}");
         }
 
-        private static string SerializeToJsonFile(PlaceDetailsWithRoomsAvailabilities placeDetailsWithRoomsAvailabilities)
+        private static string SerializeToJsonFile(HotelDetailsWithRoomsAvailabilities hotelDetailsWithRoomsAvailabilities)
         {
-            var jsonContent = JsonConvert.SerializeObject(placeDetailsWithRoomsAvailabilities, Formatting.Indented);
-            var fileName = placeDetailsWithRoomsAvailabilities.PlaceName + "-availabilities.json";
+            var jsonContent = JsonConvert.SerializeObject(hotelDetailsWithRoomsAvailabilities, Formatting.Indented);
+            var fileName = hotelDetailsWithRoomsAvailabilities.HotelName + "-availabilities.json";
             
             // ensures the full paht directory exist
             Directory.CreateDirectory(WhereToGenerateDirectoryFullPath);

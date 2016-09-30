@@ -4,24 +4,24 @@ using System.Collections.Generic;
 namespace BookARoom.Domain.ReadModel
 {
     /// <summary>
-    /// Allow to search BookingProposals or to get details about Places.
+    /// Allow to search BookingProposals or to get details about Hotels.
     /// </summary>
-    public class ReadModelFacade : IQueryBookingProposals, IProvidePlaces
+    public class ReadModelFacade : IQueryBookingProposals, IProvideHotel
     {
         // TODO: question: find a domain name instead or keep focus on the CQRS pattern to ease understanding of the MS experiences'16 audience?
 
         private readonly IProvideRooms roomsProvider;
-        private readonly IProvidePlaces placesProvider;
+        private readonly IProvideHotel hotelProvider;
 
         /// <summary>
         /// Instantiates a <see cref="ReadModelFacade"/>.
         /// </summary>
         /// <param name="roomsProvider"></param>
-        /// <param name="placesProvider"></param>
-        public ReadModelFacade(IProvideRooms roomsProvider, IProvidePlaces placesProvider)
+        /// <param name="hotelProvider"></param>
+        public ReadModelFacade(IProvideRooms roomsProvider, IProvideHotel hotelProvider)
         {
             this.roomsProvider = roomsProvider;
-            this.placesProvider = placesProvider;
+            this.hotelProvider = hotelProvider;
         }
 
         #region IQueryBookingProposals members
@@ -38,21 +38,21 @@ namespace BookARoom.Domain.ReadModel
                 throw new InvalidOperationException($"Check out date ({checkOutDate}) must be after Check in date ({checkInDate}).");
             }
 
-            return this.roomsProvider.SearchAvailablePlacesInACaseInsensitiveWay(location, checkInDate, checkOutDate);
+            return this.roomsProvider.SearchAvailableHotelsInACaseInsensitiveWay(location, checkInDate, checkOutDate);
         }
 
         #endregion
 
-        #region IProvidePlaces members
+        #region IProvideHotel members
 
-        public IEnumerable<Place> SearchFromLocation(string location)
+        public IEnumerable<Hotel> SearchFromLocation(string location)
         {
             throw new NotImplementedException();
         }
 
-        public Place GetPlace(int placeId)
+        public Hotel GetHotel(int hotelId)
         {
-            return this.placesProvider.GetPlace(placeId);
+            return this.hotelProvider.GetHotel(hotelId);
         }
 
         #endregion

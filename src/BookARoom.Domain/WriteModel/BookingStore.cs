@@ -22,7 +22,7 @@
 
             this.bookingRepository.Save(bookingCommand);
 
-            var roomBooked = new RoomBooked(bookingCommand.PlaceId, bookingCommand.ClientId, bookingCommand.RoomNumber, bookingCommand.CheckInDate, bookingCommand.CheckOutDate);
+            var roomBooked = new RoomBooked(bookingCommand.HotelId, bookingCommand.ClientId, bookingCommand.RoomNumber, bookingCommand.CheckInDate, bookingCommand.CheckOutDate);
             this.publishEvents.PublishTo(roomBooked);
         }
     }

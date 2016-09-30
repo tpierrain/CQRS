@@ -5,19 +5,19 @@ namespace BookARoom.Domain.ReadModel
 {
     public class BookingProposal
     {
-        public Place Place { get; }
+        public Hotel Hotel { get; }
 
         public IEnumerable<RoomWithPrices> AvailableRoomsWithPrices { get; }
 
-        public BookingProposal(Place place, IEnumerable<RoomWithPrices> availableRoomsWithPrices)
+        public BookingProposal(Hotel hotel, IEnumerable<RoomWithPrices> availableRoomsWithPrices)
         {
-            this.Place = place;
+            this.Hotel = hotel;
             this.AvailableRoomsWithPrices = availableRoomsWithPrices;
         }
 
         public override string ToString()
         {
-            return $"Booking proposal for place: '{this.Place}' - {this.AvailableRoomsWithPrices.Count()} possible room(s)";
+            return $"Booking proposal for hotel: '{this.Hotel}' - {this.AvailableRoomsWithPrices.Count()} possible room(s)";
         }
     }
 }

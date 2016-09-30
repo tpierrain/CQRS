@@ -9,9 +9,9 @@ namespace BookARoom.Infra
     /// </summary>
     public class CompositionRootHelper
     {
-        public static ReadModelFacade BuildTheReadModelHexagon(IProvideRooms roomsAdapter, IProvidePlaces placesAdapter)
+        public static ReadModelFacade BuildTheReadModelHexagon(IProvideRooms roomsAdapter, IProvideHotel hotelAdapter)
         {
-            return new ReadModelFacade(roomsAdapter, placesAdapter);
+            return new ReadModelFacade(roomsAdapter, hotelAdapter);
         }
 
         public static BookingCommandHandler BuildTheWriteModelHexagon(IBookingRepository bookingRepository, IClientRepository clientRepository, IPublishEvents bus)
