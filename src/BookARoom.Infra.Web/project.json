@@ -23,6 +23,9 @@
     "BookARoom.Domain": {
       "target": "project"
     },
+    "BookARoom.Infra": {
+      "target": "project"
+    },
     "BookARoom.IntegrationModel": {
       "target": "project"
     }

@@ -4,12 +4,12 @@ using System.IO;
 using System.Linq;
 using BookARoom.Domain.ReadModel;
 using BookARoom.Domain.WriteModel;
-using BookARoom.Infra.Web.MessageBus;
+using BookARoom.Infra.MessageBus;
 using BookARoom.IntegrationModel;
 using Newtonsoft.Json;
 using Price = BookARoom.Domain.ReadModel.Price;
 
-namespace BookARoom.Infra.Web.ReadModel.Adapters
+namespace BookARoom.Infra.ReadModel.Adapters
 {
     /// <summary>
     /// Adapter between the Integration model (json external files) and the domain one.

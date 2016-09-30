@@ -2,7 +2,7 @@
 using BookARoom.Domain.ReadModel;
 using BookARoom.Domain.WriteModel;
 
-namespace BookARoom.Infra.Web
+namespace BookARoom.Infra
 {
     /// <summary>
     /// Ease the integration of the various hexagons (one for the read model, the other for the write model).

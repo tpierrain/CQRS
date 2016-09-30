@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BookARoom.Domain.ReadModel;
 
-namespace BookARoom.Infra.Web.ReadModel
+namespace BookARoom.Infra.ReadModel
 {
     public class PlacesAndRoomsRepository : IProvidePlacesAndRooms
     {

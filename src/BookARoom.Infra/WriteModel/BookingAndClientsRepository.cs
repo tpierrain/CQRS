@@ -2,7 +2,7 @@
 using BookARoom.Domain;
 using BookARoom.Domain.WriteModel;
 
-namespace BookARoom.Infra.Web.WriteModel
+namespace BookARoom.Infra.WriteModel
 {
     public class BookingAndClientsRepository : IBookingRepository, IClientRepository
     {

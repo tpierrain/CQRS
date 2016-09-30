@@ -1,7 +1,7 @@
 using System;
 using BookARoom.Domain;
 
-namespace BookARoom.Infra.Web.MessageBus
+namespace BookARoom.Infra.MessageBus
 {
     public class SynchronousPublicationStrategy : IPublishToHandlers
     {

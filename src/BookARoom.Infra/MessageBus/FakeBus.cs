@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using BookARoom.Domain;
 
-namespace BookARoom.Infra.Web.MessageBus
+namespace BookARoom.Infra.MessageBus
 {
     /// <summary>
     /// Class coming from Greg YOUNG's https://github.com/gregoryyoung/m-r repo (thanks Greg!).
