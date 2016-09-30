@@ -12,7 +12,7 @@ namespace BookARoom.IntegrationModel
     {
         private const string myFavorite2017Saturday = "2017-09-16";
 
-        public static string WhereToGenerateDirectoryFullPath => Path.GetFullPath(AppContext.BaseDirectory + @"..\..\..\..\..\..\integration-files\");
+        public static string WhereToGenerateDirectoryFullPath => Path.GetFullPath(AppContext.BaseDirectory + @"../../../../../BookARoom.Infra.Web/wwwroot/hotels/");
 
         public static void GenerateJsonFileForNewYorkSofitel()
         {

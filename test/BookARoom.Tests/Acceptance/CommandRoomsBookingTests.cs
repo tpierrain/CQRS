@@ -35,7 +35,7 @@ namespace BookARoom.Tests.Acceptance
         {
             // Initialize Read-model side
             var bus = new FakeBus();
-            var hotelsAdapter = new HotelAndRoomsAdapter(@"../../integration-files/", bus);
+            var hotelsAdapter = new HotelAndRoomsAdapter(Constants.RelativePathForHotelIntegrationFiles, bus);
             hotelsAdapter.LoadHotelFile("New York Sofitel-availabilities.json");
 
             var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter);

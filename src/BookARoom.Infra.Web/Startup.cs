@@ -33,21 +33,30 @@ namespace BookARoom.Infra.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Build the WRITE side (we use a bus for it) ----------
             var bus = new FakeBus();
             var bookingRepository = new BookingAndClientsRepository();
 
             var bookingHandler = CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository, bookingRepository, bus);
-
-            // Register handlers (note: this should be packaged)
-            bus.RegisterHandler<BookARoomCommand>(bookingHandler.Handle);
+            CompositionRootHelper.SubscribeCommands(bookingHandler, bus);
+            
 
             // TODO: register handlers for the query part coming from the bus?
 
+            // Build the READ side ---------------------------------
+            var hotelsAdapter = new HotelAndRoomsAdapter(@"hotels/", bus);
+
+            // TODO: replaces the next lines by a LoadAllHotelsFiles() method on the HotelAndRoomsAdapter
+            // TODO: find the proper path (current error is: 'C:\Dev\CQRS\experiences16\src\BookARoom.Infra.Web\hotels\THE GRAND BUDAPEST HOTEL-availabilities.json'.'.)
+            //hotelsAdapter.LoadHotelFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
+            //hotelsAdapter.LoadHotelFile("Danubius Health Spa Resort Helia-availabilities.json");
+            //hotelsAdapter.LoadHotelFile("BudaFull-the-always-unavailable-hotel-availabilities.json");
+            //hotelsAdapter.LoadHotelFile("New York Sofitel-availabilities.json");
+
+            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter);
+
+            // Registers all services to the MVC IoC framework
             services.AddSingleton<ISendCommands>(bus);
-
-            var hotelsAdapter = new HotelAndRoomsAdapter(@"../../integration-files/", bus);
-            var readFacade = new ReadModelFacade(hotelsAdapter, hotelsAdapter);
-
             services.AddSingleton<IQueryBookingProposals>(readFacade);
             services.AddSingleton<IProvideHotel>(readFacade);
 
