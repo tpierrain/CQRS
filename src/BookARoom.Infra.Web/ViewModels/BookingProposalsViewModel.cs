@@ -5,6 +5,7 @@ namespace BookARoom.Infra.Web.ViewModels
 {
     public class BookingProposalsViewModel
     {
+        public SearchRoomQueryViewModel SearchCriterias { get; set; }
         public string Location { get; set; }
         public IEnumerable<BookingProposal> Proposals { get; set; }
         
@@ -12,8 +13,9 @@ namespace BookARoom.Infra.Web.ViewModels
         {
         }
 
-        public BookingProposalsViewModel(string location, IEnumerable<BookingProposal> proposals)
+        public BookingProposalsViewModel(SearchRoomQueryViewModel searchCriterias, string location, IEnumerable<BookingProposal> proposals)
         {
+            this.SearchCriterias = searchCriterias;
             this.Location = location;
             this.Proposals = proposals;
         }

@@ -30,7 +30,7 @@ namespace BookARoom.Infra.Web.Controllers
             var searchQuery = new SearchBookingProposal(queryViewModel.CheckInDate, queryViewModel.CheckOutDate, queryViewModel.Destination, queryViewModel.NumberOfAdults);
             var searchResult = this.searchService.SearchBookingProposals(searchQuery);
 
-            var bookingProposalsViewModel = new BookingProposalsViewModel(queryViewModel.Destination, searchResult);
+            var bookingProposalsViewModel = new BookingProposalsViewModel(queryViewModel, queryViewModel.Destination, searchResult);
 
             bookingProposalsViewModel.Location = searchQuery.Location;
 

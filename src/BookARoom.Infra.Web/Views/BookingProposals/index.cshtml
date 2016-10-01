@@ -3,27 +3,36 @@
     ViewData["Title"] = "Pick your booking proposal";
 }
 
-TADA! Here is the list of all proposals for booking.
-<br />
-Location = "@Model.Location"
-<br />
-<table>
+Here is the list of all booking options for your criterias:
+<br/>
+Destination: @Model.SearchCriterias.Destination <br/>
+CheckIn date: @Model.SearchCriterias.CheckInDate <br />
+CheckOut date: @Model.SearchCriterias.CheckOutDate <br />
+Number of adults: @Model.SearchCriterias.NumberOfAdults <br />
+
+<br/>
+
+<table style="border-style: groove; align-content: center">
+    <tr>
+        <td rowspan="2">Hotel name</td>
+        <td colspan="3">Rooms proposals</td>
+    </tr>
+    
+    <tr>
+        <td>Room code</td>
+        <td>One adult occupancy price</td>
+        <td>Two adults occupancy price</td>
+    </tr>
     @foreach (var bookingProposal in Model.Proposals)
     {
-        <tr>
-            <td>@bookingProposal.Hotel</td>
-            <td>
-                <table>
-                    @foreach (var availableRoomsWithPrice in bookingProposal.AvailableRoomsWithPrices)
-                    {
-                        <tr>
-                            <td>@availableRoomsWithPrice.RoomIdentifier</td>
-                            <td>@availableRoomsWithPrice.OneAdultOccupancyPrice</td>
-                            <td>@availableRoomsWithPrice.TwoAdultsOccupancyPrice</td>
-                        </tr>
-                    }
-                </table>
-            </td>
-        </tr>
+        @foreach (var availableRoomsWithPrice in bookingProposal.AvailableRoomsWithPrices)
+         {
+             <tr>
+                 <td>@bookingProposal.Hotel</td>
+                 <td>@availableRoomsWithPrice.RoomIdentifier</td>
+                 <td>@availableRoomsWithPrice.OneAdultOccupancyPrice</td>
+                 <td>@availableRoomsWithPrice.TwoAdultsOccupancyPrice</td>
+             </tr>
+         }
     }
 </table>
