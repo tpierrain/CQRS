@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace BookARoom.Domain.ReadModel
 {
-    public class BookingProposal
+    public class BookingOption
     {
         public Hotel Hotel { get; }
 
         public IEnumerable<RoomWithPrices> AvailableRoomsWithPrices { get; }
 
-        public BookingProposal(Hotel hotel, IEnumerable<RoomWithPrices> availableRoomsWithPrices)
+        public BookingOption(Hotel hotel, IEnumerable<RoomWithPrices> availableRoomsWithPrices)
         {
             this.Hotel = hotel;
             this.AvailableRoomsWithPrices = availableRoomsWithPrices;
@@ -17,7 +17,7 @@ namespace BookARoom.Domain.ReadModel
 
         public override string ToString()
         {
-            return $"Booking proposal for hotel: '{this.Hotel}' - {this.AvailableRoomsWithPrices.Count()} possible room(s)";
+            return $"Booking option for hotel: '{this.Hotel}' - {this.AvailableRoomsWithPrices.Count()} possible room(s)";
         }
     }
 }

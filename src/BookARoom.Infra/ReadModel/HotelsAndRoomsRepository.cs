@@ -17,7 +17,7 @@ namespace BookARoom.Infra.ReadModel
 
         public IEnumerable<Hotel> Hotels => this.hotelsWithPerDateRoomsStatus.Keys;
 
-        public IEnumerable<BookingProposal> SearchAvailableHotelsInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate)
+        public IEnumerable<BookingOption> SearchAvailableHotelsInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate)
         {
             var result = (from hotelWithAvailabilities in this.hotelsWithPerDateRoomsStatus
                 from dateAndRooms in this.hotelsWithPerDateRoomsStatus.Values
@@ -28,7 +28,7 @@ namespace BookARoom.Infra.ReadModel
                       && availableRooms.Count > 0
                       && dateAndRooms.Values.Contains(availableRooms)
                       && hotelWithAvailabilities.Value == dateAndRooms
-                select new BookingProposal(hotelWithAvailabilities.Key, availableRooms) ).ToList().Distinct();
+                select new BookingOption(hotelWithAvailabilities.Key, availableRooms) ).ToList().Distinct();
 
             return result;
         }

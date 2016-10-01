@@ -68,7 +68,7 @@ namespace BookARoom.Infra.ReadModel.Adapters
 
         #region IProvideRooms methods
 
-        public IEnumerable<BookingProposal> SearchAvailableHotelsInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate)
+        public IEnumerable<BookingOption> SearchAvailableHotelsInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate)
         {
             return repository.SearchAvailableHotelsInACaseInsensitiveWay(location, checkInDate, checkOutDate);
         }

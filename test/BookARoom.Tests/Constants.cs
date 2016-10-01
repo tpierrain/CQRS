@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BookARoom.Tests.Acceptance
+namespace BookARoom.Tests
 {
     public static class Constants
     {

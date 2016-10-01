@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace BookARoom.Tests.Acceptance
 {
     [TestFixture]
-    public class CommandRoomsBookingTests
+    public class CommandBookingTests
     {
         [Test]
         public void Should_Book_a_room()
@@ -44,35 +44,35 @@ namespace BookARoom.Tests.Acceptance
             var checkInDate = Constants.MyFavoriteSaturdayIn2017;
             var checkOutDate = checkInDate.AddDays(1);
 
-            var searchQuery = new SearchBookingProposal(checkInDate, checkOutDate, location: "New York", numberOfAdults: 2);
-            var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
-            // We should get 1 booking proposal with 3 available rooms in it.
-            Check.That(bookingProposals).HasSize(1);
+            var searchQuery = new SearchBookingOptions(checkInDate, checkOutDate, location: "New York", numberOfAdults: 2);
+            var bookingOptions = readFacade.SearchBookingOptions(searchQuery);
+            // We should get 1 booking option with 3 available rooms in it.
+            Check.That(bookingOptions).HasSize(1);
 
-            var bookingProposal = bookingProposals.First();
+            var bookingOption = bookingOptions.First();
             var initialRoomsNumbers = 3;
-            Check.That(bookingProposal.AvailableRoomsWithPrices).HasSize(initialRoomsNumbers);
+            Check.That(bookingOption.AvailableRoomsWithPrices).HasSize(initialRoomsNumbers);
 
             // Initialize Write-model side
             var bookingRepository = new BookingAndClientsRepository();
 
             var bookingHandler = CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository, bookingRepository, bus);
 
-            // We book a room from that booking proposal
-            BookARoomFromAProposal(bookingProposal, checkInDate, checkOutDate, bookingHandler);
+            // We book a room from that booking option
+            BookAnOption(bookingOption, checkInDate, checkOutDate, bookingHandler);
             Check.That(bookingRepository.GetBookingCommandsFrom("thomas@pierrain.net").Count()).IsEqualTo(1);
 
             // Fetch rooms availabilities now. One room should have disappeared
-            bookingProposals = readFacade.SearchBookingProposals(searchQuery);
+            bookingOptions = readFacade.SearchBookingOptions(searchQuery);
             
-            Check.That(bookingProposals).HasSize(1);
-            Check.That(bookingProposal.AvailableRoomsWithPrices).As("available matching rooms").HasSize(initialRoomsNumbers-1);
+            Check.That(bookingOptions).HasSize(1);
+            Check.That(bookingOption.AvailableRoomsWithPrices).As("available matching rooms").HasSize(initialRoomsNumbers-1);
         }
 
-        private static void BookARoomFromAProposal(BookingProposal bookingProposal, DateTime checkInDate, DateTime checkOutDate, BookingCommandHandler bookingHandler)
+        private static void BookAnOption(BookingOption bookingOption, DateTime checkInDate, DateTime checkOutDate, BookingCommandHandler bookingHandler)
         {
-            var firstRoomOfTheUniqueProposal = bookingProposal.AvailableRoomsWithPrices.First();
-            var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", hotelId: bookingProposal.Hotel.Identifier, roomNumber: firstRoomOfTheUniqueProposal.RoomIdentifier, checkInDate: checkInDate, checkOutDate: checkOutDate);
+            var firstRoomOfTheUniqueOption = bookingOption.AvailableRoomsWithPrices.First();
+            var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", hotelId: bookingOption.Hotel.Identifier, roomNumber: firstRoomOfTheUniqueOption.RoomIdentifier, checkInDate: checkInDate, checkOutDate: checkOutDate);
             bookingHandler.Handle(bookingCommand);
         }
     }

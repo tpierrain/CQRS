@@ -56,7 +56,7 @@ namespace BookARoom.Infra.Web
 
             // Registers all services to the MVC IoC framework
             services.AddSingleton<ISendCommands>(bus);
-            services.AddSingleton<IQueryBookingProposals>(readFacade);
+            services.AddSingleton<IQueryBookingOptions>(readFacade);
             services.AddSingleton<IProvideHotel>(readFacade);
 
             // Add framework services.

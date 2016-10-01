@@ -7,7 +7,7 @@ namespace BookARoom.Domain.ReadModel
     {
         IEnumerable<Hotel> Hotels { get; }
 
-        IEnumerable<BookingProposal> SearchAvailableHotelsInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate);
+        IEnumerable<BookingOption> SearchAvailableHotelsInACaseInsensitiveWay(string location, DateTime checkInDate, DateTime checkOutDate);
 
         void StoreHotel(int hotelId, Hotel hotel);
         void StoreHotelAvailabilities(Hotel hotel, Dictionary<DateTime, List<RoomWithPrices>> perDateRoomsAvailabilities);
