@@ -24,20 +24,6 @@ namespace BookARoom.Infra.Web.Controllers
             return View(defaultSearchQuery);
         }
 
-        [HttpPost]
-        public IActionResult Index(SearchRoomQueryViewModel queryViewModel)
-        {
-            var searchQuery = new SearchBookingProposal(queryViewModel.CheckInDate, queryViewModel.CheckOutDate, queryViewModel.Destination, queryViewModel.NumberOfAdults);
-            var searchResult = this.searchService.SearchBookingProposals(searchQuery);
-
-            var bookingProposalsViewModel = new BookingProposalsViewModel(queryViewModel.Destination, searchResult);
-
-            bookingProposalsViewModel.Location = searchQuery.Location;
-
-            //return View(bookingProposalsViewModel) // note: I wish I could do this, but all I found is the following RedirectToAction (which seems to make an http roundtrip and does not transfer properly the bookingProposalsViewModel instance ;-( I still miss a thing in my ASP.NET MVC understanding ;-)
-            return RedirectToAction("Index", "BookingProposals", bookingProposalsViewModel);
-        }
-
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
