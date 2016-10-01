@@ -18,12 +18,12 @@ textarea {
     max-width: 280px;
 }
 
-input[type="submit"]{
+a.button, button, input[type="submit"]{
  cursor:pointer;
     padding: 8px;
  background-color:  #ec1414;
     border-style: solid;
-    border-color: #ff0000;
+    border-color: #c21212;
     color: #ffffff;
 }
 
@@ -48,25 +48,21 @@ input[type="submit"]{
 }
 
 table {
-border: medium solid #ec1414;
+border: medium solid #c21212;
 border-collapse: collapse;
 }
 
 td {
-font-family: sans-serif;
-border: thin solid #ec1414;
-width: 50%;
-padding: 5px;
+border: thin solid #c21212;
+padding: 20px;
 text-align: center;
 background-color: #ffffff;
 }
 
 th {
-text-align: center;
-font-family: sans-serif;
-    color: #ffffff;
-border: thin solid #ffffff;
-/*width: 50%;*/
-padding: 10px;
+border: thin solid #c21212;
 background-color: #ec1414;
+padding: 10px;
+text-align: center;
+color: #ffffff;
 }

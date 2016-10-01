@@ -1,0 +1,17 @@
+﻿@model BookARoom.Infra.Web.ViewModels.BookingRequestViewModel
+@{
+    ViewData["Title"] = "Book your room";
+}
+
+Please, fill your e-mail in order to be able to book the following room:
+
+<form method="post" action="BookingConfirmation">
+    Email: <input asp-for="ClientMail" type="email" name="mail" /><br />
+    Hotel name: <input asp-for="HotelName" type="text" name="HotelName" value="@Model.HotelName" readonly="readonly" /><br />
+    <input asp-for="HotelId" type="hidden" name="HotelId" value="@Model.HotelId" />
+    <input asp-for="RoomId" type="hidden" name="RoomId" value="@Model.RoomId" />
+
+    Check-in date<input asp-for="CheckInDate" type="date" name="CheckInDate" value="@Model.CheckInDate" readonly="readonly" />
+    Check-out date<input type="text" asp-for="CheckOutDate" name="CheckOutDate" value="@Model.CheckInDate" readonly="readonly" />
+    <input type="submit" value="Confirm booking" />
+</form>

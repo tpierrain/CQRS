@@ -6,9 +6,11 @@ namespace BookARoom.Infra.Web.ViewModels
     public class BookingProposalsViewModel
     {
         public SearchRoomQueryViewModel SearchCriterias { get; set; }
+        public BookingRequestViewModel BookingRequest { get; set; }
         public string Location { get; set; }
         public IEnumerable<BookingProposal> Proposals { get; set; }
         
+
         public BookingProposalsViewModel()
         {
         }
