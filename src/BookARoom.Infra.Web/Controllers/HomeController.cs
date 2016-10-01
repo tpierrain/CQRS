@@ -26,14 +26,14 @@ namespace BookARoom.Infra.Web.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "What is BookARoom?";
 
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Wanna know more?";
 
             return View();
         }
