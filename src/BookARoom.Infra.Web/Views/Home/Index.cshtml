@@ -7,11 +7,11 @@
 <h2>Let’s find you an hotel to stay!</h2>
 
 <form method="post" action="BookingOptions">
-    <div><label>Destination: </label><input asp-for="Destination" type="text" /></div>
+    <div><label>Destination: </label><input asp-for="Destination" type="text" size="220"/></div>
     <div>
         <span><label asp-for="CheckInDate">Check-in: </label><input asp-for="CheckInDate" name="checkInDate" type="date" /></span>
         <span><label asp-for="CheckOutDate">Check-out: </label><input asp-for="CheckOutDate" name="checkOutDate" type="date" /></span>
     </div>
-    <div><label>Number of adults: </label><input asp-for="NumberOfAdults" name="numberOfAdults" type="text" /></div>
+    <div><label>Number of adults: </label><input asp-for="NumberOfAdults" name="numberOfAdults" type="text" size="2" /></div>
     <div><input type="submit" value="Search" /></div>
 </form>

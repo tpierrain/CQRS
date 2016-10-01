@@ -6,6 +6,9 @@
 <h2>You would like to go to: "<b>@Model.SearchCriterias.Destination</b>"</h2>
 and to book a room <b>for @Model.SearchCriterias.NumberOfAdults adult(s)</b> with check-in date: <b>@Model.SearchCriterias.CheckInDate.ToString("d")</b> and check-out date: <b>@Model.SearchCriterias.CheckOutDate.ToString("d")</b> <br />
 <br/>
+<a href="" class="button" onclick="history.back(); return false;">Oups, let me fix something.</a>
+<br/>
+<br/>
 <br />
 @if (!Model.Options.Any())
 {

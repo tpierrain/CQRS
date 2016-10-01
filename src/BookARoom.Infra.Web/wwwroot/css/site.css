@@ -19,6 +19,11 @@ textarea {
     border: thin solid #2f4f4f;
     background-color: #ffffff;
     max-width: 380px;
+    margin-left:5px;
+    margin-right:5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 4px;
 }
 
 a.button, button, input[type="submit"]{
