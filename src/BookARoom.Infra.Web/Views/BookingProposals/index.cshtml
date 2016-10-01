@@ -1,27 +1,21 @@
 ﻿@model BookARoom.Infra.Web.ViewModels.BookingProposalsViewModel
 @{
-    ViewData["Title"] = "Pick your booking proposal";
+    ViewData["Title"] = "Pick your best booking option";
 }
 
-Here is the list of all booking options for your criterias:
-<br/>
-Destination: @Model.SearchCriterias.Destination <br/>
-CheckIn date: @Model.SearchCriterias.CheckInDate <br />
-CheckOut date: @Model.SearchCriterias.CheckOutDate <br />
-Number of adults: @Model.SearchCriterias.NumberOfAdults <br />
 
 <br/>
-
-<table style="border-style: groove; align-content: center">
+<h2>You would like to go to: <b>@Model.SearchCriterias.Destination</b></h2>
+and to book a room <b>for @Model.SearchCriterias.NumberOfAdults adult(s)</b> with check-in date: <b>@Model.SearchCriterias.CheckInDate.ToString("d")</b> and check-out date: <b>@Model.SearchCriterias.CheckOutDate.ToString("d")</b> <br />
+<br/>
+Here is the list of all available booking options for you. Just click the button to book-a-room!
+<br/>
+<table>
     <tr>
-        <td rowspan="2">Hotel name</td>
-        <td colspan="3">Rooms proposals</td>
-    </tr>
-    
-    <tr>
-        <td>Room code</td>
-        <td>One adult occupancy price</td>
-        <td>Two adults occupancy price</td>
+        <th>Hotel name</th>
+        <th>Room code</th>
+        <th>One adult occupancy price</th>
+        <th>Two adults occupancy price</th>
     </tr>
     @foreach (var bookingProposal in Model.Proposals)
     {

@@ -33,7 +33,7 @@ namespace BookARoom.Infra.Web.Controllers
             var bookingProposalsViewModel = new BookingProposalsViewModel(queryViewModel, queryViewModel.Destination, searchResult);
 
             bookingProposalsViewModel.Location = searchQuery.Location;
-
+             
             return View(bookingProposalsViewModel);
         }
     }

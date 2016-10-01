@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: sans-serif;
 }
 
 /* Wrapping element */
@@ -15,6 +16,15 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+input[type="submit"]{
+ cursor:pointer;
+    padding: 8px;
+ background-color:  #ec1414;
+    border-style: solid;
+    border-color: #ff0000;
+    color: #ffffff;
 }
 
 /* Carousel */
@@ -35,4 +45,28 @@ textarea {
   .carousel-caption {
     display: none
   }
+}
+
+table {
+border: medium solid #ec1414;
+border-collapse: collapse;
+}
+
+td {
+font-family: sans-serif;
+border: thin solid #ec1414;
+width: 50%;
+padding: 5px;
+text-align: center;
+background-color: #ffffff;
+}
+
+th {
+text-align: center;
+font-family: sans-serif;
+    color: #ffffff;
+border: thin solid #ffffff;
+/*width: 50%;*/
+padding: 10px;
+background-color: #ec1414;
 }
