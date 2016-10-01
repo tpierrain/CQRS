@@ -44,7 +44,7 @@ namespace BookARoom.Tests.Acceptance
             var checkInDate = Constants.MyFavoriteSaturdayIn2017;
             var checkOutDate = checkInDate.AddDays(1);
 
-            var searchQuery = new SearchBookingProposal(checkInDate, checkOutDate, location: "New York", adultsCount: 2);
+            var searchQuery = new SearchBookingProposal(checkInDate, checkOutDate, location: "New York", numberOfAdults: 2);
             var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
             // We should get 1 booking proposal with 3 available rooms in it.
             Check.That(bookingProposals).HasSize(1);

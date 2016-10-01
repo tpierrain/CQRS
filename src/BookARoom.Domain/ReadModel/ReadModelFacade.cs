@@ -28,7 +28,7 @@ namespace BookARoom.Domain.ReadModel
 
         public IEnumerable<BookingProposal> SearchBookingProposals(SearchBookingProposal query)
         {
-            return this.SearchBookingProposals(query.CheckInDate, query.CheckOutDate, query.Location, query.AdultsCount, query.NumberOfRoomsNeeded, query.ChildrenCount);
+            return this.SearchBookingProposals(query.CheckInDate, query.CheckOutDate, query.Location, query.NumberOfAdults, query.NumberOfRoomsNeeded, query.ChildrenCount);
         }
 
         private IEnumerable<BookingProposal> SearchBookingProposals(DateTime checkInDate, DateTime checkOutDate, string location, int adultsCount, int numberOfRoomsNeeded = 1, int childrenCount = 0)

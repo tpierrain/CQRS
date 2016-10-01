@@ -3,14 +3,14 @@
     public class RoomWithPrices
     {
         public string RoomIdentifier;
-        public Price PriceForOneAdult;
-        public Price PriceForTwoAdults;
+        public Price OneAdultOccupancyPrice;
+        public Price TwoAdultsOccupancyPrice;
 
-        public RoomWithPrices(string roomIdentifier, Price priceForOneAdult, Price priceForTwoAdults)
+        public RoomWithPrices(string roomIdentifier, Price oneAdultOccupancyPrice, Price twoAdultsOccupancyPrice)
         {
             RoomIdentifier = roomIdentifier;
-            PriceForOneAdult = priceForOneAdult;
-            PriceForTwoAdults = priceForTwoAdults;
+            OneAdultOccupancyPrice = oneAdultOccupancyPrice;
+            TwoAdultsOccupancyPrice = twoAdultsOccupancyPrice;
         }
     }
 }

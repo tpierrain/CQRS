@@ -127,7 +127,7 @@ namespace BookARoom.Infra.ReadModel.Adapters
 
         private static RoomWithPrices AdaptRoomStatus(RoomStatusAndPrices roomStatusAndPrices)
         {
-            return new RoomWithPrices(roomStatusAndPrices.RoomIdentifier, AdaptPrice(roomStatusAndPrices.PriceForOneAdult), AdaptPrice(roomStatusAndPrices.PriceForTwoAdults));
+            return new RoomWithPrices(roomStatusAndPrices.RoomIdentifier, AdaptPrice(roomStatusAndPrices.OneAdultOccupancyPrice), AdaptPrice(roomStatusAndPrices.TwoAdultsOccupancyPrice));
         }
 
         private static Price AdaptPrice(IntegrationModel.Price price)

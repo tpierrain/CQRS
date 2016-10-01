@@ -18,7 +18,7 @@ namespace BookARoom.Tests.Acceptance
             var hotelsAdapter = new HotelAndRoomsAdapter(Constants.RelativePathForHotelIntegrationFiles, new FakeBus());
 
             var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter);
-            var searchQuery = new SearchBookingProposal(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
+            var searchQuery = new SearchBookingProposal(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", numberOfAdults: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
             var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
             Check.That(bookingProposals).IsNotNull().And.IsEmpty();
         }
@@ -31,7 +31,7 @@ namespace BookARoom.Tests.Acceptance
 
             var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter);
             var requestedLocation = "New York";
-            var searchQuery = new SearchBookingProposal(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: requestedLocation, adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
+            var searchQuery = new SearchBookingProposal(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: requestedLocation, numberOfAdults: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
             var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
 
             Check.That(bookingProposals).HasSize(1);
@@ -51,7 +51,7 @@ namespace BookARoom.Tests.Acceptance
             hotelsAdapter.LoadHotelFile("BudaFull-the-always-unavailable-hotel-availabilities.json"); // unavailable
 
             var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter);
-            var searchQuery = new SearchBookingProposal(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
+            var searchQuery = new SearchBookingProposal(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", numberOfAdults: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
             var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
 
             Check.That(bookingProposals).HasSize(2);
@@ -65,7 +65,7 @@ namespace BookARoom.Tests.Acceptance
 
             Check.ThatCode(() =>
                 {
-                    var searchQuery = new SearchBookingProposal(checkInDate: DateTime.Now.AddDays(1), checkOutDate: DateTime.Now, location: "Kunming", adultsCount: 1);
+                    var searchQuery = new SearchBookingProposal(checkInDate: DateTime.Now.AddDays(1), checkOutDate: DateTime.Now, location: "Kunming", numberOfAdults: 1);
                     return readFacade.SearchBookingProposals(searchQuery);
                 })
                 .Throws<InvalidOperationException>();
@@ -79,7 +79,7 @@ namespace BookARoom.Tests.Acceptance
 
             var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter);
             var searchedLocation = "new york";
-            var searchQuery = new SearchBookingProposal(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: searchedLocation, adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
+            var searchQuery = new SearchBookingProposal(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: searchedLocation, numberOfAdults: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
             var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
 
             Check.That(bookingProposals).HasSize(1);
@@ -94,7 +94,7 @@ namespace BookARoom.Tests.Acceptance
             // Integrates a first hotel
             hotelsAdapter.LoadHotelFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
 
-            var searchQuery = new SearchBookingProposal(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
+            var searchQuery = new SearchBookingProposal(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: "Budapest", numberOfAdults: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
             var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
             Check.That(bookingProposals).HasSize(1);
 

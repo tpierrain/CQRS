@@ -3,14 +3,14 @@
     public class RoomStatusAndPrices
     {
         public string RoomIdentifier { get; }
-        public Price PriceForOneAdult { get; }
-        public Price PriceForTwoAdults { get; }
+        public Price OneAdultOccupancyPrice { get; }
+        public Price TwoAdultsOccupancyPrice { get; }
 
-        public RoomStatusAndPrices(string roomIdentifier, Price priceForOneAdult, Price priceForTwoAdults)
+        public RoomStatusAndPrices(string roomIdentifier, Price oneAdultOccupancyPrice, Price twoAdultsOccupancyPrice)
         {
             RoomIdentifier = roomIdentifier;
-            PriceForOneAdult = priceForOneAdult;
-            PriceForTwoAdults = priceForTwoAdults;
+            OneAdultOccupancyPrice = oneAdultOccupancyPrice;
+            TwoAdultsOccupancyPrice = twoAdultsOccupancyPrice;
         }
     }
 }

@@ -7,11 +7,11 @@
     "2017-09-16T00:00:00": [
       {
         "RoomIdentifier": "101",
-        "PriceForOneAdult": {
+        "OneAdultOccupancyPrice": {
           "Currency": "EUR",
           "Value": 109.0
         },
-        "PriceForTwoAdults": {
+        "TwoAdultsOccupancyPrice": {
           "Currency": "EUR",
           "Value": 140.0
         }

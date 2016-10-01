@@ -20,17 +20,14 @@ namespace BookARoom.Infra.Web.Controllers
         public IActionResult Index()
         {
             var defaultCheckInDate = new DateTime(2017, 09, 16);
-            var defaultSearchQuery = new SearchRoomQueryViewModel("Budapest", defaultCheckInDate, defaultCheckInDate.AddDays(1));
+            var defaultSearchQuery = new SearchRoomQueryViewModel("Budapest", defaultCheckInDate, defaultCheckInDate.AddDays(1), numberOfAdults:1);
             return View(defaultSearchQuery);
         }
 
         [HttpPost]
         public IActionResult Index(SearchRoomQueryViewModel queryViewModel)
         {
-            // instantiate a command here and post it to the bus
-            var adultsCount = 2; // TODO: hide this default value within the web form
-
-            var searchQuery = new SearchBookingProposal(queryViewModel.CheckInDate, queryViewModel.CheckOutDate, queryViewModel.Destination, adultsCount);
+            var searchQuery = new SearchBookingProposal(queryViewModel.CheckInDate, queryViewModel.CheckOutDate, queryViewModel.Destination, queryViewModel.NumberOfAdults);
             var searchResult = this.searchService.SearchBookingProposals(searchQuery);
 
             var bookingProposalsViewModel = new BookingProposalsViewModel(queryViewModel.Destination, searchResult);
