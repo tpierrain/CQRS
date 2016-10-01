@@ -1,4 +1,5 @@
 ﻿body {
+    background-color: #f0ecec;
     padding-top: 50px;
     padding-bottom: 20px;
     font-family: sans-serif;
@@ -15,7 +16,9 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    border: thin solid #2f4f4f;
+    background-color: #ffffff;
+    max-width: 380px;
 }
 
 a.button, button, input[type="submit"]{
