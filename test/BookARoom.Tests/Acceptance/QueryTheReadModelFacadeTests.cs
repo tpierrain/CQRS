@@ -20,7 +20,7 @@ namespace BookARoom.Tests.Acceptance
             var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter);
             var searchQuery = new SearchBookingProposal(checkInDate: DateTime.Now, checkOutDate: DateTime.Now.AddDays(1), location: "Paris", adultsCount: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
             var bookingProposals = readFacade.SearchBookingProposals(searchQuery);
-            Check.That(bookingProposals).IsEmpty();
+            Check.That(bookingProposals).IsNotNull().And.IsEmpty();
         }
 
         [Test]

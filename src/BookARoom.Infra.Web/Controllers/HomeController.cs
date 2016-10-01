@@ -1,4 +1,5 @@
-﻿using BookARoom.Domain;
+﻿using System;
+using BookARoom.Domain;
 using BookARoom.Domain.ReadModel;
 using BookARoom.Infra.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,9 @@ namespace BookARoom.Infra.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var defaultCheckInDate = new DateTime(2017, 09, 16);
+            var defaultSearchQuery = new SearchRoomQueryViewModel("Budapest", defaultCheckInDate, defaultCheckInDate.AddDays(1));
+            return View(defaultSearchQuery);
         }
 
         [HttpPost]

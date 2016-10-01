@@ -10,7 +10,7 @@ namespace BookARoom.Infra.Web.Controllers
         // GET: /<controller>/
         public IActionResult Index(BookingProposalsViewModel bookingProposalsViewModel)
         {
-
+            // Why da heck is my bookingProposalsViewModel.Proposals always null here... I can't figure it out yet ;-(
             return View(bookingProposalsViewModel);
         }
     }
