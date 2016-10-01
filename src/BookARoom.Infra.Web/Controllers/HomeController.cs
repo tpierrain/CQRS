@@ -20,7 +20,7 @@ namespace BookARoom.Infra.Web.Controllers
         public IActionResult Index()
         {
             var defaultCheckInDate = new DateTime(2017, 09, 16);
-            var defaultSearchQuery = new SearchRoomQueryViewModel("Budapest", defaultCheckInDate, defaultCheckInDate.AddDays(1), numberOfAdults:1);
+            var defaultSearchQuery = new SearchRoomQueryViewModel("Budapest", defaultCheckInDate, defaultCheckInDate.AddDays(1), numberOfAdults:2);
             return View(defaultSearchQuery);
         }
 
@@ -34,6 +34,7 @@ namespace BookARoom.Infra.Web.Controllers
 
             bookingProposalsViewModel.Location = searchQuery.Location;
 
+            //return View(bookingProposalsViewModel) // note: I wish I could do this, but all I found is the following RedirectToAction (which seems to make an http roundtrip and does not transfer properly the bookingProposalsViewModel instance ;-( I still miss a thing in my ASP.NET MVC understanding ;-)
             return RedirectToAction("Index", "BookingProposals", bookingProposalsViewModel);
         }
 
