@@ -3,15 +3,30 @@
     ViewData["Title"] = "Book your room";
 }
 
-Please, fill your e-mail in order to be able to book the following room:
+<br /><br />
+<h2>Please, fill your e-mail in order to be able to book the following reservation:</h2>
 
 <form method="post" action="BookingConfirmation">
-    Email: <input asp-for="ClientMail" type="email" name="mail" /><br />
-    Hotel name: <input asp-for="HotelName" type="text" name="HotelName" value="@Model.HotelName" readonly="readonly" /><br />
+    <br />
+    <br />
+    Email: <input asp-for="ClientMail" type="email" name="ClientMail" /><br />
+    <br />
+    <br />
+    <h2>Booking request sum-up:</h2>
+    Hotel: <strong> @Model.HotelName</strong>
+    <input asp-for="HotelName" type="hidden" name="HotelName" value="@Model.HotelName" />
     <input asp-for="HotelId" type="hidden" name="HotelId" value="@Model.HotelId" />
+    <br />
+    Room code: <strong>@Model.RoomId</strong>
     <input asp-for="RoomId" type="hidden" name="RoomId" value="@Model.RoomId" />
-
-    Check-in date<input asp-for="CheckInDate" type="date" name="CheckInDate" value="@Model.CheckInDate" readonly="readonly" />
-    Check-out date<input type="text" asp-for="CheckOutDate" name="CheckOutDate" value="@Model.CheckInDate" readonly="readonly" />
+    <br />
+    <br />
+    Check-in date: <strong>@Model.CheckInDate.ToString("d")</strong>
+    <input asp-for="CheckInDate" type="hidden" name="CheckInDate" value="@Model.CheckInDate" />
+    <br />
+    Check-out date: <strong>@Model.CheckOutDate.ToString("d")</strong>
+    <input asp-for="CheckOutDate" type="hidden" name="CheckOutDate" value="@Model.CheckOutDate" />
+    <br />
+    <br />
     <input type="submit" value="Confirm booking" />
 </form>
