@@ -11,5 +11,7 @@ namespace BookARoom.Infra.Web.ViewModels
 
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
+
+        public bool BookingSucceeded { get; set; }
     }
 }

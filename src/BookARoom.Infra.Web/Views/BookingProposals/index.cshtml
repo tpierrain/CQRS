@@ -9,7 +9,10 @@ and to book a room <b>for @Model.SearchCriterias.NumberOfAdults adult(s)</b> wit
 <br />
 @if (!Model.Proposals.Any())
 {
-    <strong>Sorry, we couldn't find any available room for your criteria.</strong><br /><br /><a href="/" class="button">Retry with new criteria</a>
+    <strong>Sorry, we couldn't find any available room for your criteria.</strong>
+    <br />
+    <br />
+    <a href="" class="button" onclick="history.back(); return false;">Retry with new criteria</a>
 }
 else
 {

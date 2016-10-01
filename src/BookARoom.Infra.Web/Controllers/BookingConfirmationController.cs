@@ -1,5 +1,4 @@
-﻿using System;
-using BookARoom.Domain;
+﻿using BookARoom.Domain;
 using BookARoom.Domain.WriteModel;
 using BookARoom.Infra.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +19,18 @@ namespace BookARoom.Infra.Web.Controllers
         // GET: /<controller>/
         public IActionResult Index(BookingRequestViewModel viewModel)
         {
-            // Create the task and send it to the bus
-            var bookingCommand = new BookARoomCommand(clientId: viewModel.ClientMail, hotelId: int.Parse(viewModel.HotelId), roomNumber: viewModel.RoomId, checkInDate: viewModel.CheckInDate, checkOutDate: viewModel.CheckOutDate);
-            this.bus.Send(bookingCommand);
+            if (!string.IsNullOrWhiteSpace(viewModel.ClientMail))
+            {
+                // Create the task and send it to the bus
+                var bookingCommand = new BookARoomCommand(clientId: viewModel.ClientMail, hotelId: int.Parse(viewModel.HotelId), roomNumber: viewModel.RoomId, checkInDate: viewModel.CheckInDate, checkOutDate: viewModel.CheckOutDate);
+                this.bus.Send(bookingCommand);
+
+                viewModel.BookingSucceeded = true;
+            }
+            else
+            {
+                viewModel.BookingSucceeded = false;
+            }
 
             return View(viewModel);
         }
