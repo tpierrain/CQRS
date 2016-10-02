@@ -22,7 +22,8 @@
 
             this.bookingRepository.Save(bookingCommand);
 
-            var roomBooked = new RoomBooked(bookingCommand.HotelId, bookingCommand.ClientId, bookingCommand.RoomNumber, bookingCommand.CheckInDate, bookingCommand.CheckOutDate);
+            // we could enrich the event from here (eg. finding the HotelName from the HotelId)
+            var roomBooked = new RoomBooked(bookingCommand.HotelName, bookingCommand.HotelId, bookingCommand.ClientId, bookingCommand.RoomNumber, bookingCommand.CheckInDate, bookingCommand.CheckOutDate);
             this.publishEvents.PublishTo(roomBooked);
         }
     }

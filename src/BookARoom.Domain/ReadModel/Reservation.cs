@@ -5,14 +5,16 @@ namespace BookARoom.Domain.ReadModel
     public class Reservation
     {
         public string ClientId { get; }
+        public string HotelName { get; set; }
         public string HotelId { get; }
         public string RoomNumber { get; }
         public DateTime CheckInDate { get; }
         public DateTime CheckOutDate { get; }
 
-        public Reservation(string clientId, string hotelId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
+        public Reservation(string clientId, string hotelName, string hotelId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
         {
             this.ClientId = clientId;
+            this.HotelName = hotelName;
             this.HotelId = hotelId;
             this.RoomNumber = roomNumber;
             this.CheckInDate = checkInDate;
@@ -21,7 +23,7 @@ namespace BookARoom.Domain.ReadModel
 
         public override string ToString()
         {
-            return $"Reservation for:{ClientId} at HotelID:{HotelId}, RoomNumber:{RoomNumber} for check-in date:{CheckInDate.ToString("d")} and check-out date:{CheckOutDate.ToString("d")}";
+            return $"Reservation for:{ClientId} at Hotel:{HotelName} (id:{HotelId}), RoomNumber:{RoomNumber} for check-in date:{CheckInDate.ToString("d")} and check-out date:{CheckOutDate.ToString("d")}";
         }
     }
 }

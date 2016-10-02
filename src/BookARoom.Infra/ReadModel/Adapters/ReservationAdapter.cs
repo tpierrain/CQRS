@@ -23,7 +23,7 @@ namespace BookARoom.Infra.ReadModel.Adapters
                 this.perClientReservations[@event.ClientId] = new List<Reservation>();
             }
 
-            var reservation = new Reservation(@event.ClientId, @event.HotelId.ToString(), @event.RoomNumber, @event.CheckInDate, @event.CheckOutDate);
+            var reservation = new Reservation(@event.ClientId, @event.HotelName, @event.HotelId.ToString(), @event.RoomNumber, @event.CheckInDate, @event.CheckOutDate);
             this.perClientReservations[@event.ClientId].Add(reservation);
         }
 

@@ -31,10 +31,11 @@ namespace BookARoom.Tests.Acceptance
             var writeFacade = CompositionRootHelper.BuildTheWriteModelHexagon(bookingAndClientsRepository, bookingAndClientsRepository, bus, bus);
 
             var hotelId = 1;
+            var hotelName = "New York Sofitel";
             var roomNumber = "101";
             var checkInDate = Constants.MyFavoriteSaturdayIn2017;
             var checkOutDate = checkInDate.AddDays(1);
-            bus.Send(new BookARoomCommand(clientId, hotelId, roomNumber, checkInDate, checkOutDate));
+            bus.Send(new BookARoomCommand(clientId, hotelName, hotelId, roomNumber, checkInDate, checkOutDate));
 
             reservations = readFacade.GetReservationsFor(clientId);
             Check.That(reservations).HasSize(1);

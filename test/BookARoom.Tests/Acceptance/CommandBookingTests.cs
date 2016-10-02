@@ -24,7 +24,7 @@ namespace BookARoom.Tests.Acceptance
 
             bookingRepository.Verify(x => x.Save(It.IsAny<BookARoomCommand>()), Times.Never);
 
-            var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", hotelId: 1, roomNumber: "2", checkInDate: DateTime.Parse("2016-09-17"), checkOutDate: DateTime.Parse("2016-09-18"));
+            var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", hotelName:"Super Hotel", hotelId: 1, roomNumber: "2", checkInDate: DateTime.Parse("2016-09-17"), checkOutDate: DateTime.Parse("2016-09-18"));
             bookingHandler.Handle(bookingCommand);
 
             bookingRepository.Verify(x => x.Save(It.Is<BookARoomCommand>(y => y.ClientId == "thomas@pierrain.net")), Times.Once);
@@ -73,7 +73,7 @@ namespace BookARoom.Tests.Acceptance
         private static void BookAnOption(BookingOption bookingOption, DateTime checkInDate, DateTime checkOutDate, BookingCommandHandler bookingHandler)
         {
             var firstRoomOfTheUniqueOption = bookingOption.AvailableRoomsWithPrices.First();
-            var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", hotelId: bookingOption.Hotel.Identifier, roomNumber: firstRoomOfTheUniqueOption.RoomIdentifier, checkInDate: checkInDate, checkOutDate: checkOutDate);
+            var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", hotelName: "New York Sofitel", hotelId: bookingOption.Hotel.Identifier, roomNumber: firstRoomOfTheUniqueOption.RoomIdentifier, checkInDate: checkInDate, checkOutDate: checkOutDate);
             bookingHandler.Handle(bookingCommand);
         }
     }

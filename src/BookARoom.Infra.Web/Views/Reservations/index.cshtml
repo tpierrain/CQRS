@@ -40,7 +40,8 @@ else
         
         <table>
             <tr>
-                <th>Hotel name / Id</th>
+                <th>Hotel name</th>
+                <th>Hotel Id</th>
                 <th>Room code</th>
                 <th>check-in date</th>
                 <th>check-out date</th>
@@ -49,7 +50,8 @@ else
             @foreach (var reservation in Model.Reservations)
             {
                 <tr>
-                    <td><strong>@reservation.HotelId</strong></td>
+                    <td><strong>@reservation.HotelName</strong></td>
+                    <td>@reservation.HotelId</td>
                     <td>@reservation.RoomNumber</td>
                     <td>@reservation.CheckInDate</td>
                     <td>@reservation.CheckOutDate</td>

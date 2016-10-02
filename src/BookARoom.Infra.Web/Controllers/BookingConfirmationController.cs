@@ -24,7 +24,7 @@ namespace BookARoom.Infra.Web.Controllers
             if (!string.IsNullOrWhiteSpace(viewModel.ClientMail))
             {
                 // Create the task and send it to the bus
-                var bookingCommand = new BookARoomCommand(clientId: viewModel.ClientMail, hotelId: int.Parse(viewModel.HotelId), roomNumber: viewModel.RoomId, checkInDate: viewModel.CheckInDate, checkOutDate: viewModel.CheckOutDate);
+                var bookingCommand = new BookARoomCommand(clientId: viewModel.ClientMail, hotelName: viewModel.HotelName, hotelId: int.Parse(viewModel.HotelId), roomNumber: viewModel.RoomId, checkInDate: viewModel.CheckInDate, checkOutDate: viewModel.CheckOutDate);
                 this.bus.Send(bookingCommand);
 
                 viewModel.BookingSucceeded = true;
