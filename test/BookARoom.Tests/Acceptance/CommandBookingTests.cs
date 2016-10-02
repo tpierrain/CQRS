@@ -51,7 +51,7 @@ namespace BookARoom.Tests.Acceptance
             Check.That(bookingOptions).HasSize(1);
 
             var bookingOption = bookingOptions.First();
-            var initialRoomsNumbers = 3;
+            var initialRoomsNumbers = 13;
             Check.That(bookingOption.AvailableRoomsWithPrices).HasSize(initialRoomsNumbers);
 
             // Initialize Write-model side

@@ -39,7 +39,7 @@ namespace BookARoom.Tests.Acceptance
             var bookingOption = bookingOptions.First();
             Check.That(bookingOption.Hotel.Location).IsEqualTo(requestedLocation);
             Check.That(bookingOption.Hotel.Name).IsEqualTo("New York Sofitel");
-            Check.That(bookingOption.AvailableRoomsWithPrices).HasSize(3);
+            Check.That(bookingOption.AvailableRoomsWithPrices).HasSize(13);
         }
 
         [Test]

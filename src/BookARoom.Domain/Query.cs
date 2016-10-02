@@ -1,6 +1,6 @@
 ﻿namespace BookARoom.Domain
 {
-    public class Query : ICommand
+    public class Query : IMessage
     {
     }
 }
