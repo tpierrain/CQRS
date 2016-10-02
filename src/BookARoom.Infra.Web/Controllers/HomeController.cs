@@ -24,6 +24,13 @@ namespace BookARoom.Infra.Web.Controllers
             return View(defaultSearchQuery);
         }
 
+        public IActionResult QueryReservations(QueryReservationsViewModel viewModel)
+        {
+            ViewData["Message"] = "Consult your reservations";
+
+            return View(viewModel);
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "What is BookARoom?";

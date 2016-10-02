@@ -37,7 +37,6 @@ namespace BookARoom.Infra.Web
             var bookingRepository = new BookingAndClientsRepository();
 
             var bookingHandler = CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository, bookingRepository, bus, bus);
-            
 
             // TODO: register handlers for the query part coming from the bus?
 
@@ -51,12 +50,13 @@ namespace BookARoom.Infra.Web
             hotelsAdapter.LoadHotelFile("BudaFull-the-always-unavailable-hotel-availabilities.json");
             hotelsAdapter.LoadHotelFile("New York Sofitel-availabilities.json");
 
-            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter);
+            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter, null, bus);
 
             // Registers all services to the MVC IoC framework
             services.AddSingleton<ISendCommands>(bus);
             services.AddSingleton<IQueryBookingOptions>(readFacade);
             services.AddSingleton<IProvideHotel>(readFacade);
+            services.AddSingleton<IProvideReservations>(readFacade);
 
             // Add framework services.
             services.AddMvc();

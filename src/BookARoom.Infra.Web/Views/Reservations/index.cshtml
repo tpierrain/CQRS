@@ -1,0 +1,64 @@
+﻿@model BookARoom.Infra.Web.ViewModels.ReservationsViewModel
+@{
+    ViewData["Title"] = "Pick your best booking option";
+}
+<br />
+<h2>Reservations made with "<strong>@Model.ClientEMail</strong>"</h2>
+
+@if (!Model.Reservations.Any())
+{
+    <br />
+    <br />
+    <strong>No reservation has been made with that e-mail so far.</strong>
+    <br />
+    <br />
+    <a href="" class="button" onclick="history.back(); return false;">Let me try with another mail</a>
+    <br />
+    <br />
+    <br />
+}
+else
+{
+    <br />
+    <a href="" class="button" onclick="history.back(); return false;">Let me try with another mail</a>
+    <br />
+    <br />
+    <br />
+    <script>
+        //function postFormFor(hotelIdentifier, hotelName, roomIdentifier) {
+
+        //    document.forms["bookingForm"].HotelId.value = hotelIdentifier;
+        //    document.forms["bookingForm"].HotelName.value = hotelName;
+        //    document.forms["bookingForm"].RoomId.value = roomIdentifier;
+
+        //    document.forms["bookingForm"].submit();
+        //}
+    </script>
+    <form id="reservationsForm" method="post" action="ModifyReservation">
+
+        <input asp-for="@Model.ClientEMail" type="hidden" name="ClientEMail" value="@Model.ClientEMail" />
+        
+        <table>
+            <tr>
+                <th>Hotel name / Id</th>
+                <th>Room code</th>
+                <th>check-in date</th>
+                <th>check-out date</th>
+                <th></th>
+            </tr>
+            @foreach (var reservation in Model.Reservations)
+            {
+                <tr>
+                    <td><strong>@reservation.HotelId</strong></td>
+                    <td>@reservation.RoomNumber</td>
+                    <td>@reservation.CheckInDate</td>
+                    <td>@reservation.CheckOutDate</td>
+                    <td>
+                        <a href="" class="button" onclick="return false;">Edit</a>
+                        <a href="" class="button" onclick="return false;">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </form>
+}

@@ -1,0 +1,16 @@
+﻿@model BookARoom.Infra.Web.ViewModels.QueryReservationsViewModel
+@{
+    ViewData["Title"] = "Fill you e-mail";
+}
+
+<br /><br />
+<h2>Please, fill your e-mail in order to be able to list all your reservations:</h2>
+
+<form method="post" action="~/Reservations">
+    <br />
+    <br />
+    Email: <input asp-for="ClientMail" type="email" name="ClientMail" /><br />
+    <br />
+    <br />
+    <input type="submit" value="View my reservations" />
+</form>

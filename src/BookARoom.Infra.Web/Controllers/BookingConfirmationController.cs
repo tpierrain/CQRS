@@ -17,6 +17,8 @@ namespace BookARoom.Infra.Web.Controllers
         }
 
         // GET: /<controller>/
+
+        [HttpPost]
         public IActionResult Index(BookingRequestViewModel viewModel)
         {
             if (!string.IsNullOrWhiteSpace(viewModel.ClientMail))
