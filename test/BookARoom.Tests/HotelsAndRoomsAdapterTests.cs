@@ -1,6 +1,5 @@
 ﻿using BookARoom.Infra.MessageBus;
 using BookARoom.Infra.ReadModel.Adapters;
-using BookARoom.Tests.Acceptance;
 using NFluent;
 using NUnit.Framework;
 
@@ -19,6 +18,15 @@ namespace BookARoom.Tests
 
             hotelsAdapter.LoadHotelFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
             Check.That(hotelsAdapter.Hotels).HasSize(2);
+        }
+
+        [Test]
+        public void Should_load_all_files()
+        {
+            var hotelsAdapter = new HotelsAndRoomsAdapter(Constants.RelativePathForHotelIntegrationFiles, new FakeBus());
+            hotelsAdapter.LoadAllHotelsFiles();
+
+            Check.That(hotelsAdapter.Hotels).HasSize(4);
         }
     }
 }

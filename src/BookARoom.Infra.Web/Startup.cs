@@ -42,14 +42,8 @@ namespace BookARoom.Infra.Web
 
             // Build the READ side ---------------------------------
             var hotelsAdapter = new HotelsAndRoomsAdapter($"{env.WebRootPath}/hotels/", bus);
-
-            // TODO: replaces the next lines by a LoadAllHotelsFiles() method on the HotelsAndRoomsAdapter
-            // TODO: find the proper path (current error is: 'C:\Dev\CQRS\experiences16\src\BookARoom.Infra.Web\hotels\THE GRAND BUDAPEST HOTEL-availabilities.json'.'.)
-            hotelsAdapter.LoadHotelFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
-            hotelsAdapter.LoadHotelFile("Danubius Health Spa Resort Helia-availabilities.json");
-            hotelsAdapter.LoadHotelFile("BudaFull-the-always-unavailable-hotel-availabilities.json");
-            hotelsAdapter.LoadHotelFile("New York Sofitel-availabilities.json");
-
+            hotelsAdapter.LoadAllHotelsFiles();
+            
             var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter, null, bus);
 
             // Registers all services to the MVC IoC framework

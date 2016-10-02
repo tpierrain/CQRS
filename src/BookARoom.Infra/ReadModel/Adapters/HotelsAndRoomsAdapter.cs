@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using BookARoom.Domain.ReadModel;
 using BookARoom.Domain.WriteModel;
-using BookARoom.Infra.MessageBus;
 using BookARoom.IntegrationModel;
 using Newtonsoft.Json;
 using Price = BookARoom.Domain.ReadModel.Price;
@@ -52,7 +51,16 @@ namespace BookARoom.Infra.ReadModel.Adapters
 
             this.AdaptAndStoreData(integrationModelForThisHotel);
         }
-        
+
+        public void LoadAllHotelsFiles()
+        {
+            var filesNames = Directory.GetFiles(this.IntegrationFilesDirectoryPath);
+            foreach (var fileName in filesNames)
+            {
+                LoadHotelFile(fileName);
+            }
+        }
+
         private static HotelDetailsWithRoomsAvailabilities GetIntegrationModelForThisHotel(string hotelFileNameOrFilePath)
         {
             IntegrationModel.HotelDetailsWithRoomsAvailabilities integrationFileAvailabilitieses = null;
