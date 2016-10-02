@@ -37,6 +37,116 @@
           "Currency": "EUR",
           "Value": 240.0
         }
+      },
+      {
+        "RoomIdentifier": "301",
+        "OneAdultOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 109.0
+        },
+        "TwoAdultsOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 140.0
+        }
+      },
+      {
+        "RoomIdentifier": "302",
+        "OneAdultOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 109.0
+        },
+        "TwoAdultsOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 140.0
+        }
+      },
+      {
+        "RoomIdentifier": "303",
+        "OneAdultOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 109.0
+        },
+        "TwoAdultsOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 140.0
+        }
+      },
+      {
+        "RoomIdentifier": "304",
+        "OneAdultOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 109.0
+        },
+        "TwoAdultsOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 140.0
+        }
+      },
+      {
+        "RoomIdentifier": "305",
+        "OneAdultOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 109.0
+        },
+        "TwoAdultsOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 140.0
+        }
+      },
+      {
+        "RoomIdentifier": "306",
+        "OneAdultOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 109.0
+        },
+        "TwoAdultsOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 140.0
+        }
+      },
+      {
+        "RoomIdentifier": "307",
+        "OneAdultOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 109.0
+        },
+        "TwoAdultsOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 140.0
+        }
+      },
+      {
+        "RoomIdentifier": "308",
+        "OneAdultOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 109.0
+        },
+        "TwoAdultsOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 140.0
+        }
+      },
+      {
+        "RoomIdentifier": "405",
+        "OneAdultOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 145.0
+        },
+        "TwoAdultsOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 170.0
+        }
+      },
+      {
+        "RoomIdentifier": "501",
+        "OneAdultOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 12000.0
+        },
+        "TwoAdultsOccupancyPrice": {
+          "Currency": "EUR",
+          "Value": 12000.0
+        }
       }
     ]
   }

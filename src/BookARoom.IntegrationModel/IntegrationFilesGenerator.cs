@@ -22,7 +22,22 @@ namespace BookARoom.IntegrationModel
             var numberOfRooms = 405;
 
             var roomsAvailability =  new HotelDetailsWithRoomsAvailabilities(hotelId, hotelName, location, numberOfRooms);
-            roomsAvailability.AvailabilitiesAt.Add(DateTime.Parse(myFavorite2017Saturday), new RoomStatusAndPrices[] { new RoomStatusAndPrices("101", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("102", new Price("EUR", 109), new Price("EUR", 140)), new RoomStatusAndPrices("201", new Price("EUR", 209), new Price("EUR", 240)) });
+            roomsAvailability.AvailabilitiesAt.Add(DateTime.Parse(myFavorite2017Saturday), new RoomStatusAndPrices[]
+            {
+                new RoomStatusAndPrices("101", new Price("EUR", 109), new Price("EUR", 140)),
+                new RoomStatusAndPrices("102", new Price("EUR", 109), new Price("EUR", 140)),
+                new RoomStatusAndPrices("201", new Price("EUR", 209), new Price("EUR", 240)),
+                new RoomStatusAndPrices("301", new Price("EUR", 109), new Price("EUR", 140)),
+                new RoomStatusAndPrices("302", new Price("EUR", 109), new Price("EUR", 140)),
+                new RoomStatusAndPrices("303", new Price("EUR", 109), new Price("EUR", 140)),
+                new RoomStatusAndPrices("304", new Price("EUR", 109), new Price("EUR", 140)),
+                new RoomStatusAndPrices("305", new Price("EUR", 109), new Price("EUR", 140)),
+                new RoomStatusAndPrices("306", new Price("EUR", 109), new Price("EUR", 140)),
+                new RoomStatusAndPrices("307", new Price("EUR", 109), new Price("EUR", 140)),
+                new RoomStatusAndPrices("308", new Price("EUR", 109), new Price("EUR", 140)),
+                new RoomStatusAndPrices("405", new Price("EUR", 145), new Price("EUR", 170)),
+                new RoomStatusAndPrices("501", new Price("EUR", 12000), new Price("EUR", 12000))
+            });
 
             var generatedFilePath = SerializeToJsonFile(roomsAvailability);
             Console.WriteLine($"Integration file generated: {generatedFilePath}");
