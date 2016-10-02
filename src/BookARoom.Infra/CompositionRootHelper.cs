@@ -2,6 +2,7 @@
 using BookARoom.Domain.ReadModel;
 using BookARoom.Domain.WriteModel;
 using BookARoom.Infra.MessageBus;
+using BookARoom.Infra.ReadModel.Adapters;
 
 namespace BookARoom.Infra
 {
@@ -10,22 +11,35 @@ namespace BookARoom.Infra
     /// </summary>
     public class CompositionRootHelper
     {
-        public static ReadModelFacade BuildTheReadModelHexagon(IProvideRooms roomsAdapter, IProvideHotel hotelAdapter)
+        public static ReadModelFacade BuildTheReadModelHexagon(IProvideRooms roomsAdapter, IProvideHotel hotelAdapter, IProvideReservations reservationAdapter = null, ISubscribeToEvents bus = null)
         {
-            return new ReadModelFacade(roomsAdapter, hotelAdapter);
+            if (bus == null)
+            {
+                bus = new FakeBus();
+            }
+
+            if (reservationAdapter == null)
+            {
+                reservationAdapter = new ReservationAdapter(bus);
+            }
+
+            return new ReadModelFacade(roomsAdapter, hotelAdapter, reservationAdapter, bus);
         }
 
-        public static BookingCommandHandler BuildTheWriteModelHexagon(IBookingRepository bookingRepository, IClientRepository clientRepository, IPublishEvents bus)
+        public static BookingCommandHandler BuildTheWriteModelHexagon(IBookingRepository bookingRepository, IClientRepository clientRepository, IPublishEvents eventPublisher, ISubscribeToEvents eventSubscriber)
         {
-            return new BookingCommandHandler(new BookingStore(bookingRepository, clientRepository, bus));
+            var bookingHandler = new BookingCommandHandler(new BookingStore(bookingRepository, clientRepository, eventPublisher));
+            CompositionRootHelper.SubscribeCommands(bookingHandler, eventSubscriber);
+
+            return bookingHandler;
         }
 
         /// <summary>
-        /// Subscribe the "command handler" to per-type command publication on the bus.
+        /// Subscribe the "command handler" to per-type command publication on the eventPublisher.
         /// </summary>
         /// <param name="bookingCommandHandler">The callback/handler provider.</param>
-        /// <param name="bus">The bus to subscribe on.</param>
-        public static void SubscribeCommands(BookingCommandHandler bookingCommandHandler, FakeBus bus)
+        /// <param name="bus">The eventPublisher to subscribe on.</param>
+        private static void SubscribeCommands(BookingCommandHandler bookingCommandHandler, ISubscribeToEvents bus)
         {
             bus.RegisterHandler<BookARoomCommand>(bookingCommandHandler.Handle);
         }

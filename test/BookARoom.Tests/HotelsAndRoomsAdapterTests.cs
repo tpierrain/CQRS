@@ -12,7 +12,7 @@ namespace BookARoom.Tests
         [Test]
         public void Should_load_a_file()
         {
-            var hotelsAdapter = new HotelAndRoomsAdapter(Constants.RelativePathForHotelIntegrationFiles, new FakeBus());
+            var hotelsAdapter = new HotelsAndRoomsAdapter(Constants.RelativePathForHotelIntegrationFiles, new FakeBus());
 
             hotelsAdapter.LoadHotelFile("New York Sofitel-availabilities.json");
             Check.That(hotelsAdapter.Hotels).HasSize(1);

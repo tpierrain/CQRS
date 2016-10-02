@@ -1,7 +1,6 @@
 using System;
-using BookARoom.Domain;
 
-namespace BookARoom.Infra.MessageBus
+namespace BookARoom.Domain.ReadModel
 {
     public interface ISubscribeToEvents
     {

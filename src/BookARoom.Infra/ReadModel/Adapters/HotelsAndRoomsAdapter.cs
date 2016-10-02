@@ -15,13 +15,13 @@ namespace BookARoom.Infra.ReadModel.Adapters
     /// Adapter between the Integration model (json external files) and the domain one.
     /// <remarks>Implementation of the Ports and Adapters patterns (a.k.a. hexagonal architecture).</remarks>
     /// </summary>
-    public class HotelAndRoomsAdapter : IProvideRooms, IProvideHotel
+    public class HotelsAndRoomsAdapter : IProvideRooms, IProvideHotel
     {
         // TODO: extract behaviours from this adapter to put it on the domain-side
         private readonly ISubscribeToEvents eventsSubscriber;
         private readonly IStoreAndProvideHotelsAndRooms repository;
 
-        public HotelAndRoomsAdapter(string integrationFilesDirectoryPath, ISubscribeToEvents eventsSubscriber)
+        public HotelsAndRoomsAdapter(string integrationFilesDirectoryPath, ISubscribeToEvents eventsSubscriber)
         {
             this.IntegrationFilesDirectoryPath = integrationFilesDirectoryPath;
             this.repository = new HotelsAndRoomsRepository();

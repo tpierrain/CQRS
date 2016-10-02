@@ -36,16 +36,15 @@ namespace BookARoom.Infra.Web
             var bus = new FakeBus();
             var bookingRepository = new BookingAndClientsRepository();
 
-            var bookingHandler = CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository, bookingRepository, bus);
-            CompositionRootHelper.SubscribeCommands(bookingHandler, bus);
+            var bookingHandler = CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository, bookingRepository, bus, bus);
             
 
             // TODO: register handlers for the query part coming from the bus?
 
             // Build the READ side ---------------------------------
-            var hotelsAdapter = new HotelAndRoomsAdapter($"{env.WebRootPath}/hotels/", bus);
+            var hotelsAdapter = new HotelsAndRoomsAdapter($"{env.WebRootPath}/hotels/", bus);
 
-            // TODO: replaces the next lines by a LoadAllHotelsFiles() method on the HotelAndRoomsAdapter
+            // TODO: replaces the next lines by a LoadAllHotelsFiles() method on the HotelsAndRoomsAdapter
             // TODO: find the proper path (current error is: 'C:\Dev\CQRS\experiences16\src\BookARoom.Infra.Web\hotels\THE GRAND BUDAPEST HOTEL-availabilities.json'.'.)
             hotelsAdapter.LoadHotelFile("THE GRAND BUDAPEST HOTEL-availabilities.json");
             hotelsAdapter.LoadHotelFile("Danubius Health Spa Resort Helia-availabilities.json");

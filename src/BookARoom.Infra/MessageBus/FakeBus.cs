@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BookARoom.Domain;
+using BookARoom.Domain.ReadModel;
 
 namespace BookARoom.Infra.MessageBus
 {

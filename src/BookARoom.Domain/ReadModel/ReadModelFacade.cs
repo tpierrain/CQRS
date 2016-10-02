@@ -6,22 +6,26 @@ namespace BookARoom.Domain.ReadModel
     /// <summary>
     /// Allow to search BookingOptions or to get details about Hotels.
     /// </summary>
-    public class ReadModelFacade : IQueryBookingOptions, IProvideHotel
+    public class ReadModelFacade : IQueryBookingOptions, IProvideHotel, IProvideReservations
     {
         // TODO: question: find a domain name instead or keep focus on the CQRS pattern to ease understanding of the MS experiences'16 audience?
 
         private readonly IProvideRooms roomsProvider;
         private readonly IProvideHotel hotelProvider;
+        private readonly IProvideReservations reservationsProvider;
 
         /// <summary>
         /// Instantiates a <see cref="ReadModelFacade"/>.
         /// </summary>
         /// <param name="roomsProvider"></param>
         /// <param name="hotelProvider"></param>
-        public ReadModelFacade(IProvideRooms roomsProvider, IProvideHotel hotelProvider)
+        /// <param name="reservationsProvider"></param>
+        /// <param name="bus"></param>
+        public ReadModelFacade(IProvideRooms roomsProvider, IProvideHotel hotelProvider, IProvideReservations reservationsProvider, ISubscribeToEvents bus)
         {
             this.roomsProvider = roomsProvider;
             this.hotelProvider = hotelProvider;
+            this.reservationsProvider = reservationsProvider;
         }
 
         #region IQueryBookingOptions members
@@ -56,5 +60,10 @@ namespace BookARoom.Domain.ReadModel
         }
 
         #endregion
+
+        public IEnumerable<Reservation> GetReservationsFor(string clientId)
+        {
+            return this.reservationsProvider.GetReservationsFor(clientId);
+        }
     }
 }

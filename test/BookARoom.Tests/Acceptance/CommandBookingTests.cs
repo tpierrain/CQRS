@@ -31,14 +31,15 @@ namespace BookARoom.Tests.Acceptance
         }
 
         [Test]
-        public void Should_impact_read_model_when_booking_a_room()
+        public void Should_impact_bookingOptions_read_model_when_booking_a_room()
         {
             // Initialize Read-model side
             var bus = new FakeBus();
-            var hotelsAdapter = new HotelAndRoomsAdapter(Constants.RelativePathForHotelIntegrationFiles, bus);
+            var hotelsAdapter = new HotelsAndRoomsAdapter(Constants.RelativePathForHotelIntegrationFiles, bus);
+            var reservationsAdapter = new ReservationAdapter(bus);
             hotelsAdapter.LoadHotelFile("New York Sofitel-availabilities.json");
 
-            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter);
+            var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter, reservationsAdapter, bus);
 
             // Search Rooms availabilities
             var checkInDate = Constants.MyFavoriteSaturdayIn2017;
@@ -56,7 +57,7 @@ namespace BookARoom.Tests.Acceptance
             // Initialize Write-model side
             var bookingRepository = new BookingAndClientsRepository();
 
-            var bookingHandler = CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository, bookingRepository, bus);
+            var bookingHandler = CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository, bookingRepository, bus, bus);
 
             // We book a room from that booking option
             BookAnOption(bookingOption, checkInDate, checkOutDate, bookingHandler);
