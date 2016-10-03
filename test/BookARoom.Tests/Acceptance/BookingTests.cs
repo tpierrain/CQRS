@@ -24,12 +24,12 @@ namespace BookARoom.Tests.Acceptance
 
             CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository.Object, clientRepository.Object, bus, bus);
 
-            bookingRepository.Verify(x => x.Save(It.IsAny<BookingCommand>()), Times.Never);
+            bookingRepository.Verify(x => x.Save(It.IsAny<Booking>()), Times.Never);
 
             var bookingCommand = new BookingCommand(clientId: "thomas@pierrain.net", hotelName:"Super Hotel", hotelId: 1, roomNumber: "2", checkInDate: DateTime.Parse("2016-09-17"), checkOutDate: DateTime.Parse("2016-09-18"));
             bus.Send(bookingCommand);
 
-            bookingRepository.Verify(x => x.Save(It.Is<BookingCommand>(y => y.ClientId == "thomas@pierrain.net")), Times.Once);
+            bookingRepository.Verify(x => x.Save(It.Is<Booking>(y => y.ClientId == "thomas@pierrain.net")), Times.Once);
         }
 
         [Test]

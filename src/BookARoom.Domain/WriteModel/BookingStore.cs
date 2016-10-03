@@ -1,4 +1,6 @@
-﻿namespace BookARoom.Domain.WriteModel
+﻿using System;
+
+namespace BookARoom.Domain.WriteModel
 {
     public class BookingStore : IBookRooms
     {
@@ -13,17 +15,36 @@
             this.publishEvents = publishEvents;
         }
 
-        public void BookARoom(BookingCommand bookingCommand)
+        public void CancelBooking(CancelBookingCommand cancelBookingCommand)
         {
-            if (!this.clientRepository.IsClientAlready(bookingCommand.ClientId))
+            var booking = this.bookingRepository.GetBooking(cancelBookingCommand.ClientId, cancelBookingCommand.BookingCommandGuid);
+            if (booking.IsForClient(cancelBookingCommand.ClientId))
             {
-                this.clientRepository.CreateClient(bookingCommand.ClientId);    
+                // We cancel the booking
+                booking.Cancel();
+
+                // And save its updated version
+                this.bookingRepository.Update(booking);
+            }
+            else
+            {
+                throw new InvalidOperationException("Can't cancel a booking for another client.");
+            }
+        }
+
+        public void BookARoom(BookingCommand command)
+        {
+            if (!this.clientRepository.IsClientAlready(command.ClientId))
+            {
+                this.clientRepository.CreateClient(command.ClientId);    
             }
 
-            var guid = this.bookingRepository.Save(bookingCommand);
+            Guid guid = Guid.NewGuid();
+            var booking = new Booking(guid, command.ClientId, command.HotelId, command.RoomNumber, command.CheckInDate, command.CheckOutDate);
+            this.bookingRepository.Save(booking);
 
             // we could enrich the event from here (eg. finding the HotelName from the HotelId)
-            var roomBooked = new RoomBooked(guid, bookingCommand.HotelName, bookingCommand.HotelId, bookingCommand.ClientId, bookingCommand.RoomNumber, bookingCommand.CheckInDate, bookingCommand.CheckOutDate);
+            var roomBooked = new RoomBooked(guid, command.HotelName, command.HotelId, command.ClientId, command.RoomNumber, command.CheckInDate, command.CheckOutDate);
             this.publishEvents.PublishTo(roomBooked);
         }
     }
