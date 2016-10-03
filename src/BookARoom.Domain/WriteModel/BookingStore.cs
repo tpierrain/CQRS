@@ -20,10 +20,10 @@
                 this.clientRepository.CreateClient(bookingCommand.ClientId);    
             }
 
-            this.bookingRepository.Save(bookingCommand);
+            var guid = this.bookingRepository.Save(bookingCommand);
 
             // we could enrich the event from here (eg. finding the HotelName from the HotelId)
-            var roomBooked = new RoomBooked(bookingCommand.HotelName, bookingCommand.HotelId, bookingCommand.ClientId, bookingCommand.RoomNumber, bookingCommand.CheckInDate, bookingCommand.CheckOutDate);
+            var roomBooked = new RoomBooked(guid, bookingCommand.HotelName, bookingCommand.HotelId, bookingCommand.ClientId, bookingCommand.RoomNumber, bookingCommand.CheckInDate, bookingCommand.CheckOutDate);
             this.publishEvents.PublishTo(roomBooked);
         }
     }

@@ -4,6 +4,7 @@ namespace BookARoom.Domain.ReadModel
 {
     public class Reservation
     {
+        public Guid Guid { get; private set; }
         public string ClientId { get; }
         public string HotelName { get; set; }
         public string HotelId { get; }
@@ -11,8 +12,10 @@ namespace BookARoom.Domain.ReadModel
         public DateTime CheckInDate { get; }
         public DateTime CheckOutDate { get; }
 
-        public Reservation(string clientId, string hotelName, string hotelId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
+
+        public Reservation(Guid guid, string clientId, string hotelName, string hotelId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
         {
+            this.Guid = guid;
             this.ClientId = clientId;
             this.HotelName = hotelName;
             this.HotelId = hotelId;

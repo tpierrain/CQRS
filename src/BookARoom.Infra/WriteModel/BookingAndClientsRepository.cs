@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BookARoom.Domain;
 using BookARoom.Domain.WriteModel;
 
@@ -13,9 +14,13 @@ namespace BookARoom.Infra.WriteModel
             this.perClientCommands = new Dictionary<string, List<ICommand>>();
         }
 
-        public void Save(BookARoomCommand bookingCommand)
+        public Guid Save(BookARoomCommand bookingCommand)
         {
+            // In our case the Guid is provided here, at the persistence level
+            bookingCommand.Guid = Guid.NewGuid();
             this.perClientCommands[bookingCommand.ClientId].Add(bookingCommand);
+
+            return bookingCommand.Guid;
         }
 
         public bool IsClientAlready(string clientIdentifier)

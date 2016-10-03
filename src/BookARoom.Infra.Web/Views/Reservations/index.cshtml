@@ -33,6 +33,10 @@ else
 
         //    document.forms["bookingForm"].submit();
         //}
+
+        function cancelBooking(guid) {
+            alert("cancel booking for '" + guid + "'");
+        }
     </script>
     <form id="reservationsForm" method="post" action="ModifyReservation">
 
@@ -56,8 +60,8 @@ else
                     <td>@reservation.CheckInDate.ToString("d")</td>
                     <td>@reservation.CheckOutDate.ToString("d")</td>
                     <td>
-                        <a href="" class="button" onclick="return false;">Edit</a>
-                        <a href="" class="button" onclick="return false;">Delete</a>
+                        @*<a href="" class="button" onclick="return false;">Edit</a>*@
+                        <a href="" class="button" onclick="cancelBooking('@reservation.Guid'); return false;">Cancel</a>
                     </td>
                 </tr>
             }

@@ -4,6 +4,7 @@ namespace BookARoom.Domain.WriteModel
 {
     public class RoomBooked : IEvent
     {
+        public Guid Guid { get; }
         public string HotelName { get; }
         public int HotelId { get; }
         public string ClientId { get; }
@@ -11,8 +12,9 @@ namespace BookARoom.Domain.WriteModel
         public DateTime CheckInDate { get; }
         public DateTime CheckOutDate { get; }
 
-        public RoomBooked(string hotelName,int hotelId, string clientId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
+        public RoomBooked(Guid guid, string hotelName, int hotelId, string clientId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
         {
+            this.Guid = guid;
             this.HotelName = hotelName;
             this.HotelId = hotelId;
             this.ClientId = clientId;
