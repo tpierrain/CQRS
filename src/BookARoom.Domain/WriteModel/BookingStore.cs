@@ -15,23 +15,6 @@ namespace BookARoom.Domain.WriteModel
             this.publishEvents = publishEvents;
         }
 
-        public void CancelBooking(CancelBookingCommand cancelBookingCommand)
-        {
-            var booking = this.bookingRepository.GetBooking(cancelBookingCommand.ClientId, cancelBookingCommand.BookingId);
-            if (booking.IsForClient(cancelBookingCommand.ClientId))
-            {
-                // We cancel the booking
-                booking.Cancel();
-
-                // And save its updated version
-                this.bookingRepository.Update(booking);
-            }
-            else
-            {
-                throw new InvalidOperationException("Can't cancel a booking for another client.");
-            }
-        }
-
         public void BookARoom(BookingCommand command)
         {
             if (!this.clientRepository.IsClientAlready(command.ClientId))

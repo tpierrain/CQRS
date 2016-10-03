@@ -3,6 +3,5 @@
     public interface IBookRooms
     {
         void BookARoom(BookingCommand command);
-        void CancelBooking(CancelBookingCommand cancelBookingCommand);
     }
 }

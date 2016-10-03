@@ -35,44 +35,5 @@ namespace BookARoom.Infra.WriteModel
         {
             return this.perClientBookings[clientIdentifier];
         }
-
-        public Booking GetBooking(string clientId, Guid bookingId)
-        {
-            var allBookingsForThisClient = this.perClientBookings[clientId];
-            foreach (var booking in allBookingsForThisClient)
-            {
-                if (booking.BookingId == bookingId)
-                {
-                    return booking;
-                }
-            }
-
-            return Booking.Null;
-        }
-
-        public void Update(Booking booking)
-        {
-            if (!this.perClientBookings.ContainsKey(booking.ClientId))
-            {
-                this.perClientBookings[booking.ClientId] = new List<Booking>();
-            }
-
-            var bookingsForThisClient = this.perClientBookings[booking.ClientId];
-
-            int? index = null;
-            for (int i = 0; i < bookingsForThisClient.Count; i++)
-            {
-                if (bookingsForThisClient[i].BookingId == booking.BookingId)
-                {
-                    index = i;
-                    break;
-                }
-            }
-
-            if (index.HasValue)
-            {
-                bookingsForThisClient[index.Value] = booking;
-            }
-        }
     }
 }

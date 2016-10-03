@@ -59,6 +59,17 @@ namespace BookARoom.Tests.Acceptance
     }    
 }
 ````
+To make our solution build again, we must create (Alt-Enter) a new *IsCancelled* property for the *Booking* type :
+````C#
+public class Booking
+{
+    // existing code
+
+    public bool IsCanceled { get; private set; }  // a new property to identify booking cancelation
+
+    // existing code
+}
+````
 
 
 ## Step2: Make it work
