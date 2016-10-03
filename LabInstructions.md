@@ -31,29 +31,32 @@ namespace BookARoom.Tests.Acceptance
             var hotelId = 2;
             var roomNumber = "101";
             var clientId = "thomas@pierrain.net";
-            var bookingCommand = new BookARoomCommand(clientId: clientId, hotelName: "New York Sofitel", hotelId: hotelId, roomNumber: roomNumber, checkInDate: Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1));
-
+            var bookingCommand = new BookingCommand(clientId: clientId, hotelName: "New York Sofitel", hotelId: hotelId, roomNumber: roomNumber, checkInDate: Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1));
+            
             bus.Send(bookingCommand);
 
-            Check.That(bookingEngine.GetBookingCommandsFrom(clientId)).ContainsExactly(bookingCommand);
+            Check.That(bookingEngine.GetBookingsFrom(clientId)).HasSize(1);
+            var bookingGuid = bookingEngine.GetBookingsFrom(clientId).First().BookingId;
 
-            var cancelBookingCommand = new CancelBookingCommand(bookingCommand.Guid);
+            var cancelBookingCommand = new CancelBookingCommand(bookingGuid);
             bus.Send(cancelBookingCommand);
 
-            Check.That(bookingEngine.GetBookingCommandsFrom(clientId)).IsEmpty();
+            // Booking is still there, but canceled
+            Check.That(bookingEngine.GetBookingsFrom(clientId)).HasSize(1);
+            Check.That(bookingEngine.GetBookingsFrom(clientId).First().IsCanceled).IsTrue();
         }
     }
 
     // Note: since we 'TDD as if you meant it', the newly created command sits aside the test (we'll move it in a second step).
     public class CancelBookingCommand: ICommand
     {
-        public Guid BookingCommandGuid { get; }
+        public Guid BookingId { get; }
 
-        public CancelBookingCommand(Guid bookingCommandGuid)
+        public CancelBookingCommand(Guid bookingId)
         {
-            BookingCommandGuid = bookingCommandGuid;
+            this.BookingId = bookingId;
         }
-    }
+    }    
 }
 ````
 
@@ -118,18 +121,18 @@ namespace BookARoom.Tests.Acceptance
     // (...) somewhere within the WriteModelFacade type
     public void Handle(CancelBookingCommand command)
     {
-    this.BookingStore.CancelBooking(command); // better than a NotImplementedException right?
+        this.BookingStore.CancelBooking(command); // better than a NotImplementedException right?
     }
     ````
 
     ````C#
     namespace BookARoom.Domain.WriteModel
     {
-    public interface IBookRooms
-    {
-    void BookARoom(BookingCommand bookingCommand);
-    void CancelBooking(CancelBookingCommand cancelBookingCommand); // the new operation
-    }
+        public interface IBookRooms
+        {
+            void BookARoom(BookingCommand bookingCommand);
+            void CancelBooking(CancelBookingCommand cancelBookingCommand); // the new operation
+        }
     }
     ````
 
@@ -140,37 +143,36 @@ namespace BookARoom.Tests.Acceptance
 
     namespace BookARoom.Domain.WriteModel
     {
-    public class BookingStore : IBookRooms
-    {
-    // existing code
+        public class BookingStore : IBookRooms
+        {
+            // existing code
 
-    public void CancelBooking(CancelBookingCommand cancelBookingCommand)
-    {
-    var booking = this.bookingRepository.GetBooking(cancelBookingCommand.ClientId, cancelBookingCommand.BookingCommandGuid);
+            public void CancelBooking(CancelBookingCommand cancelBookingCommand)
+            {
+                var booking = this.bookingRepository.GetBooking(cancelBookingCommand.ClientId, cancelBookingCommand.BookingId);
+                if (booking.IsForClient(cancelBookingCommand.ClientId))
+                {
+                    // We cancel the booking
+                    booking.Cancel();
 
-    if (booking.IsForClient(cancelBookingCommand.ClientId))
-    {
-    // We cancel the booking
-    booking.Cancel();
+                    // And save its updated version
+                    this.bookingRepository.Update(booking);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Can't cancel a booking for another client.");
+                }
+            }
 
-    // And save its updated version
-    this.bookingRepository.Update(booking);
-    }
-    else
-    {
-    throw new InvalidOperationException("Can't cancel a booking for another client.");
-    }
-    }
-
-    // existing code
-    }
+            // existing code
+        }
     }
     ````
 
     Since this newly implemented *CancelBooking* method refers to undefined methods and type, __we need to catch-up the implementation__ in order to make it build again. It means:
     1. __To Add a new *ClientId* property__ on the existing *CancelBookingCommand* type (needed to prevent someone from cancelling someone else's booking) and to fix the acceptance test that uses it (*Should_Update_booking_engine_when_CancelBookingCommand_is_sent()*)
     2. __To Add 2 methods on the IBookingRepository interface__: *Booking GetBooking(string clientId, Guid bookingId)* and *void Update(Booking booking)*
-    3. __To implement a new *Booking* type__ that has *Cancel()* and a *IsForClient(string clientId)* methods.
+    3. __To implement new methods on the *Booking* type__ (*Cancel()* and *IsForClient(string clientId)*)
     4. To catch-up *IBookingRepository* implementation of the *BookingAndClientsRepository* concrete type __by adding the 2 missing methods__: GetBooking(...) and Update(...)
 
     Let's see what it takes with code:
@@ -178,13 +180,16 @@ namespace BookARoom.Tests.Acceptance
     ````C#
     public class CancelBookingCommand: ICommand
     {
-        public Guid BookingCommandGuid { get; }
-        public string ClientId { get; } // new property
-
-        public CancelBookingCommand(Guid bookingCommandGuid, string clientId)
+        public class CancelBookingCommand: ICommand
         {
-            this.BookingCommandGuid = bookingCommandGuid;
-            this.ClientId = clientId; // new property assignment
+            public Guid BookingId { get; }
+            public string ClientId { get; } // new property
+
+            public CancelBookingCommand(Guid bookingId, string clientId)
+            {
+                this.BookingId = bookingId;
+                this.ClientId = clientId; // new property assignment
+            }
         }
     }
     ````
@@ -195,7 +200,7 @@ namespace BookARoom.Tests.Acceptance
     public void Should_Update_booking_engine_when_CancelBookingCommand_is_sent()
     {
         // existing code
-        var cancelBookingCommand = new CancelBookingCommand(bookingCommand.Guid, clientId); // add the new clientId parameter
+        var cancelBookingCommand = new CancelBookingCommand(bookingGuid, clientId);
         // existing code
     }
     ````
@@ -206,9 +211,9 @@ namespace BookARoom.Tests.Acceptance
     {
         public interface IBookingRepository
         {
-            Guid Save(BookingCommand bookingCommand);
-            Booking GetBooking(string clientId, Guid bookingId); // new method
-            void Update(Booking booking); // new method
+            void Save(Booking booking);
+            Booking GetBooking(string clientId, Guid bookingId);
+            void Update(Booking booking);
         }
     }
     ````
@@ -216,8 +221,10 @@ namespace BookARoom.Tests.Acceptance
     ````C#
     namespace BookARoom.Domain.WriteModel
     {
-        public class Booking // new type!
+        public class Booking
         {
+            // existing code
+
             public bool IsForClient(string clientId)
             {
                 throw new NotImplementedException();
@@ -227,6 +234,8 @@ namespace BookARoom.Tests.Acceptance
             {
                 throw new NotImplementedException();
             }
+
+            // existing code
         }
     }
     ````
@@ -288,68 +297,99 @@ namespace BookARoom.Tests.Acceptance
     which by the way, force us to add a __Null (object pattern)__ property on the new *Booking* type that we need to implement to get rid of its previous NotImplementedExceptions:
 
     ````C#
-    public class Booking
+    using System;
+
+    namespace BookARoom.Domain.WriteModel
     {
-        public static Booking Null { get; } = new NullBooking();
-
-        // We provide getters only so that the state of this domain object is only changed via one of its operations (methods)
-        public Guid BookingId { get; }
-        public string ClientId { get; }
-        public int HotelId { get; }
-        public string RoomNumber { get; }
-        public DateTime CheckInDate { get; }
-        public DateTime CheckOutDate { get; }
-        public bool IsCanceled { get; private set; }
-
-        public Booking(Guid bookingId , string clientId, int hotelId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
+        public class Booking
         {
-            this.BookingId = bookingId;
-            this.ClientId = clientId;
-            this.HotelId = hotelId;
-            this.RoomNumber = roomNumber;
-            this.CheckInDate = checkInDate;
-            this.CheckOutDate = checkOutDate;
-        }
+            public static Booking Null { get; } = new NullBooking();
 
-        public virtual bool IsForClient(string clientId)
-        {
-            if (this.ClientId == clientId)
+            // We provide getters only so that the state of this domain object is only changed via one of its operations (methods)
+            public Guid BookingId { get; }
+            public string ClientId { get; }
+            public int HotelId { get; }
+            public string RoomNumber { get; }
+            public DateTime CheckInDate { get; }
+            public DateTime CheckOutDate { get; }
+            public bool IsCanceled { get; private set; }
+
+            public Booking(Guid bookingId , string clientId, int hotelId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
             {
-                return true;
+                this.BookingId = bookingId;
+                this.ClientId = clientId;
+                this.HotelId = hotelId;
+                this.RoomNumber = roomNumber;
+                this.CheckInDate = checkInDate;
+                this.CheckOutDate = checkOutDate;
             }
 
-            return false;
-        }
-
-        public virtual void Cancel()
-        {
-            this.IsCanceled = true;
-        }
-
-        private class NullBooking : Booking
-        {
-            public NullBooking() : base(Guid.Empty, string.Empty, 0, string.Empty, DateTime.Now, DateTime.Now)
+            public virtual bool IsForClient(string clientId)
             {
-            }
+                if (this.ClientId == clientId)
+                {
+                    return true;
+                }
 
-            public override bool IsForClient(string clientId)
-            {
                 return false;
             }
 
-            public override void Cancel()
+            public virtual void Cancel()
             {
+                this.IsCanceled = true;
+            }
+
+            private class NullBooking : Booking
+            {
+                public NullBooking() : base(Guid.Empty, string.Empty, 0, string.Empty, DateTime.Now, DateTime.Now)
+                {
+                }
+
+                public override bool IsForClient(string clientId)
+                {
+                    return false;
+                }
+
+                public override void Cancel()
+                {
+                }
             }
         }
     }
     ````
     we continue to replace all our NotImplementedException by some code. Next-one pointed out by our acceptance test is the *Update()* method of the *BookingAndClientsRepository* type:
 
+    ````C#
+    public void Update(Booking booking)
+    {
+        if (!this.perClientBookings.ContainsKey(booking.ClientId))
+        {
+            this.perClientBookings[booking.ClientId] = new List<Booking>();
+        }
 
+        var bookingsForThisClient = this.perClientBookings[booking.ClientId];
 
+        int? index = null;
+        for (int i = 0; i < bookingsForThisClient.Count; i++)
+        {
+            if (bookingsForThisClient[i].BookingId == booking.BookingId)
+            {
+                index = i;
+                break;
+            }
+        }
+
+        if (index.HasValue)
+        {
+            bookingsForThisClient[index.Value] = booking;
+        }
+    }
+    ````
+    We run our tests again, and TADA! it's all green.
 
     - - -
 
+## Step3: Integrate our work to the UI
 
 
 4. We refactor

@@ -4,12 +4,12 @@ namespace BookARoom.Domain.WriteModel
 {
     public class CancelBookingCommand: ICommand
     {
-        public Guid BookingCommandGuid { get; }
+        public Guid BookingId { get; }
         public string ClientId { get; }
 
-        public CancelBookingCommand(Guid bookingCommandGuid, string clientId)
+        public CancelBookingCommand(Guid bookingId, string clientId)
         {
-            this.BookingCommandGuid = bookingCommandGuid;
+            this.BookingId = bookingId;
             this.ClientId = clientId;
         }
     }

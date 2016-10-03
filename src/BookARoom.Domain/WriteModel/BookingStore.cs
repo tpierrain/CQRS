@@ -17,7 +17,7 @@ namespace BookARoom.Domain.WriteModel
 
         public void CancelBooking(CancelBookingCommand cancelBookingCommand)
         {
-            var booking = this.bookingRepository.GetBooking(cancelBookingCommand.ClientId, cancelBookingCommand.BookingCommandGuid);
+            var booking = this.bookingRepository.GetBooking(cancelBookingCommand.ClientId, cancelBookingCommand.BookingId);
             if (booking.IsForClient(cancelBookingCommand.ClientId))
             {
                 // We cancel the booking

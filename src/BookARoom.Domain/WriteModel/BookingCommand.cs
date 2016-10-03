@@ -10,7 +10,6 @@ namespace BookARoom.Domain.WriteModel
         public string RoomNumber { get; }
         public DateTime CheckInDate { get; }
         public DateTime CheckOutDate { get; }
-        public Guid Guid { get; set; }
 
         public BookingCommand(string clientId, string hotelName, int hotelId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
         {

@@ -15,7 +15,6 @@ namespace BookARoom.Infra.WriteModel
 
         public void Save(Booking booking)
         {
-            // In our case the Guid is provided here, at the persistence level
             this.perClientBookings[booking.ClientId].Add(booking);
         }
 
@@ -53,7 +52,27 @@ namespace BookARoom.Infra.WriteModel
 
         public void Update(Booking booking)
         {
-            throw new NotImplementedException();
+            if (!this.perClientBookings.ContainsKey(booking.ClientId))
+            {
+                this.perClientBookings[booking.ClientId] = new List<Booking>();
+            }
+
+            var bookingsForThisClient = this.perClientBookings[booking.ClientId];
+
+            int? index = null;
+            for (int i = 0; i < bookingsForThisClient.Count; i++)
+            {
+                if (bookingsForThisClient[i].BookingId == booking.BookingId)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index.HasValue)
+            {
+                bookingsForThisClient[index.Value] = booking;
+            }
         }
     }
 }

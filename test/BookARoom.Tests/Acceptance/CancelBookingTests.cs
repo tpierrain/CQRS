@@ -31,7 +31,9 @@ namespace BookARoom.Tests.Acceptance
             var cancelBookingCommand = new CancelBookingCommand(bookingGuid, clientId);
             bus.Send(cancelBookingCommand);
 
-            Check.That(bookingEngine.GetBookingsFrom(clientId)).IsEmpty();
+            // Booking is still there, but canceled
+            Check.That(bookingEngine.GetBookingsFrom(clientId)).HasSize(1);
+            Check.That(bookingEngine.GetBookingsFrom(clientId).First().IsCanceled).IsTrue();
         }
     }
 }
