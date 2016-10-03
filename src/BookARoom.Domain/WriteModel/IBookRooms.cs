@@ -2,6 +2,6 @@
 {
     public interface IBookRooms
     {
-        void BookARoom(BookARoomCommand bookingCommand);
+        void BookARoom(BookingCommand bookingCommand);
     }
 }

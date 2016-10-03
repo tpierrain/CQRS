@@ -2,7 +2,7 @@
 
 namespace BookARoom.Domain.WriteModel
 {
-    public class BookARoomCommand : ICommand
+    public class BookingCommand : ICommand
     {
         public string ClientId { get; }
         public string HotelName { get; }
@@ -12,7 +12,7 @@ namespace BookARoom.Domain.WriteModel
         public DateTime CheckOutDate { get; }
         public Guid Guid { get; set; }
 
-        public BookARoomCommand(string clientId, string hotelName, int hotelId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
+        public BookingCommand(string clientId, string hotelName, int hotelId, string roomNumber, DateTime checkInDate, DateTime checkOutDate)
         {
             this.ClientId = clientId;
             this.HotelName = hotelName;

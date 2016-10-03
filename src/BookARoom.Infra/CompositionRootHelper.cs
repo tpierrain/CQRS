@@ -41,7 +41,7 @@ namespace BookARoom.Infra
         /// <param name="bus">The eventPublisher to subscribe on.</param>
         private static void SubscribeCommands(WriteModelFacade writeModelFacade, ISubscribeToEvents bus)
         {
-            bus.RegisterHandler<BookARoomCommand>(writeModelFacade.Handle);
+            bus.RegisterHandler<BookingCommand>(writeModelFacade.Handle);
         }
     }
 }

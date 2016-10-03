@@ -14,7 +14,7 @@ namespace BookARoom.Infra.WriteModel
             this.perClientCommands = new Dictionary<string, List<ICommand>>();
         }
 
-        public Guid Save(BookARoomCommand bookingCommand)
+        public Guid Save(BookingCommand bookingCommand)
         {
             // In our case the Guid is provided here, at the persistence level
             bookingCommand.Guid = Guid.NewGuid();

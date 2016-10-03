@@ -13,7 +13,7 @@
             this.publishEvents = publishEvents;
         }
 
-        public void BookARoom(BookARoomCommand bookingCommand)
+        public void BookARoom(BookingCommand bookingCommand)
         {
             if (!this.clientRepository.IsClientAlready(bookingCommand.ClientId))
             {

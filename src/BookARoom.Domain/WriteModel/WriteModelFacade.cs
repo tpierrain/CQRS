@@ -1,6 +1,6 @@
 ﻿namespace BookARoom.Domain.WriteModel
 {
-    public class WriteModelFacade : IHandleCommand<BookARoomCommand>
+    public class WriteModelFacade : IHandleCommand<BookingCommand>
     {
         public IBookRooms BookingStore { get; }
 
@@ -9,7 +9,7 @@
             this.BookingStore = bookingStore;
         }
 
-        public void Handle(BookARoomCommand command)
+        public void Handle(BookingCommand command)
         {
             this.BookingStore.BookARoom(command);
         }

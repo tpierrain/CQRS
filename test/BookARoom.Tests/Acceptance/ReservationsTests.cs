@@ -35,7 +35,7 @@ namespace BookARoom.Tests.Acceptance
             var roomNumber = "101";
             var checkInDate = Constants.MyFavoriteSaturdayIn2017;
             var checkOutDate = checkInDate.AddDays(1);
-            bus.Send(new BookARoomCommand(clientId, hotelName, hotelId, roomNumber, checkInDate, checkOutDate));
+            bus.Send(new BookingCommand(clientId, hotelName, hotelId, roomNumber, checkInDate, checkOutDate));
 
             reservations = readFacade.GetReservationsFor(clientId);
             Check.That(reservations).HasSize(1);
