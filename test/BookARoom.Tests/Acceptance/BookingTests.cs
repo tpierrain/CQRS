@@ -69,7 +69,7 @@ namespace BookARoom.Tests.Acceptance
             bus.Send(bookingCommand);
 
             // We check that both the BookingRepository (Write model) and the available rooms (Read model) have been updated.
-            Check.That(bookingRepository.GetBookingCommandsFrom("thomas@pierrain.net").Count()).IsEqualTo(1);
+            Check.That(bookingRepository.GetBookingsFrom("thomas@pierrain.net").Count()).IsEqualTo(1);
 
             // Fetch rooms availabilities now. One room should have disappeared from the search result
             bookingOptions = readFacade.SearchBookingOptions(searchQuery);

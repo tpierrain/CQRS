@@ -6,43 +6,43 @@ namespace BookARoom.Infra.WriteModel
 {
     public class BookingAndClientsRepository : IBookingRepository, IClientRepository
     {
-        private readonly Dictionary<string, List<Booking>> perClientCommands;
+        private readonly Dictionary<string, List<Booking>> perClientBookings;
 
         public BookingAndClientsRepository()
         {
-            this.perClientCommands = new Dictionary<string, List<Booking>>();
+            this.perClientBookings = new Dictionary<string, List<Booking>>();
         }
 
         public void Save(Booking booking)
         {
             // In our case the Guid is provided here, at the persistence level
-            this.perClientCommands[booking.ClientId].Add(booking);
+            this.perClientBookings[booking.ClientId].Add(booking);
         }
 
         public bool IsClientAlready(string clientIdentifier)
         {
-            return this.perClientCommands.ContainsKey(clientIdentifier);
+            return this.perClientBookings.ContainsKey(clientIdentifier);
         }
 
         public void CreateClient(string clientIdentifier)
         {
-            if (!this.perClientCommands.ContainsKey(clientIdentifier))
+            if (!this.perClientBookings.ContainsKey(clientIdentifier))
             {
-                this.perClientCommands[clientIdentifier] = new List<Booking>();
+                this.perClientBookings[clientIdentifier] = new List<Booking>();
             }
         }
 
-        public IEnumerable<Booking> GetBookingCommandsFrom(string clientIdentifier)
+        public IEnumerable<Booking> GetBookingsFrom(string clientIdentifier)
         {
-            return this.perClientCommands[clientIdentifier];
+            return this.perClientBookings[clientIdentifier];
         }
 
         public Booking GetBooking(string clientId, Guid bookingId)
         {
-            var allBookingsForThisClient = this.perClientCommands[clientId];
+            var allBookingsForThisClient = this.perClientBookings[clientId];
             foreach (var booking in allBookingsForThisClient)
             {
-                if (booking != null && booking.BookingId == bookingId)
+                if (booking.BookingId == bookingId)
                 {
                     return booking;
                 }
@@ -53,7 +53,6 @@ namespace BookARoom.Infra.WriteModel
 
         public void Update(Booking booking)
         {
-
             throw new NotImplementedException();
         }
     }

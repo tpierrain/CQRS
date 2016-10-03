@@ -4,6 +4,7 @@ using BookARoom.Infra.MessageBus;
 using BookARoom.Infra.WriteModel;
 using NFluent;
 using NUnit.Framework;
+using System.Linq;
 
 namespace BookARoom.Tests.Acceptance
 {
@@ -24,12 +25,13 @@ namespace BookARoom.Tests.Acceptance
             
             bus.Send(bookingCommand);
 
-            Check.That(bookingEngine.GetBookingCommandsFrom(clientId)).ContainsExactly(bookingCommand);
+            Check.That(bookingEngine.GetBookingsFrom(clientId)).HasSize(1);
+            var bookingGuid = bookingEngine.GetBookingsFrom(clientId).First().BookingId;
 
-            var cancelBookingCommand = new CancelBookingCommand(bookingCommand.Guid, clientId);
+            var cancelBookingCommand = new CancelBookingCommand(bookingGuid, clientId);
             bus.Send(cancelBookingCommand);
 
-            Check.That(bookingEngine.GetBookingCommandsFrom(clientId)).IsEmpty();
+            Check.That(bookingEngine.GetBookingsFrom(clientId)).IsEmpty();
         }
     }
 }
