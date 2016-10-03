@@ -26,22 +26,22 @@ namespace BookARoom.Infra
             return new ReadModelFacade(roomsAdapter, hotelAdapter, reservationAdapter, bus);
         }
 
-        public static BookingCommandHandler BuildTheWriteModelHexagon(IBookingRepository bookingRepository, IClientRepository clientRepository, IPublishEvents eventPublisher, ISubscribeToEvents eventSubscriber)
+        public static WriteModelFacade BuildTheWriteModelHexagon(IBookingRepository bookingRepository, IClientRepository clientRepository, IPublishEvents eventPublisher, ISubscribeToEvents eventSubscriber)
         {
-            var bookingHandler = new BookingCommandHandler(new BookingStore(bookingRepository, clientRepository, eventPublisher));
-            CompositionRootHelper.SubscribeCommands(bookingHandler, eventSubscriber);
+            var writeModelCommandHandler = new WriteModelFacade(new BookingStore(bookingRepository, clientRepository, eventPublisher));
+            CompositionRootHelper.SubscribeCommands(writeModelCommandHandler, eventSubscriber);
 
-            return bookingHandler;
+            return writeModelCommandHandler;
         }
 
         /// <summary>
         /// Subscribe the "command handler" to per-type command publication on the eventPublisher.
         /// </summary>
-        /// <param name="bookingCommandHandler">The callback/handler provider.</param>
+        /// <param name="writeModelFacade">The callback/handler provider.</param>
         /// <param name="bus">The eventPublisher to subscribe on.</param>
-        private static void SubscribeCommands(BookingCommandHandler bookingCommandHandler, ISubscribeToEvents bus)
+        private static void SubscribeCommands(WriteModelFacade writeModelFacade, ISubscribeToEvents bus)
         {
-            bus.RegisterHandler<BookARoomCommand>(bookingCommandHandler.Handle);
+            bus.RegisterHandler<BookARoomCommand>(writeModelFacade.Handle);
         }
     }
 }

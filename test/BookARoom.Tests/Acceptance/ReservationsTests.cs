@@ -12,10 +12,10 @@ using NUnit.Framework;
 namespace BookARoom.Tests.Acceptance
 {
     [TestFixture]
-    public class QueryReservationsTests
+    public class ReservationsTests
     {
         [Test]
-        public void Should_retrieve_list_of_reservations()
+        public void Should_retrieve_updated_list_of_reservations()
         {
             var bus = new FakeBus();
             var adapter = new HotelsAndRoomsAdapter(Constants.RelativePathForHotelIntegrationFiles, bus);
@@ -28,7 +28,7 @@ namespace BookARoom.Tests.Acceptance
             Check.That(reservations).IsEmpty();
 
             var bookingAndClientsRepository = new BookingAndClientsRepository();
-            var writeFacade = CompositionRootHelper.BuildTheWriteModelHexagon(bookingAndClientsRepository, bookingAndClientsRepository, bus, bus);
+            CompositionRootHelper.BuildTheWriteModelHexagon(bookingAndClientsRepository, bookingAndClientsRepository, bus, bus);
 
             var hotelId = 1;
             var hotelName = "New York Sofitel";

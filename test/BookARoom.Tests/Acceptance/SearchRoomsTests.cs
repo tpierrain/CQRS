@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace BookARoom.Tests.Acceptance
 {
     [TestFixture]
-    public class QuerySearchAvailableRoomsTests
+    public class SearchRoomsTests
     {
         [Test]
         public void Should_find_no_room_when_searching_an_empty_location_catalog()
@@ -24,7 +24,7 @@ namespace BookARoom.Tests.Acceptance
         }
 
         [Test]
-        public void Should_find_matching_and_available_hotel()
+        public void Should_find_matching_and_available_hotels()
         {
             var hotelsAdapter = new HotelsAndRoomsAdapter(Constants.RelativePathForHotelIntegrationFiles, new FakeBus());
             hotelsAdapter.LoadHotelFile("New York Sofitel-availabilities.json");
@@ -43,7 +43,7 @@ namespace BookARoom.Tests.Acceptance
         }
 
         [Test]
-        public void Should_find_only_hotels_that_match_location_and_available_for_this_period()
+        public void Should_find_only_hotels_that_match_location_and_availability_for_this_period()
         {
             var hotelsAdapter = new HotelsAndRoomsAdapter(Constants.RelativePathForHotelIntegrationFiles, new FakeBus());
             hotelsAdapter.LoadHotelFile("THE GRAND BUDAPEST HOTEL-availabilities.json"); // available
@@ -72,7 +72,7 @@ namespace BookARoom.Tests.Acceptance
         }
 
         [Test]
-        public void Should_find_hotels_despite_wrong_case_location()
+        public void Should_find_hotels_despite_incorrect_case_for_location()
         {
             var hotelsAdapter = new HotelsAndRoomsAdapter(Constants.RelativePathForHotelIntegrationFiles, new FakeBus());
             hotelsAdapter.LoadHotelFile("New York Sofitel-availabilities.json");
@@ -86,7 +86,7 @@ namespace BookARoom.Tests.Acceptance
         }
 
         [Test]
-        public void Should_find_new_matching_hotels_after_new_hotel_is_integrated()
+        public void Should_find_one_more_matching_hotel_after_new_hotel_is_integrated()
         {
             var hotelsAdapter = new HotelsAndRoomsAdapter(Constants.RelativePathForHotelIntegrationFiles, new FakeBus());
             var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter);

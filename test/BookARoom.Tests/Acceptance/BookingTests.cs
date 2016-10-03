@@ -13,28 +13,30 @@ using NUnit.Framework;
 namespace BookARoom.Tests.Acceptance
 {
     [TestFixture]
-    public class CommandBookingTests
+    public class BookingTests
     {
         [Test]
-        public void Should_Book_a_room()
+        public void Should_impact_booking_repository_when_sending_a_booking_command()
         {
+            var bus = new FakeBus(synchronousPublication:true);
             var bookingRepository = new Mock<IBookingRepository>();
             var clientRepository = new Mock<IClientRepository>();
-            var bookingHandler = new BookingCommandHandler(new BookingStore(bookingRepository.Object, clientRepository.Object, new FakeBus()));
+
+            CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository.Object, clientRepository.Object, bus, bus);
 
             bookingRepository.Verify(x => x.Save(It.IsAny<BookARoomCommand>()), Times.Never);
 
             var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", hotelName:"Super Hotel", hotelId: 1, roomNumber: "2", checkInDate: DateTime.Parse("2016-09-17"), checkOutDate: DateTime.Parse("2016-09-18"));
-            bookingHandler.Handle(bookingCommand);
+            bus.Send(bookingCommand);
 
             bookingRepository.Verify(x => x.Save(It.Is<BookARoomCommand>(y => y.ClientId == "thomas@pierrain.net")), Times.Once);
         }
 
         [Test]
-        public void Should_impact_bookingOptions_read_model_when_booking_a_room()
+        public void Should_impact_both_write_and_read_models_when_sending_a_booking_command()
         {
             // Initialize Read-model side
-            var bus = new FakeBus();
+            var bus = new FakeBus(synchronousPublication:true);
             var hotelsAdapter = new HotelsAndRoomsAdapter(Constants.RelativePathForHotelIntegrationFiles, bus);
             var reservationsAdapter = new ReservationAdapter(bus);
             hotelsAdapter.LoadHotelFile("New York Sofitel-availabilities.json");
@@ -47,34 +49,32 @@ namespace BookARoom.Tests.Acceptance
 
             var searchQuery = new SearchBookingOptions(checkInDate, checkOutDate, location: "New York", numberOfAdults: 2);
             var bookingOptions = readFacade.SearchBookingOptions(searchQuery);
-            // We should get 1 booking option with 3 available rooms in it.
+            
+            // We should get 1 booking option with 13 available rooms in it.
             Check.That(bookingOptions).HasSize(1);
 
             var bookingOption = bookingOptions.First();
             var initialRoomsNumbers = 13;
             Check.That(bookingOption.AvailableRoomsWithPrices).HasSize(initialRoomsNumbers);
 
+            // Now, let's book that room!
+            var firstRoomOfThisBookingOption = bookingOption.AvailableRoomsWithPrices.First();
+            var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", hotelName: "New York Sofitel", hotelId: bookingOption.Hotel.Identifier, roomNumber: firstRoomOfThisBookingOption.RoomIdentifier, checkInDate: checkInDate, checkOutDate: checkOutDate);
+
             // Initialize Write-model side
             var bookingRepository = new BookingAndClientsRepository();
+            CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository, bookingRepository, bus, bus);
 
-            var bookingHandler = CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository, bookingRepository, bus, bus);
+            // We send the BookARoom command
+            bus.Send(bookingCommand);
 
-            // We book a room from that booking option
-            BookAnOption(bookingOption, checkInDate, checkOutDate, bookingHandler);
+            // We check that both the BookingRepository (Write model) and the available rooms (Read model) have been updated.
             Check.That(bookingRepository.GetBookingCommandsFrom("thomas@pierrain.net").Count()).IsEqualTo(1);
 
-            // Fetch rooms availabilities now. One room should have disappeared
+            // Fetch rooms availabilities now. One room should have disappeared from the search result
             bookingOptions = readFacade.SearchBookingOptions(searchQuery);
-            
             Check.That(bookingOptions).HasSize(1);
             Check.That(bookingOption.AvailableRoomsWithPrices).As("available matching rooms").HasSize(initialRoomsNumbers-1);
-        }
-
-        private static void BookAnOption(BookingOption bookingOption, DateTime checkInDate, DateTime checkOutDate, BookingCommandHandler bookingHandler)
-        {
-            var firstRoomOfTheUniqueOption = bookingOption.AvailableRoomsWithPrices.First();
-            var bookingCommand = new BookARoomCommand(clientId: "thomas@pierrain.net", hotelName: "New York Sofitel", hotelId: bookingOption.Hotel.Identifier, roomNumber: firstRoomOfTheUniqueOption.RoomIdentifier, checkInDate: checkInDate, checkOutDate: checkOutDate);
-            bookingHandler.Handle(bookingCommand);
         }
     }
 }

@@ -53,8 +53,8 @@ else
                     <td><strong>@reservation.HotelName</strong></td>
                     <td>@reservation.HotelId</td>
                     <td>@reservation.RoomNumber</td>
-                    <td>@reservation.CheckInDate</td>
-                    <td>@reservation.CheckOutDate</td>
+                    <td>@reservation.CheckInDate.ToString("d")</td>
+                    <td>@reservation.CheckOutDate.ToString("d")</td>
                     <td>
                         <a href="" class="button" onclick="return false;">Edit</a>
                         <a href="" class="button" onclick="return false;">Delete</a>
