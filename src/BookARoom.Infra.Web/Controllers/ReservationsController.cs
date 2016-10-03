@@ -15,9 +15,12 @@ namespace BookARoom.Infra.Web.Controllers
             this.reservationsProvider = reservationsProvider;
         }
 
-        // GET: /<controller>/
-        public IActionResult Index(ReservationsViewModel reservationsViewModel)
+        [HttpGet]
+        public IActionResult Index(string email)
         {
+            var reservations = this.reservationsProvider.GetReservationsFor(email);
+            var reservationsViewModel = new ReservationsViewModel(email, reservations);
+
             return View(reservationsViewModel);
         }
 

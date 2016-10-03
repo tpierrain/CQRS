@@ -1,4 +1,5 @@
-﻿@model BookARoom.Infra.Web.ViewModels.BookingRequestViewModel
+﻿@using System.Text.Encodings.Web
+@model BookARoom.Infra.Web.ViewModels.BookingRequestViewModel
 @{
     ViewData["Title"] = "Room booked";
 }
@@ -10,7 +11,7 @@
     <div>You will received a confirmation e-mail in few seconds.</div>
     <br/>
     <br/>
-    <div>You can consult all your booking reservations in the <a href="MyReservations">"My Reservations"</a> section of the site.
+    <div>You can consult all your booking reservations in the <a href="~/Reservations?email=@Model.ClientMail">"My reservations"</a> section of the site.
     </div>
     <br/>
     <br/>
