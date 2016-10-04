@@ -6,5 +6,7 @@ namespace BookARoom.Domain.WriteModel
     public interface IBookingRepository
     {
         void Save(Booking booking);
+        Booking GetBooking(string clientId, Guid bookingGuid);
+        void Update(Booking booking);
     }
 }

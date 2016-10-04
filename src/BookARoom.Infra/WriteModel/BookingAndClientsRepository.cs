@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BookARoom.Domain.WriteModel;
 
 namespace BookARoom.Infra.WriteModel
@@ -38,6 +39,25 @@ namespace BookARoom.Infra.WriteModel
             }
 
             return new List<Booking>();
+        }
+
+        public Booking GetBooking(string clientId, Guid bookingGuid)
+        {
+            var bookingList = this.perClientBookings[clientId];
+            foreach (var booking in bookingList)
+            {
+                if (booking.BookingId == bookingGuid)
+                {
+                    return booking;
+                }
+            }
+
+            return Booking.Null;
+        }
+
+        public void Update(Booking booking)
+        {
+            // Method existing for real Db
         }
     }
 }

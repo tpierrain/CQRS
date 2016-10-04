@@ -30,5 +30,16 @@ namespace BookARoom.Domain.WriteModel
             var roomBooked = new RoomBooked(guid, command.HotelName, command.HotelId, command.ClientId, command.RoomNumber, command.CheckInDate, command.CheckOutDate);
             this.publishEvents.PublishTo(roomBooked);
         }
+
+        public void CancelBooking(CancelBookingCommand command)
+        {
+            var booking = this.bookingRepository.GetBooking(command.ClientId, command.BookingGuid);
+            if (booking.IsForClient(command.ClientId))
+            {
+                booking.Cancel();
+
+                this.bookingRepository.Update(booking);
+            }
+        }
     }
 }
