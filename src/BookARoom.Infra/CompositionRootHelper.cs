@@ -26,10 +26,10 @@ namespace BookARoom.Infra
             return new ReadModelFacade(roomsAdapter, hotelAdapter, reservationAdapter, bus);
         }
 
-        public static WriteModelFacade BuildTheWriteModelHexagon(IBookingRepository bookingRepository, IClientRepository clientRepository, IPublishEvents eventPublisher, ISubscribeToEvents eventSubscriber)
+        public static WriteModelFacade BuildTheWriteModelHexagon(IBookingRepository bookingRepository, IClientRepository clientRepository, IPublishEvents eventPublisher, ISubscribeToCommands commandSubscriber)
         {
             var writeModelCommandHandler = new WriteModelFacade(new BookingStore(bookingRepository, clientRepository, eventPublisher));
-            CompositionRootHelper.SubscribeCommands(writeModelCommandHandler, eventSubscriber);
+            CompositionRootHelper.SubscribeCommands(writeModelCommandHandler, commandSubscriber);
 
             return writeModelCommandHandler;
         }

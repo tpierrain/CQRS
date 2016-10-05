@@ -6,4 +6,9 @@ namespace BookARoom.Domain.ReadModel
     {
         void RegisterHandler<T>(Action<T> handler) where T : IMessage;
     }
+
+    // to sustain CQRS explanations at MS experiences'16
+    public interface ISubscribeToCommands : ISubscribeToEvents
+    {
+    }
 }

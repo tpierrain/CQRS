@@ -16,7 +16,6 @@ namespace BookARoom.Infra.Web.Controllers
         [HttpPost]
         public IActionResult Index(BookingRequestViewModel bookingRequestViewModel)
         {
-            
             return View(bookingRequestViewModel);
         }
     }
