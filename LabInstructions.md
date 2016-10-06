@@ -126,7 +126,7 @@ public class Booking
 
     ````
 
-    3.  We replace the System.NotImplementedException of the (WriteModelFacade) handler by a code calling a method we create on-the-fly on the IBookRooms interface:
+3.  We replace the System.NotImplementedException of the (WriteModelFacade) handler by a code calling a method we create on-the-fly on the IBookRooms interface:
 
     ````C#
         // (...) somewhere within the WriteModelFacade type
@@ -181,10 +181,14 @@ public class Booking
     ````
 
     Since this newly implemented *CancelBooking* method refers to undefined methods and type, __we need to catch-up the implementation__ in order to make it build again. It means:
-        1. __To Add a new *ClientId* property__ on the existing *CancelBookingCommand* type (needed to prevent someone from cancelling someone else's booking) and to fix the acceptance test that uses it (*Should_Update_booking_engine_when_CancelBookingCommand_is_sent()*)
-        2. __To Add 2 methods on the IBookingRepository interface__: *Booking GetBooking(string clientId, Guid bookingId)* and *void Update(Booking booking)*
-        3. __To implement new methods on the *Booking* type__ (*Cancel()* and *IsForClient(string clientId)*)
-        4. To catch-up *IBookingRepository* implementation of the *BookingAndClientsRepository* concrete type __by adding the 2 missing methods__: GetBooking(...) and Update(...)
+    
+    1. __To Add a new *ClientId* property__ on the existing *CancelBookingCommand* type (needed to prevent someone from cancelling someone else's booking) and to fix the acceptance test that uses it (*Should_Update_booking_engine_when_CancelBookingCommand_is_sent()*)
+    
+    2. __To Add 2 methods on the IBookingRepository interface__: *Booking GetBooking(string clientId, Guid bookingId)* and *void Update(Booking booking)*
+    
+    3. __To implement new methods on the *Booking* type__ (*Cancel()* and *IsForClient(string clientId)*)
+    
+    4. To catch-up *IBookingRepository* implementation of the *BookingAndClientsRepository* concrete type __by adding the 2 missing methods__: GetBooking(...) and Update(...)
 
     Let's see what it takes with code:
 
