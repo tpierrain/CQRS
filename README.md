@@ -20,24 +20,21 @@ I also find important that people understand that __CQRS ![loves](https://github
 
 ---
 
-### Remaining tasks before the D-day
+### Tracks of improvement
 
-1. Plug the ASP.NET web app
 1. Fight against the current anemic model (mainly because I never worked on that topic and that I don't have any expert available to help me ;-( and embrace more the ubiquitous language of this domain.
-1. Identify which use case(s) will be usefull to live-code at MS event (to zoom on CQRS) and to find the best pedagogical workflow for it.
-
-
 
 ---
 
 ### Highlights of the talk
 
 1. __CQRS (WITHOUT Event Sourcing)__:
-    - why CQRS?
+    - Why CQRS?
     - Pattern origin
     - How read and write models articulate
-    - Eventual consistency
+    - Eventual consistency challenges and options
     - Short clarification between __CQRS & Event sourcing__
+    
 1. How __Outside-in TDD__ works
 1. How __Hexagonal Architecture__ can help us to focus on __Domain first__, before tackling the infra code (ASP.NET) in a second time
 1. What is __dotnet core__ and how it articulates with the new version of ASP.NET
@@ -76,6 +73,6 @@ There are many forms of CQRS implementation. The implementation of the BookARoom
 
 ![directory](https://github.com/tpierrain/cqrs/blob/master/images/CQRSdiagram.png?raw=true)
 
-source: [https://msdn.microsoft.com/en-us/library/jj591573.aspx](https://msdn.microsoft.com/en-us/library/jj591573.aspx)
+from original source: [https://msdn.microsoft.com/en-us/library/jj591573.aspx](https://msdn.microsoft.com/en-us/library/jj591573.aspx)
 
 ...
