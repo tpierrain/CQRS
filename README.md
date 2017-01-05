@@ -20,12 +20,6 @@ I also find important that people understand that __CQRS ![loves](https://github
 
 ---
 
-### Tracks of improvement
-
-1. Fight against the current anemic model (mainly because I never worked on that topic and that I don't have any expert available to help me ;-( and embrace more the ubiquitous language of this domain.
-
----
-
 ### Highlights of the talk
 
 1. __CQRS (WITHOUT Event Sourcing)__:
@@ -74,5 +68,11 @@ There are many forms of CQRS implementation. The implementation of the BookARoom
 ![directory](https://github.com/tpierrain/cqrs/blob/master/images/CQRSdiagram.png?raw=true)
 
 from original source: [https://msdn.microsoft.com/en-us/library/jj591573.aspx](https://msdn.microsoft.com/en-us/library/jj591573.aspx)
+
+---
+
+### Tracks of improvement
+
+1. Fight against the current anemic model (mainly because I never worked on that topic and that I don't have any expert available to help me ;-( and embrace more the ubiquitous language of this domain.
 
 ...
