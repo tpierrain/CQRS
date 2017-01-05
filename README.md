@@ -1,6 +1,6 @@
 ![BookARoom](https://github.com/tpierrain/cqrs/blob/master/images/bookARoom.gif?raw=true)
 
-BookARoom is a simple project __to explain CQRS__ during a live coding session at MS experiences'16 (slides in french are available here: [https://github.com/tpierrain/CQRS-slides](https://github.com/tpierrain/CQRS-slides))
+BookARoom is a simple project __to explain CQRS__ during a live coding session at MS experiences'16 (__slides in french are available here: [https://github.com/tpierrain/CQRS-slides](https://github.com/tpierrain/CQRS-slides)__)
 
 The project is a __dotnet core__ ASP.NET web site (in order to be containerized in the next session), allowing users:
 
