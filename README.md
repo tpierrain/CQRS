@@ -74,7 +74,7 @@ from original source: [https://msdn.microsoft.com/en-us/library/jj591573.aspx](h
 
 The objective of this lab is to __add the "cancel a reservation" feature__.
 
-__[Step by step Instructions are presented here](LabInstructions.md)__.
+__[Step by step Instructions (following outside-in TDD technique) are presented here](LabInstructions.md)__.
 
 ---
 
