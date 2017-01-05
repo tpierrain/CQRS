@@ -30,6 +30,7 @@ namespace BookARoom.Tests.Acceptance
             hotelsAdapter.LoadHotelFile("New York Sofitel-availabilities.json");
 
             var readFacade = CompositionRootHelper.BuildTheReadModelHexagon(hotelsAdapter, hotelsAdapter);
+
             var requestedLocation = "New York";
             var searchQuery = new SearchBookingOptions(Constants.MyFavoriteSaturdayIn2017, checkOutDate: Constants.MyFavoriteSaturdayIn2017.AddDays(1), location: requestedLocation, numberOfAdults: 2, numberOfRoomsNeeded: 1, childrenCount: 0);
             var bookingOptions = readFacade.SearchBookingOptions(searchQuery);

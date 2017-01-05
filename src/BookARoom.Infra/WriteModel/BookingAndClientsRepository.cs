@@ -3,7 +3,7 @@ using BookARoom.Domain.WriteModel;
 
 namespace BookARoom.Infra.WriteModel
 {
-    public class BookingAndClientsRepository : IBookingRepository, IClientRepository
+    public class BookingAndClientsRepository : ISaveBooking, IHandleClients
     {
         private readonly Dictionary<string, List<Booking>> perClientBookings;
 

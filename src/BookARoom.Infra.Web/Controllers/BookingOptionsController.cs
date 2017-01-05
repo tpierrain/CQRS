@@ -9,12 +9,10 @@ namespace BookARoom.Infra.Web.Controllers
 {
     public class BookingOptionsController : Controller
     {
-        private ISendCommands bus;
         private readonly IQueryBookingOptions searchService;
 
-        public BookingOptionsController(ISendCommands bus, IQueryBookingOptions searchService)
+        public BookingOptionsController(IQueryBookingOptions searchService)
         {
-            this.bus = bus;
             this.searchService = searchService;
         }
 

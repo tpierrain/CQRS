@@ -19,8 +19,8 @@ namespace BookARoom.Tests.Acceptance
         public void Should_impact_booking_repository_when_sending_a_booking_command()
         {
             var bus = new FakeBus(synchronousPublication:true);
-            var bookingRepository = new Mock<IBookingRepository>();
-            var clientRepository = new Mock<IClientRepository>();
+            var bookingRepository = new Mock<ISaveBooking>();
+            var clientRepository = new Mock<IHandleClients>();
 
             CompositionRootHelper.BuildTheWriteModelHexagon(bookingRepository.Object, clientRepository.Object, bus, bus);
 
