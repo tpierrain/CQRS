@@ -1,8 +1,13 @@
 # CQRS lab instructions
 
-The objective of this lab is to add the cancel a reservation feature.
+The objective of this lab is to add the cancel a reservation feature __following an Outside-in TDD approach__.
 
-## Step1: Add a failing acceptance test
+Note: __What is Outside-In TDD?__ Also called the double-loop (or London school of TDD), the Outside-In TDD starts from the outside, considering the system as a black box and makes us write one failing acceptance test first, then many underlying unit tests (Red-Green_Refactor) to make this acceptance test Green, before we Refactor it and continue with another black box acceptance test (ad lib).
+
+The huge advantage of this Outside-In TDD is that we will end with the exact expected result at the end for our (black box- system (since we wrote acceptance tests to define its behaviours). Thus, we follow a minimal (and YAGNI) approach to deliver our app/service/whatever...
+
+
+## Step1: Add a failing acceptance test (Make it fail)
 
 1. Create a new __CancelBookingTests__ test fixture within the BookARoom.Tests projects (within the 'Acceptance' directory)
 2. Add a first failing test (__Should_Update_booking_engine_when_CancelBookingCommand_is_sent()__):
@@ -412,7 +417,10 @@ We run our tests again, and TADA! it's all green.
 
 - - -
 
-## Step3: Write a failing acceptance test showing that a 'CancelBooking' task updates the "My Reservations" read model
+## Step 3: Make it better (Refactor)
+I let you do homework ;-)
+
+## Step 4: Write a failing acceptance test showing that a 'CancelBooking' task updates the "My Reservations" read model (Make it fail)
 
 Here it is:
 ````C#
@@ -470,7 +478,7 @@ So far, we've added the concept of cancelation for the *Booking* (on the write-s
 ````
 
 
-## Step4: Make it work
+## Step 5: Make it work
 
 For that, __the write-side domain logic will have to triggering a *BookingCanceled* event that will impact the read-side model__ (reservations to begin, rooms availabilities in a second time).
 
@@ -588,8 +596,10 @@ Time for us to Implement the Cancel() method on the *Reservation* type and Voila
     }
 ````
 
+## Step 6: Make it better (Refactor)
+I let you do homework ;-)
 
-## Step5: Write a failing acceptance test showing that a 'CancelBooking' task impacts the "rooms search engine" on the read-side
+## Step 7: Write a failing acceptance test showing that a 'CancelBooking' task impacts the "rooms search engine" on the read-side
 
 Provided here, in a non-refactored form to ease Copy-and-Paste (but will deserve some extract methods in your IDE):
 
@@ -650,7 +660,7 @@ Provided here, in a non-refactored form to ease Copy-and-Paste (but will deserve
         Check.That(bookingOption.AvailableRoomsWithPrices).As("available matching rooms").HasSize(initialRoomsNumbers - 1 + 1);
     }
 ````
-## Step6: Make it work
+## Step 8: Make it work
 
 As we previously did for the *ReservationAdapter*, let's make the *HotelsAndRoomsAdapter* (implementing *IProvideRooms*) subscribes to the *BookingCanceled* event.
 
@@ -690,8 +700,12 @@ As you have probably already understand, __there is no one size fits all CQRS ar
 
 
 - - -
+## Step 9: Make it better (Refactor)
+I let you do homework ;-)
 
-## Step7: Integrate our work to the (Web site) UI
+---
+
+## Step 10: Integrate our work to the (Web site) UI
 
 TODO with a DELETE VERB.
 

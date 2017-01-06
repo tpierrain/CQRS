@@ -70,7 +70,7 @@ There are many forms of CQRS implementation. The implementation of the BookARoom
 from original source: [https://msdn.microsoft.com/en-us/library/jj591573.aspx](https://msdn.microsoft.com/en-us/library/jj591573.aspx)
 
 ---
-### Lab to play at home
+![lab](https://github.com/tpierrain/cqrs/blob/master/images/Lab.jpg?raw=true)
 
 The objective of this lab is to __add the "cancel a reservation" feature__.
 
