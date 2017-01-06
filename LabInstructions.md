@@ -7,7 +7,7 @@ Also called the double-loop (or London school of TDD), the Outside-In TDD starts
 
 ![BookARoom](https://github.com/tpierrain/cqrs/blob/master/images/outsideinTDD.PNG?raw=true)
 
-__The huge advantage of this Outside-In TDD is that__ we will end with the exact expected result at the end for our (black box- system (since we wrote acceptance tests to define its behaviours). Thus, we follow a strict and minimal (and YAGNI) approach to deliver our app/service/... We avoid any digression or not objective-driven task.
+__The huge advantage of this Outside-In TDD is that__ we will end with the exact expected result at the end for our (black box- system (since we wrote acceptance tests to define its behaviours). Thus, we follow a strict and minimal (and YAGNI) approach to deliver our app/service/... We avoid any digression or not objective-driven task. __A straight to the point approach!__
 
 Note: since the BookARoom system is already existing (built thanks to this workflow), the lab instructions below focus more on the new acceptance tests than on underlying unit tests that whether already exist (and are impacted here) or aren't needed.
 
