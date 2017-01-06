@@ -3,11 +3,11 @@
 The objective of this lab is to add the cancel a reservation feature __following an Outside-in TDD approach__.
 
 ## Outside-In TDD?
-Also called the double-loop (or London school of TDD), the Outside-In TDD starts from the outside, considering the system as a black box and makes us write one failing acceptance test first, then many underlying unit tests (Red-Green_Refactor) to make this acceptance test Green, before we Refactor it and continue with another black box acceptance test (ad lib).
+Also called the double-loop (or London school of TDD), the Outside-In TDD starts the flow from the outside of your system to be built, considering the system as a black box and makes us write one failing acceptance test first, then many underlying unit tests (Red-Green_Refactor) to make this acceptance test Green, before we Refactor it and continue with another black box acceptance test (ad lib).
 
 ![BookARoom](https://github.com/tpierrain/cqrs/blob/master/images/outsideinTDD.PNG?raw=true)
 
-The huge advantage of this Outside-In TDD is that we will end with the exact expected result at the end for our (black box- system (since we wrote acceptance tests to define its behaviours). Thus, we follow a minimal (and YAGNI) approach to deliver our app/service/whatever...
+The huge advantage of this Outside-In TDD is that we will end with the exact expected result at the end for our (black box- system (since we wrote acceptance tests to define its behaviours). Thus, we follow a strict and minimal (and YAGNI) approach to deliver our app/service/... We avoid any digression or not objective-driven task.
 
 
 ## Step1: Add a failing acceptance test (Make it fail)
