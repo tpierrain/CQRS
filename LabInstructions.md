@@ -12,7 +12,7 @@ __The huge advantage of this Outside-In TDD is that__ we will end with the exact
 Note: since the BookARoom system is already existing (built thanks to this workflow), the lab instructions below focus more on the new acceptance tests than on underlying unit tests that whether already exist (and are impacted here) or aren't needed.
 
 ####Tips:
-__In any case, your tests (including the unit ones) must ALWAYS TEST BEHAVIOURS; NOT IMPLEMENTATIONS! (otherwise your tests will be fragile and painfull).__
+In any case, your tests (including the unit ones) must __ALWAYS TEST BEHAVIOURS; NOT IMPLEMENTATIONS!__ (otherwise your tests will be fragile and painfull).
 
 ---
 
