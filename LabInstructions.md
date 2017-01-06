@@ -9,6 +9,9 @@ Also called the double-loop (or London school of TDD), the Outside-In TDD starts
 
 The huge advantage of this Outside-In TDD is that we will end with the exact expected result at the end for our (black box- system (since we wrote acceptance tests to define its behaviours). Thus, we follow a strict and minimal (and YAGNI) approach to deliver our app/service/... We avoid any digression or not objective-driven task.
 
+Note: since the BookARoom system is already existing (built thanks to this workflow), the lab instructions below focus more on the new acceptance tests than on underlying unit tests that whether already exist (and are impacted here) or aren't needed.
+
+__In any case, your tests (including the unit ones) must always test behaviors; Not implementations (otherwise your tests will be fragile and painfull).__
 
 ## Step1: Add a failing acceptance test (Make it fail)
 
