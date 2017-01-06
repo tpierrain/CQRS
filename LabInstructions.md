@@ -1,6 +1,11 @@
 # CQRS lab instructions
 
-The objective of this lab is to add the cancel a reservation feature.
+The objective of this lab is to add the cancel a reservation feature __following an Outside-in TDD approach__.
+
+Note: __What is Outside-In TDD?__ Also called the double-loop (or London school of TDD), the Outside-In TDD starts from the outside, considering the system as a black box and makes us write one failing acceptance test first, then many underlying unit tests (Red-Green_Refactor) to make this acceptance test Green, before we Refactor it and continue with another black box acceptance test (ad lib).
+
+The huge advantage of this Outside-In TDD is that we will end with the exact expected result at the end for our (black box- system (since we wrote acceptance tests to define its behaviours). Thus, we follow a minimal (and YAGNI) approach to deliver our app/service/whatever...
+
 
 ## Step1: Add a failing acceptance test (Make it fail)
 
