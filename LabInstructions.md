@@ -13,6 +13,8 @@ Note: since the BookARoom system is already existing (built thanks to this workf
 
 __In any case, your tests (including the unit ones) must always test behaviors; Not implementations (otherwise your tests will be fragile and painfull).__
 
+---
+
 ## Step1: Add a failing acceptance test (Make it fail)
 
 1. Create a new __CancelBookingTests__ test fixture within the BookARoom.Tests projects (within the 'Acceptance' directory)
